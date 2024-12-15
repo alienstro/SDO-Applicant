@@ -1,0 +1,26 @@
+.login-container {
+    display: flex;
+    flex-direction: row;
+    background-color: #0165b2;
+    min-height: 100vh;
+}
+
+.div1 {
+ flex: 1;
+}
+
+.div2 {
+    background-color: white;
+    flex: 1;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
