@@ -1,0 +1,1 @@
+export const mainPort: string = "http://localhost" 

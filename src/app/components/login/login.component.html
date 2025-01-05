@@ -3,7 +3,7 @@
         <img src="../../../../public/DEPED.png" alt="">
     </div>
     <div class="div2">
-        <form action="" class="form-container">
+        <div class="form-container" >
             <p>Welcome</p>
             <p>Login to your account to continue</p>
             <mat-form-field appearance="outline">
@@ -18,7 +18,10 @@
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
                 <mat-hint>Hint</mat-hint>
               </mat-form-field>
-            <button type="submit">Login</button>
-        </form>
+            <button
+            (click)="onLogin()"
+            type="submit"
+            >Login</button>
+        </div>
     </div>
 </div>
