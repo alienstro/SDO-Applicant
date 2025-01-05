@@ -7,6 +7,21 @@
 
 .div1 {
  flex: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+}
+
+#welcome-title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+#welcome-message {
+  text-align: center;
+  font-size: 1rem;
 }
 
 .div2 {
@@ -22,5 +37,42 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
+}
+
+.form-display {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  border: 1px black solid;
+  border-radius: 1.5rem;
+  padding: 0.5em 1em;
+  width: 280px;
+}
+
+.form-border {
+  border: none;
+}
+
+.form-size {
+  width: 100%;
+}
+
+input {
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+}
+
+.submit-button {
+  background-color: #0165B2;
+  color: white;
+  padding: 1rem 0.5rem;
+  font-weight: 500;
+  border-radius: 1.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
 }

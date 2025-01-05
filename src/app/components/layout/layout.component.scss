@@ -1,0 +1,36 @@
+$sidenav-blue: #0165B2;
+.container {
+ min-height: 100svh;
+}
+
+.sidenav {
+    background-color: $sidenav-blue;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.hambuger-menu {
+    width: 24px;
+    height: 24px;
+    color: black;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-nav {
+    padding: 0.25em 0.5em;
+    box-shadow: 1px 1px 12px -3px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 1px 12px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 1px 12px -3px rgba(0,0,0,0.75);
+}
+
+.toggle-button {
+  background-color: #F8F8F8;
+  border-radius: 100%;
+  padding: 1rem 0.5rem;
+  border: none;
+  cursor: pointer;
+}
