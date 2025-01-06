@@ -21,6 +21,10 @@ export class RequestService {
   login(data: LoginRequest) {
     return this.http.post<LoginResponse>(mainPort + '/sdo_api_v1/API/login', data);
   }
+
+  post(data: any, endpoint: string) {
+    return this.http.post(mainPort + `/sdo_api_v1/API/${endpoint}`, data)
+  }
   // login(data: any, endpoint: string) {
   //   return this.http.post(mainPort + '/sdo_api_v1/API/login' + endpoint, data.getRawValue());
   // }
