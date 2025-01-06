@@ -10,8 +10,8 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', component: LayoutComponent, children: [
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-        { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-        { path: 'application', component: ApplicationFormComponent, canActivate: [authGuard] },
+        { path: 'dashboard', component: DashboardComponent},
+        { path: 'application', component: ApplicationFormComponent},
         { path: '**', redirectTo: '/dashboard' },
-    ]}
+    ], canActivateChild: [authGuard]}
 ];

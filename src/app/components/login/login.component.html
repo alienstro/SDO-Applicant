@@ -1,27 +1,25 @@
 <div class="login-container">
-    <div class="div1">
-        <img src="../../../../public/DEPED.png" alt="">
-    </div>
-    <div class="div2">
-        <div class="form-container" >
-            <p>Welcome</p>
-            <p>Login to your account to continue</p>
-            <mat-form-field appearance="outline">
-                <mat-label>Outline form field</mat-label>
-                <input matInput placeholder="Placeholder">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Outline form field</mat-label>
-                <input matInput placeholder="Placeholder">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-              </mat-form-field>
-            <button
-            (click)="onLogin()"
-            type="submit"
-            >Login</button>
-        </div>
-    </div>
+  <div class="div1">
+    <img src="DEPED.png" alt="" />
+  </div>
+  <div class="div2">
+    <form class="form-container" (ngSubmit)="onLogin()" [formGroup]="userLogin">
+      <p>Welcome</p>
+      <p>Login to your account to continue</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Placeholder" formControlName="email" />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Placeholder" formControlName="password" />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+      @if(errMessage) {
+      <p class="err__msg">{{ errMessage }}</p>
+      }
+      <button type="submit">Login</button>
+    </form>
+  </div>
 </div>
