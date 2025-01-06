@@ -8,8 +8,6 @@ export class AuthService {
 
   constructor(private cookieService: CookieService) { }
 
-  redirectUrl: string = '/login';
-
   getToken() {
     return this.cookieService.get('token') as string;
   }
@@ -20,14 +18,6 @@ export class AuthService {
 
   isAuth() {
     return this.getToken().length > 0
-  }
-
-  setRedirectUrl(url: string): void {
-    this.redirectUrl = url;
-  }
-
-  get getRedirectUrl(): string {
-    return this.redirectUrl;
   }
 
 }

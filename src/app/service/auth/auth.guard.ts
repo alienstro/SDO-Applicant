@@ -3,24 +3,16 @@ import { AuthService } from './auth.service';
 import { inject } from '@angular/core';
 
 
-export const authGuard: CanActivateFn = (route, state) => {
-  //Decode current token held
+export const authGuard: CanActivateFn = async (route, state) => {
   const auth = inject(AuthService);
-  const router = inject(Router)
+  const router = inject(Router);
 
-  if(auth.getToken() === null) {
-    router.navigate([auth.getRedirectUrl])
-    console.log('Uuuu')
+  const token = auth.getToken();
+
+  if (!token || token.length <= 0) {
+    await router.navigate(['login']); // Wait for navigation to complete
     return false;
   }
-  // Check the existance of token
-  if (auth.getToken().length <= 0) {
-    console.log('Uuuu')
-    router.navigate([auth.getRedirectUrl])
-    return false;
-  }
-  
-  console.log('ooo')
+
   return true;
-
 };
