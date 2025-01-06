@@ -1,4 +1,4 @@
-<div>
+<div class="application-container">
     <p>Provident Loan Application</p>
       <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
         <mat-step >
@@ -30,7 +30,7 @@
                         <mat-checkbox class="example-margin">New</mat-checkbox>
                         <mat-checkbox class="example-margin">Renewal</mat-checkbox>
                       </div>
-                      <mat-checkbox class="example-margin">Additional</mat-checkbox>    
+                      <mat-checkbox class="example-margin">Additional</mat-checkbox>
                     </div>
                   </div>
                   <div class="form-split">
@@ -63,7 +63,7 @@
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Borrower's Information</ng-template>
             <div class="form-field-container">
-           
+
             <div class="form-field">
               <mat-form-field appearance="outline" class="form-split">
                 <mat-label>Lastname</mat-label>
@@ -167,7 +167,7 @@
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Co maker's Information</ng-template>
             <div class="form-field-container">
-           
+
             <div class="form-field">
               <mat-form-field appearance="outline" class="form-split">
                 <mat-label>Lastname</mat-label>
@@ -272,7 +272,7 @@
           <p>I hereby apply for a Provident Fund Loan in the amount of PESOS: Zero Pesos (P 0). In consideration of the grant thereof, I promise to pay all installments due based on the attached amortization schedule and bind myself with the terms and conditions of the loan as stipulated in the applicable guidelines of the DepEd Provident Fund. This document also serves as the Promissory Note upon approval of this loan.</p>
 
           <p>Accordingly, I hereby authorize the deductions of the monthly amortization from my salary. Should I be separated from the service, I also hereby agree to settle my outstanding loan balance before the date of my retirement/separation from the service, either through full payment in cash or through the execution of a notarized Promissory Note.</p>
-        
+
           <div class="next-button-container">
             <button mat-button matStepperNext>Next Step</button>
           </div>
@@ -290,7 +290,7 @@
           <ng-template matStepLabel>Done!</ng-template>
           <p>Thank you for filling up the application form</p>
         </mat-step>
-     
+
       </mat-stepper>
-      
+
 </div>

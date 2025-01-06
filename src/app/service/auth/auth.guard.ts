@@ -10,16 +10,14 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if(auth.getToken() === null) {
     router.navigate([auth.getRedirectUrl])
-    console.log('Uuuu')
     return false;
   }
   // Check the existance of token
   if (auth.getToken().length <= 0) {
-    console.log('Uuuu')
     router.navigate([auth.getRedirectUrl])
     return false;
   }
-  
+
   console.log('ooo')
   return true;
 

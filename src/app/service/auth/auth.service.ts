@@ -8,7 +8,7 @@ export class AuthService {
 
   constructor(private cookieService: CookieService) { }
 
-  redirectUrl: string = '/login';
+  redirectUrl: string = 'login';
 
   getToken() {
     return this.cookieService.get('token') as string;
