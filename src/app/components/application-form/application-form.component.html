@@ -1,7 +1,8 @@
 <div class="application-container">
-  <p>Provident Loan Application</p>
+  <p id="prodvident__title">Provident Loan Application</p>
   <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-    <mat-step>
+    <!-- <mat-step [completed]="true"> -->
+    <mat-step [completed]="loanDetailsForm.valid">
       <form [formGroup]="loanDetailsForm">
         <ng-template matStepLabel>Loan Details</ng-template>
         <div class="form-field-container">
@@ -10,6 +11,7 @@
               <mat-form-field appearance="outline">
                 <mat-label>Loan Amount</mat-label>
                 <input
+                  required=""
                   matInput
                   placeholder="Php 1.00"
                   formControlName="loanAmount"
@@ -22,7 +24,8 @@
                 <mat-label>Loan Application Number</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  required=""
+                  placeholder="123456"
                   formControlName="loanNumber"
                   required
                 />
@@ -40,15 +43,20 @@
                     >Multi-Purpose</mat-checkbox
                   > -->
                   <mat-radio-group
+                    required=""
                     aria-label="Select an option"
                     class="purpose"
                     formControlName="loanType"
                   >
                     <div class="type-loan purpose">
-                      <mat-radio-button value="new" class="example-margin"
+                      <mat-radio-button
+                        value="Multi-Purpose (new)"
+                        class="example-margin"
                         >New</mat-radio-button
                       >
-                      <mat-radio-button value="renewal" class="example-margin"
+                      <mat-radio-button
+                        value="Multi-Purpose (renewal)"
+                        class="example-margin"
                         >Renewal</mat-radio-button
                       >
                     </div>
@@ -73,12 +81,14 @@
             <div class="form-split purpose">
               <p>Purpose:</p>
               <mat-radio-group
+                required
                 aria-label="Select an option"
                 class="purpose"
                 formControlName="purpose"
+                (change)="purposeChange('main')"
               >
                 @for (item of purposeArr; track $index) {
-                <mat-radio-button (value)="(item)">
+                <mat-radio-button [value]="item">
                   {{ item }}
                 </mat-radio-button>
                 }
@@ -86,21 +96,21 @@
               <mat-form-field appearance="outline">
                 <mat-label>Other (Specify)</mat-label>
                 <input
+                  (keydown)="purposeChange('other')"
                   matInput
                   placeholder="Other (Specify)"
-                  formControlName="purpose"
-                  required
+                  formControlName="otherPurpose"
                 />
               </mat-form-field>
             </div>
           </div>
         </div>
         <div class="next-button-container">
-          <button mat-button matStepperNext>Next Step</button>
+          <button mat-button matStepperNext (click)="test()">Next Step</button>
         </div>
       </form>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="borrowerInfoForm.valid">
       <form [formGroup]="borrowerInfoForm">
         <ng-template matStepLabel>Borrower's Information</ng-template>
         <div class="form-field-container">
@@ -129,7 +139,6 @@
                 matInput
                 placeholder="Php 1.00"
                 formControlName="middleName"
-                required
               />
             </mat-form-field>
           </div>
@@ -222,7 +231,7 @@
                 required
               />
             </mat-form-field>
-            <mat-form-field appearance="outline" class="form-split">
+            <!-- <mat-form-field appearance="outline" class="form-split">
               <mat-label>Age</mat-label>
               <input
                 matInput
@@ -230,7 +239,7 @@
                 formControlName="age"
                 required
               />
-            </mat-form-field>
+            </mat-form-field> -->
           </div>
 
           <div class="form-field">
@@ -288,11 +297,17 @@
           </div>
         </div>
         <div class="next-button-container">
-          <button mat-button matStepperNext>Next Step</button>
+          <button
+            mat-button
+            matStepperNext
+            (click)="findInvalidControls(borrowerInfoForm)"
+          >
+            Next Step
+          </button>
         </div>
       </form>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="comakerInfoForm.valid">
       <form [formGroup]="comakerInfoForm">
         <ng-template matStepLabel>Co-Maker's Information</ng-template>
         <div class="form-field-container">
@@ -321,7 +336,6 @@
                 matInput
                 placeholder="Php 1.00"
                 formControlName="middleName"
-                required
               />
             </mat-form-field>
           </div>
@@ -414,7 +428,7 @@
                 required
               />
             </mat-form-field>
-            <mat-form-field appearance="outline" class="form-split">
+            <!-- <mat-form-field appearance="outline" class="form-split">
               <mat-label>Age</mat-label>
               <input
                 matInput
@@ -422,7 +436,7 @@
                 formControlName="age"
                 required
               />
-            </mat-form-field>
+            </mat-form-field> -->
           </div>
 
           <div class="form-field">
@@ -480,7 +494,13 @@
           </div>
         </div>
         <div class="next-button-container">
-          <button mat-button matStepperNext>Next Step</button>
+          <button
+            mat-button
+            matStepperNext
+            (click)="findInvalidControls(comakerInfoForm)"
+          >
+            Next Step
+          </button>
         </div>
       </form>
     </mat-step>
