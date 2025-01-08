@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mainPort } from '../env';
+import { mainPort, API_URL } from '../env';
 import { Observable } from 'rxjs';
-import { API_URL } from '../components/constant';
 interface LoginResponse {
   token: string
 }
