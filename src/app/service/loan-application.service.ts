@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RequestService } from './request.service';
-import { LoanApplication, LoanStatus } from '../interface';
+import { CurrentLoanApplication, LoanApplication, LoanStatus } from '../interface';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -19,12 +19,19 @@ export class LoanApplicationService {
 
   loanApplicationStatus$ = this._loanApplicationStatus.asObservable();
 
+  private _currentLoanApplication = new BehaviorSubject<CurrentLoanApplication>({
+    ongoingApplication: false,
+    applicationDetails: []
+  })
+
+  currentLoanApplication$ = this._currentLoanApplication.asObservable()
+
   constructor(
     private requestService: RequestService,
     private snackbarService: SnackbarService
   ) {
     this.initLoanStatus()
-
+    this.initCurrentLoanApplication()
   }
 
   initLoanStatus() {
@@ -33,14 +40,29 @@ export class LoanApplicationService {
         console.log('fetching status: ', res.message)
         this.setLoanStatus(res.message)
         console.log(this._loanApplicationStatus.getValue())
-      }
-        ,
+      },
       error: error =>
         this.snackbarService.showSnackbar('An error occured while fetching loan application status')
     })
   }
 
+  initCurrentLoanApplication() {
+    this.requestService.get<CurrentLoanApplication>('currentLoanApplication').subscribe({
+      next: res => {
+        console.log('fetching status: ', res.message)
+        this.setCurrentLoanApplication(res.message)
+        console.log(this._currentLoanApplication.getValue())
+      },
+      error: error =>
+        this.snackbarService.showSnackbar('An error occured while fetching current loan application status')
+    })
+  }
+
   setLoanStatus(data: LoanStatus) {
     this._loanApplicationStatus.next(data)
+  }
+
+  setCurrentLoanApplication(data: CurrentLoanApplication) {
+    this._currentLoanApplication.next(data)
   }
 }

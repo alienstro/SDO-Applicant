@@ -24,7 +24,7 @@ export interface LoanDetails {
   loanAmount: number | null
   loanNumber: string | null
   purpose:   string | null
-  term: string | null
+  term: number | null
   loanType:   string | null
 }
 
@@ -46,4 +46,9 @@ export interface LoanStatus {
 export interface Response<T> {
   success: boolean,
   message: T
+}
+
+export interface CurrentLoanApplication {
+  ongoingApplication: boolean,
+  applicationDetails: LoanApplication | {}
 }

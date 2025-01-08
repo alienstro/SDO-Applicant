@@ -7,8 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RequestService } from '../../service/request.service';
 import { MatRadioModule } from '@angular/material/radio';
-import { Information, LoanApplication, LoanDetails } from '../../interface';
+import { CurrentLoanApplication, Information, LoanApplication, LoanDetails } from '../../interface';
 import { SnackbarService } from '../../service/snackbar.service';
+import { LoanApplicationService } from '../../service/loan-application.service';
 
 @Component({
   selector: 'app-application-form',
@@ -28,10 +29,23 @@ import { SnackbarService } from '../../service/snackbar.service';
 })
 export class ApplicationFormComponent {
 
+  isCurrentLoanApplicationLoading = false
+  CurrentLoanApplication!: CurrentLoanApplication
+
   constructor(
     private requestService: RequestService,
-    private snackbarService: SnackbarService
-  ) { }
+    private snackbarService: SnackbarService,
+    private loanApplicationService: LoanApplicationService
+  ) {
+    this.isCurrentLoanApplicationLoading = true
+    this.loanApplicationService.currentLoanApplication$.subscribe(
+      res => {
+        this.CurrentLoanApplication = res
+        this.isCurrentLoanApplicationLoading = false
+        this.parseApplicationForm()
+      }
+    )
+  }
 
   purposeArr = [
     "Hospitalization/Medical",
@@ -64,10 +78,10 @@ export class ApplicationFormComponent {
     zipcode: new FormControl('', [Validators.required]),
     employeeNo: new FormControl('', [Validators.required]),
     employeeStatus: new FormControl('', [Validators.required]),
-    birth: new FormControl('', [Validators.required]),
+    birth: new FormControl(new Date(), [Validators.required]),
     age: new FormControl(0),
     office: new FormControl('', [Validators.required]),
-    salary: new FormControl('', [Validators.required]),
+    salary: new FormControl(0, [Validators.required]),
     officeTelNo: new FormControl('', [Validators.required]),
     yearService: new FormControl(0, [Validators.required]),
     mobileNo: new FormControl('', [Validators.required]),
@@ -85,16 +99,78 @@ export class ApplicationFormComponent {
     zipcode: new FormControl('', [Validators.required]),
     employeeNo: new FormControl('', [Validators.required]),
     employeeStatus: new FormControl('', [Validators.required]),
-    birth: new FormControl('', [Validators.required]),
+    birth: new FormControl(new Date(), [Validators.required]),
     age: new FormControl(0),
     office: new FormControl('', [Validators.required]),
-    salary: new FormControl('', [Validators.required]),
+    salary: new FormControl(0, [Validators.required]),
     officeTelNo: new FormControl('', [Validators.required]),
     yearService: new FormControl(0, [Validators.required]),
     mobileNo: new FormControl('', [Validators.required]),
   })
 
   isLinear = true;
+
+  isEditing = false
+
+  parseApplicationForm() {
+    if(!this.CurrentLoanApplication.ongoingApplication) return
+
+    const currentLoan = this.CurrentLoanApplication.applicationDetails as LoanApplication
+
+    this.loanDetailsForm.patchValue({
+      "loanAmount": currentLoan.loanDetails.loanAmount,
+      "loanNumber": currentLoan.loanDetails.loanNumber,
+      "purpose": currentLoan.loanDetails.purpose,
+      "otherPurpose": '',
+      "term": currentLoan.loanDetails.term,
+      "loanType": currentLoan.loanDetails.loanType
+    })
+
+    this.borrowerInfoForm.patchValue({
+      "lastName": currentLoan.borrowerInfo.lastName,
+      "firstname": currentLoan.borrowerInfo.firstname,
+      "middleName": currentLoan.borrowerInfo.middleName,
+      "region": currentLoan.borrowerInfo.region,
+      "province": currentLoan.borrowerInfo.province,
+      "city": currentLoan.borrowerInfo.city,
+      "barangay": currentLoan.borrowerInfo.barangay,
+      "street": currentLoan.borrowerInfo.street,
+      "zipcode": currentLoan.borrowerInfo.zipcode,
+      "employeeNo": currentLoan.borrowerInfo.employeeNo,
+      "employeeStatus": currentLoan.borrowerInfo.employeeStatus,
+      "birth": currentLoan.borrowerInfo.birth,
+      "age": currentLoan.borrowerInfo.age,
+      "office": currentLoan.borrowerInfo.office,
+      "salary": currentLoan.borrowerInfo.salary,
+      "officeTelNo": currentLoan.borrowerInfo.officeTelNo,
+      "yearService": currentLoan.borrowerInfo.yearService,
+      "mobileNo":currentLoan.borrowerInfo.mobileNo
+    })
+
+    this.comakerInfoForm.patchValue({
+      "lastName": currentLoan.borrowerInfo.lastName,
+      "firstname": currentLoan.borrowerInfo.firstname,
+      "middleName": currentLoan.borrowerInfo.middleName,
+      "region": currentLoan.borrowerInfo.region,
+      "province": currentLoan.borrowerInfo.province,
+      "city": currentLoan.borrowerInfo.city,
+      "barangay": currentLoan.borrowerInfo.barangay,
+      "street": currentLoan.borrowerInfo.street,
+      "zipcode": currentLoan.borrowerInfo.zipcode,
+      "employeeNo": currentLoan.borrowerInfo.employeeNo,
+      "employeeStatus": currentLoan.borrowerInfo.employeeStatus,
+      "birth": currentLoan.borrowerInfo.birth,
+      "age": currentLoan.borrowerInfo.age,
+      "office": currentLoan.borrowerInfo.office,
+      "salary": currentLoan.borrowerInfo.salary,
+      "officeTelNo": currentLoan.borrowerInfo.officeTelNo,
+      "yearService": currentLoan.borrowerInfo.yearService,
+      "mobileNo":currentLoan.borrowerInfo.mobileNo
+    })
+
+    this.isEditing = true
+
+  }
 
   purposeChange(type: string) {
     if (type === 'main') {
