@@ -72,6 +72,7 @@ export class ApplicationFormComponent {
     yearService: new FormControl(0, [Validators.required]),
     mobileNo: new FormControl('', [Validators.required]),
   })
+
   comakerInfoForm = new FormGroup({
     lastName: new FormControl('', [Validators.required]),
     firstname: new FormControl('', [Validators.required]),
@@ -121,7 +122,7 @@ export class ApplicationFormComponent {
     let message = ''
 
     if (words.length < 2) {
-      message = `Recheck ${words} is input`
+      message = `Recheck ${words} input`
     } else if (words.length < 4) {
       message = `Recheck  ${words} inputs`
     } else {
@@ -161,7 +162,7 @@ export class ApplicationFormComponent {
 
     this.requestService.addLoanApplication(applicationForm).subscribe({
       next: (res) => {
-        console.log(res); 
+        console.log(res);
 
         if (res.success) {
           this.snackbarService.showSnackbar('Loan application submitted successfully!');

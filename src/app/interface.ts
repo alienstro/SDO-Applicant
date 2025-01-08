@@ -34,3 +34,16 @@ export interface LoanApplication {
   borrowerInfo: Information
   comakerInfo: Information
 }
+
+export interface LoanStatus {
+  application_id: number;
+  loan_application_number: number;
+  is_approved_osds: string;
+  is_approved_accounting: string;
+  is_qualified: string;
+}
+
+export interface Response<T> {
+  success: boolean,
+  message: T
+}

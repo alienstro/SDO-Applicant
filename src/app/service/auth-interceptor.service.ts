@@ -5,11 +5,8 @@ import { AuthService } from './auth/auth.service';
 
 export const loggingInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
   const authToken = inject(AuthService).getToken();
-  if (req.method === 'POST') {
-    const cloned = req.clone({
-      setHeaders: { Authorization: `Bearer ${authToken}` }
-    });
-    return next(cloned);
-  }
-  return next(req);
+  const cloned = req.clone({
+    setHeaders: { Authorization: `Bearer ${authToken}` }
+  });
+  return next(cloned);
 };
