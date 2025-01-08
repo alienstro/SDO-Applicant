@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import {FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RequestService } from '../../service/request.service';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { Information, LoanApplication, LoanDetails } from '../../interface';
 import { SnackbarService } from '../../service/snackbar.service';
 
@@ -31,7 +31,7 @@ export class ApplicationFormComponent {
   constructor(
     private requestService: RequestService,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   purposeArr = [
     "Hospitalization/Medical",
@@ -64,13 +64,13 @@ export class ApplicationFormComponent {
     zipcode: new FormControl('', [Validators.required]),
     employeeNo: new FormControl('', [Validators.required]),
     employeeStatus: new FormControl('', [Validators.required]),
-    birth: new FormControl(new Date(), [Validators.required]),
+    birth: new FormControl('', [Validators.required]),
     age: new FormControl(0),
     office: new FormControl('', [Validators.required]),
     salary: new FormControl('', [Validators.required]),
     officeTelNo: new FormControl('', [Validators.required]),
     yearService: new FormControl(0, [Validators.required]),
-    mobileNo: new FormControl('' , [Validators.required]),
+    mobileNo: new FormControl('', [Validators.required]),
   })
   comakerInfoForm = new FormGroup({
     lastName: new FormControl('', [Validators.required]),
@@ -84,24 +84,24 @@ export class ApplicationFormComponent {
     zipcode: new FormControl('', [Validators.required]),
     employeeNo: new FormControl('', [Validators.required]),
     employeeStatus: new FormControl('', [Validators.required]),
-    birth: new FormControl(new Date(), [Validators.required]),
+    birth: new FormControl('', [Validators.required]),
     age: new FormControl(0),
     office: new FormControl('', [Validators.required]),
     salary: new FormControl('', [Validators.required]),
     officeTelNo: new FormControl('', [Validators.required]),
     yearService: new FormControl(0, [Validators.required]),
-    mobileNo: new FormControl('' , [Validators.required]),
+    mobileNo: new FormControl('', [Validators.required]),
   })
 
   isLinear = true;
 
   purposeChange(type: string) {
-    if(type === 'main') {
+    if (type === 'main') {
       this.loanDetailsForm.patchValue({
         otherPurpose: ''
       })
       console.log('asdsd')
-    } else if(type === 'other') {
+    } else if (type === 'other') {
       console.log('asdsd')
       this.loanDetailsForm.get('purpose')?.setValue("NA");
     }
@@ -120,11 +120,11 @@ export class ApplicationFormComponent {
   private parseMessage(words: string[]) {
     let message = ''
 
-    if(words.length < 2) {
+    if (words.length < 2) {
       message = `Recheck ${words} is input`
-    } else if(words.length < 4) {
-      message = `Recheck  ${words}inputs`
-    }else {
+    } else if (words.length < 4) {
+      message = `Recheck  ${words} inputs`
+    } else {
       message = `Some inputs are invalid`
     }
 
@@ -142,11 +142,10 @@ export class ApplicationFormComponent {
       }
     });
 
-    if(invalidControls.length < 1) return
+    if (invalidControls.length < 1) return
 
-    // Format the control names
     invalidControls = invalidControls.map(item =>
-      " "+String(item).charAt(0).toUpperCase()+String(item).slice(1).replace(/(?<!^)([A-Z])/g, ' $1'))
+      " " + String(item).charAt(0).toUpperCase() + String(item).slice(1).replace(/(?<!^)([A-Z])/g, ' $1'))
 
     this.parseMessage(invalidControls)
   }
@@ -156,9 +155,27 @@ export class ApplicationFormComponent {
   }
 
   onSubmit() {
-    this.requestService.post(this.parseForm(), 'loanForm').subscribe({
-      next: res => console.log(res),
-      error: err => console.error(err)
-    })
+    const applicationForm = this.parseForm();
+
+    console.log(applicationForm);
+
+    this.requestService.addLoanApplication(applicationForm).subscribe({
+      next: (res) => {
+        console.log(res); 
+
+        if (res.success) {
+          this.snackbarService.showSnackbar('Loan application submitted successfully!');
+        } else {
+          this.snackbarService.showSnackbar('Failed to submit loan application. Please try again.');
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackbarService.showSnackbar('An error occurred while submitting the application.');
+      },
+    });
   }
+
+
+
 }

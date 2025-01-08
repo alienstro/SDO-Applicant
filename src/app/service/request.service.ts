@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { mainPort } from '../env';
+import { Observable } from 'rxjs';
+import { API_URL } from '../components/constant';
 interface LoginResponse {
   token: string
 }
@@ -22,10 +24,9 @@ export class RequestService {
     return this.http.post<LoginResponse>(mainPort + '/sdo_api_v1/API/login', data);
   }
 
-  post(data: any, endpoint: string) {
-    return this.http.post(mainPort + `/sdo_api_v1/API/${endpoint}`, data)
+  addLoanApplication(data: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${API_URL}/addLoanData`, data, { headers });
   }
-  // login(data: any, endpoint: string) {
-  //   return this.http.post(mainPort + '/sdo_api_v1/API/login' + endpoint, data.getRawValue());
-  // }
+
 }

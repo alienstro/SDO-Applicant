@@ -41,7 +41,7 @@ export class ApplicationService {
     return this.http.get<BorrowersInformation[]>(`${API_URL}/borrowersInformation`);
   }
 
-  createLoanApplication(data: LoanDetails): Observable<any> {
-    return this.http.post(`${API_URL}/loanDetails`, data)
+  createLoanApplication(data: any): Observable<any> {
+    return this.http.post(`${API_URL}/addLoanData`, data)
   }
 }
