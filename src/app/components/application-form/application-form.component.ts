@@ -30,6 +30,7 @@ import { LoanApplicationService } from '../../service/loan-application.service';
 export class ApplicationFormComponent {
 
   isCurrentLoanApplicationLoading = false
+  isloanPending = false
   CurrentLoanApplication!: CurrentLoanApplication
 
   constructor(
@@ -114,6 +115,11 @@ export class ApplicationFormComponent {
 
   parseApplicationForm() {
     if(!this.CurrentLoanApplication.ongoingApplication) return
+
+    if(this.CurrentLoanApplication.ongoingApplication && !this.CurrentLoanApplication.isEditable) {
+      this.isloanPending = true
+      return
+    }
 
     const currentLoan = this.CurrentLoanApplication.applicationDetails as LoanApplication
 

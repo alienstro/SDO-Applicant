@@ -20,6 +20,7 @@ export class LoanApplicationService {
   loanApplicationStatus$ = this._loanApplicationStatus.asObservable();
 
   private _currentLoanApplication = new BehaviorSubject<CurrentLoanApplication>({
+    isEditable: false,
     ongoingApplication: false,
     applicationDetails: []
   })
@@ -49,7 +50,7 @@ export class LoanApplicationService {
   initCurrentLoanApplication() {
     this.requestService.get<CurrentLoanApplication>('currentLoanApplication').subscribe({
       next: res => {
-        console.log('fetching status: ', res.message)
+        console.log('fetching current loan: ', res.message)
         this.setCurrentLoanApplication(res.message)
         console.log(this._currentLoanApplication.getValue())
       },

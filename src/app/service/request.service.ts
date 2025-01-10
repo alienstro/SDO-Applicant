@@ -21,16 +21,16 @@ export class RequestService {
   constructor(private http: HttpClient) { }
 
   login(data: LoginRequest) {
-    return this.http.post<LoginResponse>(mainPort + '/sdo_api_v1/API/login', data);
+    return this.http.post<LoginResponse>(`${API_URL}`+'login', data);
   }
 
   addLoanApplication(data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${API_URL}/addLoanData`, data, { headers });
+    return this.http.post(`${API_URL}` + `addLoanData`, data, { headers });
   }
 
   get<T>(endpoint: string) {
-    return this.http.get<Response<T>>(`${API_URL}/${endpoint}`)
+    return this.http.get<Response<T>>(`${API_URL}`+`${endpoint}`)
   }
 
 }

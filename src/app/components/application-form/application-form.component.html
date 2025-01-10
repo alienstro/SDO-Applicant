@@ -1,3 +1,4 @@
+@if(isloanPending) { Current Loan is pending } @else {
 <div class="application-container">
   <p id="prodvident__title">Provident Loan Application</p>
   <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
@@ -42,8 +43,8 @@
                 <div class="purpose">
                   <p>Multi-Purpose</p>
                   <!-- <mat-checkbox class="example-margin"
-                    >Multi-Purpose</mat-checkbox
-                  > -->
+                      >Multi-Purpose</mat-checkbox
+                    > -->
                   <mat-radio-group
                     required=""
                     aria-label="Select an option"
@@ -573,3 +574,4 @@
     </mat-step>
   </mat-stepper>
 </div>
+}

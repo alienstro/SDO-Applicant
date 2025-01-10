@@ -49,6 +49,7 @@ export interface Response<T> {
 }
 
 export interface CurrentLoanApplication {
-  ongoingApplication: boolean,
+  isEditable: boolean;
+  ongoingApplication: boolean;
   applicationDetails: LoanApplication | {}
 }
