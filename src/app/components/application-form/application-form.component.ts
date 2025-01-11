@@ -7,9 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RequestService } from '../../service/request.service';
 import { MatRadioModule } from '@angular/material/radio';
-import { CurrentLoanApplication, Information, LoanApplication, LoanDetails } from '../../interface';
+import { CurrentLoanApplication, FileUpload, Information, LoanApplication, LoanDetails } from '../../interface';
 import { SnackbarService } from '../../service/snackbar.service';
 import { LoanApplicationService } from '../../service/loan-application.service';
+import { CommonModule } from '@angular/common';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-application-form',
@@ -22,7 +24,9 @@ import { LoanApplicationService } from '../../service/loan-application.service';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    CommonModule,
+    FileUploadComponent
   ],
   templateUrl: './application-form.component.html',
   styleUrl: './application-form.component.scss'
@@ -32,6 +36,7 @@ export class ApplicationFormComponent {
   isCurrentLoanApplicationLoading = false
   isloanPending = false
   CurrentLoanApplication!: CurrentLoanApplication
+  fileFormData: FormData = new FormData()
 
   constructor(
     private requestService: RequestService,
@@ -191,13 +196,20 @@ export class ApplicationFormComponent {
   }
 
   parseForm() {
-    const applicationForm: LoanApplication = {
-      loanDetails: this.loanDetailsForm.getRawValue() as LoanDetails,
-      borrowerInfo: this.borrowerInfoForm.getRawValue() as Information,
-      comakerInfo: this.comakerInfoForm.getRawValue() as Information,
-    }
 
-    return applicationForm
+    const applicantionFormdata = new FormData()
+
+    applicantionFormdata.append('loanDetails', JSON.stringify(this.loanDetailsForm.getRawValue()))
+    applicantionFormdata.append('borrowerInfo', JSON.stringify(this.borrowerInfoForm.getRawValue()))
+    applicantionFormdata.append('comakerInfo', JSON.stringify(this.comakerInfoForm.getRawValue()))
+
+    // const applicationForm: LoanApplication = {
+    //   loanDetails: this.loanDetailsForm.getRawValue() as LoanDetails,
+    //   borrowerInfo: this.borrowerInfoForm.getRawValue() as Information,
+    //   comakerInfo: this.comakerInfoForm.getRawValue() as Information,
+    // }
+
+    return applicantionFormdata
   }
 
   private parseMessage(words: string[]) {
@@ -233,16 +245,25 @@ export class ApplicationFormComponent {
     this.parseMessage(invalidControls)
   }
 
-  test() {
-    this.findInvalidControls(this.loanDetailsForm)
+  handleFileUpload(event: FileUpload) {
+    if(this.fileFormData.has(event.idLabel)) {
+      this.fileFormData.set(event.idLabel, event.file)
+    } else {
+      this.fileFormData.append(event.idLabel, event.file)
+    }
   }
 
   onSubmit() {
-    const applicationForm = this.parseForm();
+    const applicationForm = this.parseForm() as any;
 
-    console.log(applicationForm);
+    // Append applicationForm data to fileFormData
+    for (const [key, value] of applicationForm.entries()) {
+      this.fileFormData.append(key, value);
+    }
 
-    this.requestService.addLoanApplication(applicationForm).subscribe({
+    console.log(applicationForm.entries());
+
+    this.requestService.addLoanApplication(this.fileFormData).subscribe({
       next: (res) => {
         console.log(res);
 
@@ -258,7 +279,4 @@ export class ApplicationFormComponent {
       },
     });
   }
-
-
-
 }

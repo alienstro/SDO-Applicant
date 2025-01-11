@@ -53,3 +53,18 @@ export interface CurrentLoanApplication {
   ongoingApplication: boolean;
   applicationDetails: LoanApplication | {}
 }
+
+export interface Files {
+  csc_path: string
+  emergency_path: string
+  idComaker_path: string
+  idApplicant_path: string
+  authorityToDeduct_path: string
+  payslipApplicant_path: string
+  payslipComaker_path: string
+}
+
+export interface FileUpload {
+  idLabel: string
+  file: File
+}

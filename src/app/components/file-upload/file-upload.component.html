@@ -1,0 +1,14 @@
+<div class="file-upload">
+  <p class="title">{{ title }}</p>
+  <input
+    type="file"
+    class="file-input"
+    [id]="idLabel"
+    (change)="onFileSelected($event)"
+  />
+  <label [for]="idLabel" class="upload-label">
+    <span *ngIf="!selectedFile">Click to select a file</span>
+    <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+  </label>
+  <!-- <button *ngIf="selectedFile" (click)="uploadFile()">Upload</button> -->
+</div>

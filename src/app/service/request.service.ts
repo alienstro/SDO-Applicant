@@ -25,8 +25,8 @@ export class RequestService {
   }
 
   addLoanApplication(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${API_URL}` + `addLoanData`, data, { headers });
+    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${API_URL}` + `addLoanData`, data);
   }
 
   get<T>(endpoint: string) {
