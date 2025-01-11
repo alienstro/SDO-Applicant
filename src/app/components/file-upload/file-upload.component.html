@@ -1,14 +1,22 @@
 <div class="file-upload">
-  <p class="title">{{ title }}</p>
-  <input
-    type="file"
-    class="file-input"
-    [id]="idLabel"
-    (change)="onFileSelected($event)"
-  />
-  <label [for]="idLabel" class="upload-label">
-    <span *ngIf="!selectedFile">Click to select a file</span>
-    <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
-  </label>
-  <!-- <button *ngIf="selectedFile" (click)="uploadFile()">Upload</button> -->
+  <p class="title">{{ title }} {{ required && !haveUploaded ? "*" : "" }}</p>
+  @if(note) {
+  <p>*{{ note }}</p>
+  }
+  <div class="input__container">
+    <input
+      type="file"
+      class="file-input"
+      [id]="idLabel"
+      (change)="onFileSelected($event)"
+      #fileInput
+    />
+    <label [for]="idLabel" class="upload-label">
+      <span *ngIf="!selectedFile">Click to select a file</span>
+      <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+    </label>
+    @if(haveUploaded) {
+    <button (click)="cancelUploadFile()">Cancel</button>
+    }
+  </div>
 </div>

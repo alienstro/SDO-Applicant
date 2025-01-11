@@ -527,44 +527,60 @@
         </div>
       </form>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="isDocumentValid">
       <ng-template matStepLabel>Required Documents</ng-template>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="csc"
         title="CSC"
+        note="For first time applicant"
+        [required]="false"
       >
       </app-file-upload>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="emergency"
         title="Medical Emergency Proof"
+        note="For emergency loan"
+        [required]="false"
       ></app-file-upload>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="idComaker"
         title="Photocopy ID of Co-maker"
       ></app-file-upload>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="idApplicant"
         title="Photocopy ID of applicant"
       ></app-file-upload>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="authorityToDeduct"
         title="Authority to Deduct"
       ></app-file-upload>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="payslipApplicant"
         title="Payslip of applicant"
       ></app-file-upload>
       <app-file-upload
         (fileSelected)="handleFileUpload($event)"
+        (cancelFile)="handleFileCancel($event)"
         idLabel="payslipComaker"
         title="Payslip of comaker"
       ></app-file-upload>
+      <div class="next-button-container">
+        <button mat-button matStepperNext (click)="checkValidDocuments()">
+          Next Step
+        </button>
+      </div>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Borrower's Agreement</ng-template>

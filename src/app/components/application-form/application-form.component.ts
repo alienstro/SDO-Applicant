@@ -12,6 +12,7 @@ import { SnackbarService } from '../../service/snackbar.service';
 import { LoanApplicationService } from '../../service/loan-application.service';
 import { CommonModule } from '@angular/common';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-application-form',
@@ -38,6 +39,19 @@ export class ApplicationFormComponent {
   CurrentLoanApplication!: CurrentLoanApplication
   fileFormData: FormData = new FormData()
 
+  // requiredDocuments = false
+
+  private _requiredDocuments = new BehaviorSubject<{[key:string] : boolean}>({
+    idComaker: false,
+    idApplicant: false,
+    authorityToDeduct: false,
+    payslipApplicant: false,
+    payslipComaker: false
+  })
+
+  requiredDocuments$ = this._requiredDocuments.asObservable()
+
+  isDocumentValid = false
   constructor(
     private requestService: RequestService,
     private snackbarService: SnackbarService,
@@ -49,6 +63,15 @@ export class ApplicationFormComponent {
         this.CurrentLoanApplication = res
         this.isCurrentLoanApplicationLoading = false
         this.parseApplicationForm()
+      }
+    )
+
+    this.requiredDocuments$.subscribe(
+
+      res => {
+        this.isDocumentValid =  Object.values(res).every(value => value === true);
+
+        console.log(this.isDocumentValid)
       }
     )
   }
@@ -250,6 +273,38 @@ export class ApplicationFormComponent {
       this.fileFormData.set(event.idLabel, event.file)
     } else {
       this.fileFormData.append(event.idLabel, event.file)
+    }
+
+    let data = this._requiredDocuments.getValue()
+
+
+    if(event.idLabel in data) {
+      data = {...data, [event.idLabel]: true}
+
+      this._requiredDocuments.next(data)
+    }
+  }
+
+  handleFileCancel(event: string) {
+    if(this.fileFormData.has(event)) {
+      this.fileFormData.delete(event)
+    }
+
+    let data = this._requiredDocuments.getValue()
+
+    if(event in data) {
+      data = {...data, [event]: false}
+
+      this._requiredDocuments.next(data)
+    }
+
+  }
+
+  checkValidDocuments() {
+    // const allDocumentsValid = Object.values(this._requiredDocuments).every(value => value === true);
+
+    if(!this.isDocumentValid) {
+      this.snackbarService.showSnackbar('Check all required documents!')
     }
   }
 
