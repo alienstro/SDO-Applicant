@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../service/user.service';
 import { UserProfile } from '../../interface';
 @Component({
@@ -13,7 +13,7 @@ export class SidebarComponent {
 
   userProfile!: UserProfile
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.userService.userProfile$.subscribe(
       res => {
         this.userProfile = res
@@ -24,11 +24,15 @@ export class SidebarComponent {
   get parseUsername() {
 
     return this.userProfile.first_name + ' ' +
-    (this.userProfile.middle_name ? this.userProfile.middle_name : '')
-    + ' ' +
-    this.userProfile.last_name
-    + ' ' +
-    (this.userProfile.ext_name ? this.userProfile.ext_name : '')
+      (this.userProfile.middle_name ? this.userProfile.middle_name : '')
+      + ' ' +
+      this.userProfile.last_name
+      + ' ' +
+      (this.userProfile.ext_name ? this.userProfile.ext_name : '')
+  }
+
+  logout(): void {
+    this.router.navigate(['/login']);
   }
 
 
