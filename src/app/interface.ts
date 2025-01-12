@@ -68,3 +68,21 @@ export interface FileUpload {
   idLabel: string
   file: File
 }
+
+export interface LoanHistory {
+  loan_application_number: number
+  application_id: number;
+  application_date: Date;
+  is_qualified: string,
+  amount: string
+}
+
+export interface UserProfile {
+  applicant_id: number;
+  email: string;
+  first_name: string;
+  middle_name: string;
+  ext_name: string | null;
+  last_name: string;
+  designation: string;
+}

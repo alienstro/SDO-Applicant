@@ -9,7 +9,7 @@ $sidenav-blue: #0165B2;
     background-color: $sidenav-blue;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
-}
+  }
 
 .hambuger-menu {
     width: 24px;
@@ -23,6 +23,8 @@ $sidenav-blue: #0165B2;
   grid-template-rows: auto 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  overflow: hidden;
+  max-height: 100vh;
 }
 
   // .div1 { grid-area: 1 / 1 / 2 / 2; }
@@ -54,4 +56,5 @@ $sidenav-blue: #0165B2;
 
 .router__container {
   padding: 1.5em 1em;
+  height: 100vh;
 }
