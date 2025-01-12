@@ -58,50 +58,26 @@
   <div class="div2">
     <div class="board">
       <p>Loan Application History</p>
+      @if(!isLoanHistoryLoading) {
       <table class="table-border table-width">
         <tr>
-          <th>Loan</th>
+          <th>Loan #</th>
           <th>Status</th>
           <th>Application Date</th>
           <th>Loan Amount</th>
         </tr>
+        @for (history of loanHistory; track $index) {
         <tr>
-          <td>#1</td>
-          <td>Rejected</td>
-          <td>December 12, 2019</td>
-          <td>P1,000,000</td>
+          <td>{{ history.loan_application_number }}</td>
+          <td>{{ history.is_qualified }}</td>
+          <td>{{ history.application_date }}</td>
+          <td>{{ formatPhp(history.amount) }}</td>
         </tr>
-        <tr>
-          <td>#2</td>
-          <td>Rejected</td>
-          <td>December 12, 2020</td>
-          <td>P1,000,000</td>
-        </tr>
-        <tr>
-          <td>#3</td>
-          <td>Rejected</td>
-          <td>December 12, 2021</td>
-          <td>P1,000,000</td>
-        </tr>
-        <tr>
-          <td>#4</td>
-          <td>Rejected</td>
-          <td>December 12, 2022</td>
-          <td>P1,000,000</td>
-        </tr>
-        <tr>
-          <td>#5</td>
-          <td>Rejected</td>
-          <td>December 12, 2023</td>
-          <td>P1,000,000</td>
-        </tr>
-        <tr>
-          <td>#6</td>
-          <td>Rejected</td>
-          <td>December 12, 2024</td>
-          <td>P1,000,000</td>
-        </tr>
+        }
       </table>
+      } @else {
+      <p>...Loading</p>
+      }
     </div>
   </div>
   <!-- <div class="div3 message-container">

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RequestService } from './request.service';
-import { CurrentLoanApplication, LoanApplication, LoanStatus } from '../interface';
+import { CurrentLoanApplication, LoanApplication, LoanHistory, LoanStatus } from '../interface';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -25,6 +25,10 @@ export class LoanApplicationService {
     applicationDetails: []
   })
 
+  private _loanHistory = new BehaviorSubject<LoanHistory[]>([]);
+
+  loanHistory$ = this._loanHistory.asObservable()
+
   currentLoanApplication$ = this._currentLoanApplication.asObservable()
 
   constructor(
@@ -33,6 +37,7 @@ export class LoanApplicationService {
   ) {
     this.initLoanStatus()
     this.initCurrentLoanApplication()
+    this.initLoanHistory()
   }
 
   initLoanStatus() {
@@ -59,11 +64,25 @@ export class LoanApplicationService {
     })
   }
 
+  initLoanHistory() {
+    this.requestService.get<LoanHistory[]>('loanHistory').subscribe({
+      next: res => {
+        this.setLoanHistory(res.message)
+      },
+      error: error =>
+        this.snackbarService.showSnackbar('An error occured while fetching loan history')
+    })
+  }
+
   setLoanStatus(data: LoanStatus) {
     this._loanApplicationStatus.next(data)
   }
 
   setCurrentLoanApplication(data: CurrentLoanApplication) {
     this._currentLoanApplication.next(data)
+  }
+
+  setLoanHistory(data: LoanHistory[]) {
+    this._loanHistory.next(data)
   }
 }
