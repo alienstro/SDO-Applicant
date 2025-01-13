@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../service/user.service';
 import { UserProfile } from '../../interface';
+import { AuthService } from '../../service/auth/auth.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -13,7 +14,12 @@ export class SidebarComponent {
 
   userProfile!: UserProfile
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthService
+
+  ) {
     this.userService.userProfile$.subscribe(
       res => {
         this.userProfile = res
@@ -32,6 +38,7 @@ export class SidebarComponent {
   }
 
   logout(): void {
+    this.authService.flushToken()
     this.router.navigate(['/login']);
   }
 
