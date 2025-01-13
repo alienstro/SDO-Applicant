@@ -40,7 +40,7 @@ export class LoginComponent {
     private requestService: RequestService,
     private tokenService: TokenService,
     private router: Router
-  ) {}
+  ) { }
 
   userLogin = new FormGroup({
     email: new FormControl(''),
@@ -64,10 +64,12 @@ export class LoginComponent {
         this.router.navigate(['/application']);
       },
       error: err => {
-        if(err.status === 401) {
+        if (err.status === 401) {
           this.errMessage = 'Invalid Credentials'
+        } else {
+          this.errMessage = 'Error Logging in'
         }
       }
     });
   }
-  }
+}
