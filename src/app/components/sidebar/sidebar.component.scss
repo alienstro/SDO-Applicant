@@ -1,44 +1,46 @@
 .nav-div {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.text-deco-none {
-}
+.text-deco-none {}
 
 .nav-text {
-    font-size: 1rem;
-    text-decoration: none;
-    color: white;
+  font-size: 1rem;
+  text-decoration: none;
+  color: white;
 }
 
 .sidenav {
-    font-size: 1rem;
-    padding: 1rem 0.5rem;
-    display: flex;
-    flex-direction: column;
-    color: white;
-    gap: 1rem;
+  font-size: 1rem;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 1rem;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
 }
 
 .profile-container {
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5em;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
 }
 
-.profile-container > p {
-    margin: 0;
+.profile-container>p {
+  margin: 0;
 }
 
 .button-logout {
-    background: transparent;
-    border: none;
-    cursor: pointer;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }

@@ -52,11 +52,13 @@
           />
         </div>
       </div>
-      @if(errMessage) {
-        <p class="err__msg">{{errMessage}}</p>
-      }
-      <div class="button">
-        <button type="submit" (click)="onLogin()">LOGIN</button>
+      <div>
+        @if(errMessage) {
+          <p class="err__msg">{{errMessage}}</p>
+        }
+        <div class="button">
+          <button type="submit" (click)="onLogin()">LOGIN</button>
+        </div>
       </div>
     </form>
   </div>
