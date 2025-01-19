@@ -1,30 +1,20 @@
-.nav-div {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.text-deco-none {}
-
-.nav-text {
-  font-size: 1rem;
-  text-decoration: none;
-  color: white;
+hr {
+  width: 100%;
 }
 
 .sidenav {
-  font-size: 1rem;
-  padding: 1rem 0.5rem;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   display: flex;
   flex-direction: column;
-  color: white;
-  gap: 1rem;
-  justify-content: space-between;
-  height: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #0165B2;
   overflow: hidden;
+  justify-content: space-between;
+  height: 95%;
+  color: white;
+  padding: 1em 0.5em;
 }
 
 .profile-container {
@@ -35,12 +25,22 @@
   gap: 0.5em;
 }
 
-.profile-container>p {
-  margin: 0;
-}
-
 .button-logout {
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+
+.nav-text {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-div {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }

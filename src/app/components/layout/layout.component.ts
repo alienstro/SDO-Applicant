@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-layout',
@@ -11,8 +12,8 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     RouterOutlet,
     MatSidenavModule,
     MatButtonModule,
-    SidebarComponent
-
+    SidebarComponent,
+    CommonModule
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'

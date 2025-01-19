@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { RequestService } from './request.service';
-import { CurrentLoanApplication, LoanApplication, LoanHistory, LoanStatus } from '../interface';
+import { CurrentLoanApplication, CurrentLoan, LoanApplication, LoanHistory, LoanStatus, OfficeStatus, CurrentLoanStatus } from '../interface';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -31,6 +31,52 @@ export class LoanApplicationService {
 
   currentLoanApplication$ = this._currentLoanApplication.asObservable()
 
+  private _officeStatus = new BehaviorSubject<OfficeStatus[]>([])
+
+  officeStatus$ = this._officeStatus.asObservable()
+
+  /*
+  export interface CurrentLoan {
+    application_id: string,
+    application_date: string,
+    status: string
+  }
+
+
+  export interface CurrentHistory {
+    application_history_id: string;
+    application_id: string;
+    remarks: string;
+    history_date: string;
+    initiator: string;
+  }
+
+
+  export interface CurrentLoanStatus {
+    currentLoan: CurrentLoan
+    currentHistory: CurrentHistory
+  }
+
+
+  */
+
+  private _currentLoanStatus = new BehaviorSubject<CurrentLoanStatus>({
+    currentLoan: {
+      application_id: "",
+      application_date: "",
+      status: ""
+    },
+    currentHistory: {
+      application_history_id: "",
+      application_id: "",
+      remarks: "",
+      history_date: "",
+      initiator: ""
+    }
+  })
+
+  currentLoanStatus$ = this._currentLoanStatus.asObservable()
+
   constructor(
     private requestService: RequestService,
     private snackbarService: SnackbarService
@@ -38,6 +84,8 @@ export class LoanApplicationService {
     this.initLoanStatus()
     this.initCurrentLoanApplication()
     this.initLoanHistory()
+    this.initOfficeStatus()
+    this.initCurrentLoan()
   }
 
   initLoanStatus() {
@@ -71,6 +119,25 @@ export class LoanApplicationService {
       },
       error: error =>
         this.snackbarService.showSnackbar('An error occured while fetching loan history')
+    })
+  }
+
+  initOfficeStatus() {
+    this.requestService.get<OfficeStatus[]>('officeStatus').subscribe({
+      next: res => {
+        this._officeStatus.next(res.message)
+      },
+      error: error => this.snackbarService.showSnackbar('An error occured while fetching office status')
+    })
+  }
+
+
+  initCurrentLoan() {
+    this.requestService.get<CurrentLoanStatus>('currentLoanApplication').subscribe({
+      next: res => {
+        this._currentLoanStatus.next(res.message)
+      },
+      error: error => this.snackbarService.showSnackbar('An error occured while fetching current loan status')
     })
   }
 

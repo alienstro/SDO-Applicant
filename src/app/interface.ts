@@ -23,9 +23,9 @@ export interface Information {
 export interface LoanDetails {
   loanAmount: number | null
   loanNumber: string | null
-  purpose:   string | null
+  purpose: string | null
   term: number | null
-  loanType:   string | null
+  loanType: string | null
 }
 
 
@@ -85,4 +85,34 @@ export interface UserProfile {
   ext_name: string | null;
   last_name: string;
   designation: string;
+}
+
+export interface OfficeStatus {
+  application_id: string,
+  status: string,
+  updated_at: string | null,
+  office_name: string,
+  sequence_order: string
+}
+
+
+export interface CurrentLoan {
+  application_id: string,
+  application_date: string,
+  status: string
+}
+
+
+export interface CurrentHistory {
+  application_history_id: string;
+  application_id: string;
+  remarks: string;
+  history_date: string;
+  initiator: string;
+}
+
+
+export interface CurrentLoanStatus {
+  currentLoan: CurrentLoan
+  currentHistory: CurrentHistory
 }

@@ -1,0 +1,21 @@
+<div class="loan_details_container">
+  <app-title-view [title]="'LOAN #'+currentLoanStatus.currentLoan.application_id"></app-title-view>
+
+  <div class="progress_container">
+    <p id="latest_msg">{{currentLoanStatus.currentHistory.remarks}}</p>
+    <p>{{formatDate(currentLoanStatus.currentHistory.history_date)}}</p>
+    <div class="stepper_container">
+      <app-stepper [progressName]="'Loan Submitted'" [disable]="false" [date]="formatDate(currentLoanStatus.currentLoan.application_date)"></app-stepper>
+      <app-stepper [progressName]="'OSDS'" [disable]="!isOfficeDone('osds')" [date]="fetchUpdateDate(['osds'])"></app-stepper>
+      <app-stepper [progressName]="'Accounting'" [disable]="!isOfficeDone('accounting')" [date]="fetchUpdateDate(['accounting'])"></app-stepper>
+      <app-stepper [progressName]="'Assessment'" [disable]="!isOfficeDone('secretariat')" [date]="fetchUpdateDate(['secretariat'])"></app-stepper>
+      <app-stepper [progressName]="'Signature'" [disable]="!isOfficeDone(['HR', 'Admin', 'Legal'])" [date]="fetchUpdateDate(['hr', 'admin', 'legal'])"></app-stepper>
+      <app-stepper [progressName]="'Endorsement'" [disable]="!isOfficeDone(['SDS', 'ASDS'])" [date]="fetchUpdateDate(['sds', 'asds'])"></app-stepper>
+      <app-stepper-end [progressName]="'Payment'" [disable]="!isOfficeDone('payment')" [date]="fetchUpdateDate(['payment'])"></app-stepper-end>
+    </div>
+
+  </div>
+  <div class="remarks_container">
+    <p>Remarks</p>
+  </div>
+</div>
