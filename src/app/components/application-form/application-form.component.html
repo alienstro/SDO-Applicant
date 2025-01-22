@@ -156,39 +156,43 @@
           <div class="form-field">
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Region</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="region"
-                required
-              />
+              <mat-select formControlName="region">
+                <mat-option>Region</mat-option>
+                @for (region of fetchRegions(); track $index) {
+                  <mat-option [value]="region">{{region}}</mat-option>
+                }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Province</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="province"
-                required
-              />
+              <mat-select formControlName="province">
+                <mat-option>Province</mat-option>
+                @if(borrowerInfoForm.get('region')?.value) {
+                  @for (province of fetchProvince(borrowerInfoForm.get('region')!.value!); track $index) {
+                    <mat-option [value]="province">{{province}}</mat-option>
+                  }
+                }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>City</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="city"
-                required
-              />
+              <mat-select formControlName="city">
+                <mat-option>City</mat-option>
+                  @for (city of fetchCity(); track $index) {
+                    <mat-option [value]="city">{{city}}</mat-option>
+                  }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Barangay</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="barangay"
-                required
-              />
+              <mat-select formControlName="barangay">
+                <mat-option>Barangay</mat-option>
+                @if(borrowerInfoForm.get('city')?.value) {
+                  @for (barangay of fetchBarangay(borrowerInfoForm.get('city')?.value!); track $index) {
+                    <mat-option [value]="barangay">{{barangay}}</mat-option>
+                  }
+                }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Street</mat-label>
@@ -360,39 +364,43 @@
           <div class="form-field">
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Region</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="region"
-                required
-              />
+              <mat-select formControlName="region">
+                <mat-option>Region</mat-option>
+                @for (region of fetchRegions(); track $index) {
+                  <mat-option [value]="region">{{region}}</mat-option>
+                }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Province</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="province"
-                required
-              />
+              <mat-select formControlName="province">
+                <mat-option>Province</mat-option>
+                @if(borrowerInfoForm.get('region')?.value) {
+                  @for (province of fetchProvince(borrowerInfoForm.get('region')!.value!); track $index) {
+                    <mat-option [value]="province">{{province}}</mat-option>
+                  }
+                }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>City</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="city"
-                required
-              />
+              <mat-select formControlName="city">
+                <mat-option>City</mat-option>
+                  @for (city of fetchCity(); track $index) {
+                    <mat-option [value]="city">{{city}}</mat-option>
+                  }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Barangay</mat-label>
-              <input
-                matInput
-                placeholder="Php 1.00"
-                formControlName="barangay"
-                required
-              />
+              <mat-select formControlName="barangay">
+                <mat-option>Barangay</mat-option>
+                @if(borrowerInfoForm.get('city')?.value) {
+                  @for (barangay of fetchBarangay(borrowerInfoForm.get('city')?.value!); track $index) {
+                    <mat-option [value]="barangay">{{barangay}}</mat-option>
+                  }
+                }
+              </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="form-split">
               <mat-label>Street</mat-label>

@@ -1,18 +1,20 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RequestService } from '../../service/request.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { CurrentLoanApplication, FileUpload, Information, LoanApplication, LoanDetails } from '../../interface';
-import { SnackbarService } from '../../service/snackbar.service';
-import { LoanApplicationService } from '../../service/loan-application.service';
-import { CommonModule } from '@angular/common';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 import { BehaviorSubject } from 'rxjs';
+import { CurrentLoanApplication, FileUpload, LoanApplication } from '../../interface';
+import { AddressService } from '../../service/address.service';
+import { LoanApplicationService } from '../../service/loan-application.service';
+import { RequestService } from '../../service/request.service';
+import { SnackbarService } from '../../service/snackbar.service';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-application-form',
@@ -27,7 +29,9 @@ import { BehaviorSubject } from 'rxjs';
     MatCheckboxModule,
     MatRadioModule,
     CommonModule,
-    FileUploadComponent
+    FileUploadComponent,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   templateUrl: './application-form.component.html',
   styleUrl: './application-form.component.scss'
@@ -38,10 +42,11 @@ export class ApplicationFormComponent {
   isloanPending = false
   CurrentLoanApplication!: CurrentLoanApplication
   fileFormData: FormData = new FormData()
-
+  municipalities: { [id: string]: string[] }
+  regions: { [id: string]: string[] }
   // requiredDocuments = false
 
-  private _requiredDocuments = new BehaviorSubject<{[key:string] : boolean}>({
+  private _requiredDocuments = new BehaviorSubject<{ [key: string]: boolean }>({
     idComaker: false,
     idApplicant: false,
     authorityToDeduct: false,
@@ -55,7 +60,8 @@ export class ApplicationFormComponent {
   constructor(
     private requestService: RequestService,
     private snackbarService: SnackbarService,
-    private loanApplicationService: LoanApplicationService
+    private loanApplicationService: LoanApplicationService,
+    private addressService: AddressService
   ) {
     this.isCurrentLoanApplicationLoading = true
     this.loanApplicationService.currentLoanApplication$.subscribe(
@@ -67,13 +73,14 @@ export class ApplicationFormComponent {
     )
 
     this.requiredDocuments$.subscribe(
-
       res => {
-        this.isDocumentValid =  Object.values(res).every(value => value === true);
-
+        this.isDocumentValid = Object.values(res).every(value => value === true);
         console.log(this.isDocumentValid)
       }
     )
+
+    this.regions = addressService.region
+    this.municipalities = addressService.municipalities
   }
 
   purposeArr = [
@@ -142,9 +149,9 @@ export class ApplicationFormComponent {
   isEditing = false
 
   parseApplicationForm() {
-    if(!this.CurrentLoanApplication.ongoingApplication) return
+    if (!this.CurrentLoanApplication.ongoingApplication) return
 
-    if(this.CurrentLoanApplication.ongoingApplication && !this.CurrentLoanApplication.isEditable) {
+    if (this.CurrentLoanApplication.ongoingApplication && !this.CurrentLoanApplication.isEditable) {
       this.isloanPending = true
       return
     }
@@ -178,7 +185,7 @@ export class ApplicationFormComponent {
       "salary": currentLoan.borrowerInfo.salary,
       "officeTelNo": currentLoan.borrowerInfo.officeTelNo,
       "yearService": currentLoan.borrowerInfo.yearService,
-      "mobileNo":currentLoan.borrowerInfo.mobileNo
+      "mobileNo": currentLoan.borrowerInfo.mobileNo
     })
 
     this.comakerInfoForm.patchValue({
@@ -199,7 +206,7 @@ export class ApplicationFormComponent {
       "salary": currentLoan.borrowerInfo.salary,
       "officeTelNo": currentLoan.borrowerInfo.officeTelNo,
       "yearService": currentLoan.borrowerInfo.yearService,
-      "mobileNo":currentLoan.borrowerInfo.mobileNo
+      "mobileNo": currentLoan.borrowerInfo.mobileNo
     })
 
     this.isEditing = true
@@ -269,7 +276,7 @@ export class ApplicationFormComponent {
   }
 
   handleFileUpload(event: FileUpload) {
-    if(this.fileFormData.has(event.idLabel)) {
+    if (this.fileFormData.has(event.idLabel)) {
       this.fileFormData.set(event.idLabel, event.file)
     } else {
       this.fileFormData.append(event.idLabel, event.file)
@@ -278,22 +285,22 @@ export class ApplicationFormComponent {
     let data = this._requiredDocuments.getValue()
 
 
-    if(event.idLabel in data) {
-      data = {...data, [event.idLabel]: true}
+    if (event.idLabel in data) {
+      data = { ...data, [event.idLabel]: true }
 
       this._requiredDocuments.next(data)
     }
   }
 
   handleFileCancel(event: string) {
-    if(this.fileFormData.has(event)) {
+    if (this.fileFormData.has(event)) {
       this.fileFormData.delete(event)
     }
 
     let data = this._requiredDocuments.getValue()
 
-    if(event in data) {
-      data = {...data, [event]: false}
+    if (event in data) {
+      data = { ...data, [event]: false }
 
       this._requiredDocuments.next(data)
     }
@@ -301,11 +308,25 @@ export class ApplicationFormComponent {
   }
 
   checkValidDocuments() {
-    // const allDocumentsValid = Object.values(this._requiredDocuments).every(value => value === true);
-
-    if(!this.isDocumentValid) {
+    if (!this.isDocumentValid) {
       this.snackbarService.showSnackbar('Check all required documents!')
     }
+  }
+
+  fetchRegions() {
+    return Object.keys(this.regions)
+  }
+
+  fetchProvince(region: string) {
+    return this.regions[region]
+  }
+
+  fetchCity() {
+    return Object.keys(this.municipalities)
+  }
+
+  fetchBarangay(city: string) {
+    return this.municipalities[city]
   }
 
   onSubmit() {
