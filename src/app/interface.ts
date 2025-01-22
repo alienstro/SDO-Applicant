@@ -91,7 +91,7 @@ export interface OfficeStatus {
   application_id: string,
   status: string,
   updated_at: string | null,
-  office_name: string,
+  department_name: string,
   sequence_order: string
 }
 

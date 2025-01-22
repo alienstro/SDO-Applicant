@@ -45,7 +45,7 @@ export class LoanApplicationDetailsComponent {
     if (Array.isArray(officeName)) {
       // Filter the entries that belong to the group
       const groupEntries = this.officeStatus.filter(entry =>
-        officeName.includes(entry.office_name)
+        officeName.includes(entry.department_name)
       );
 
       // Check if all offices in the group are not "Pending"
@@ -56,7 +56,7 @@ export class LoanApplicationDetailsComponent {
 
       // Find the specific office by name
       const office = this.officeStatus.find(
-        (entry) => entry.office_name.toLowerCase() === officeName.toLowerCase()
+        (entry) => entry.department_name.toLowerCase() === officeName.toLowerCase()
       );
 
       // If office is found, check if its status is not "Pending"
@@ -74,7 +74,7 @@ export class LoanApplicationDetailsComponent {
   isGroupDone(groupOffices: string[]) {
     // Filter the entries that belong to the group
     const groupEntries = this.officeStatus.filter(entry =>
-      groupOffices.includes(entry.office_name)
+      groupOffices.includes(entry.department_name)
     );
 
     // Check if all offices in the group are not "Pending"
@@ -87,7 +87,7 @@ export class LoanApplicationDetailsComponent {
 
     if (!this.officeStatus) return null
     // Filter the entries that match the office or group of offices
-    const filteredEntries = this.officeStatus.find(entry => offices.includes(entry.office_name.toLowerCase()))!;
+    const filteredEntries = this.officeStatus.find(entry => offices.includes(entry.department_name.toLowerCase()))!;
 
     const date = filteredEntries.updated_at ? filteredEntries.updated_at : ''
 
