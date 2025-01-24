@@ -9,9 +9,9 @@ import { LayoutComponent } from './layout/layout.component';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', component: LayoutComponent, children: [
-        { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+        { path: '', redirectTo: '/login', pathMatch: 'full' },
         { path: 'dashboard', component: DashboardComponent},
         { path: 'application', component: ApplicationFormComponent},
-        { path: '**', redirectTo: '/dashboard' },
+        { path: '**', redirectTo: '/login' },
     ], canActivateChild: [authGuard]}
 ];

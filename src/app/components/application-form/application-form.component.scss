@@ -29,8 +29,22 @@
 
 .application-container {
   overflow-y: auto;
+  padding: 2rem;
 }
 
-#prodvident__title {
-  font-size: 1.5rem;
+
+.stepper-container {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+}
+
+.mat-stepper-vertical.ng-tns-c3820311392-1 {
+    border-radius: 10px;
+}
+
+.title {
+    font-family: "Poppins", serif;
+    opacity: 60%;
+    font-size: 2rem;
+    font-weight: bold;
 }

@@ -1,7 +1,8 @@
 
 $sidenav-blue: #0165B2;
 .container {
- min-height: 100svh;
+//  min-height: 100svh;
+ height: 100%;
 }
 
 .sidenav {
@@ -28,3 +29,23 @@ $sidenav-blue: #0165B2;
     -moz-box-shadow: 1px 1px 12px -3px rgba(0,0,0,0.75);
 }
 
+.toggle-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem 0.5rem;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    
+  }
+  
+  .toggle-button:hover {
+    background-color: rgb(200, 200, 200);
+  }
+  

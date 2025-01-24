@@ -1,4 +1,4 @@
-<nav class="sidenav">
+<!-- <nav class="sidenav">
   <div>
     <div class="profile-container">
       <svg
@@ -113,4 +113,53 @@
       />
     </svg>
   </button>
-</nav>
+</nav> -->
+
+<div class="sidebar">
+  <div class="main-content">
+
+
+    <div class="top">
+      <div class="profile">
+        <div class="img-contianer">
+          <img src="../../../assets/profile.svg" alt="user pfp">
+        </div>
+
+        <div class="info-container">
+          <p class="profile-name">{{ parseUsername }}</p>
+          <p class="profile-department"> {{ userProfile.designation }}</p>
+
+
+        </div>
+
+      </div>
+
+      <div class="routes">
+        <button>
+          <img src="../../../assets/panel.svg" alt="dashboard img">
+
+          <div class="button-title" [routerLink]="['/dashboard']">
+            <span>Dashboard</span>
+          </div>
+        </button>
+
+        <button>
+          <img src="../../../assets/forms.svg" alt="applicant forms img">
+
+          <div class="button-title" [routerLink]="['/application']">
+            <span>Loan Application</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="logout">
+        <button (click)="logout()" class="button-action">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
