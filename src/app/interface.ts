@@ -113,6 +113,6 @@ export interface CurrentHistory {
 
 
 export interface CurrentLoanStatus {
-  currentLoan: CurrentLoan
-  currentHistory: CurrentHistory
+  currentLoan: CurrentLoan | null
+  currentHistory: CurrentHistory | null
 }

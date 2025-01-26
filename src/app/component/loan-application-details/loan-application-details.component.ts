@@ -16,18 +16,8 @@ export class LoanApplicationDetailsComponent {
 
   officeStatus: OfficeStatus[] = []
   currentLoanStatus: CurrentLoanStatus = {
-    currentLoan: {
-      application_id: "",
-      application_date: "",
-      status: ""
-    },
-    currentHistory: {
-      application_history_id: "",
-      application_id: "",
-      remarks: "",
-      history_date: "",
-      initiator: ""
-    }
+    currentLoan: null,
+    currentHistory: null
   }
   constructor(private loanApplicationDetails: LoanApplicationService) {
     this.loanApplicationDetails.officeStatus$.subscribe(res => {
@@ -36,6 +26,8 @@ export class LoanApplicationDetailsComponent {
 
     this.loanApplicationDetails.currentLoanStatus$.subscribe(res => {
       this.currentLoanStatus = res
+
+      console.log("HERE: ", this.currentLoanStatus)
     })
 
   }
@@ -89,7 +81,7 @@ export class LoanApplicationDetailsComponent {
     // Filter the entries that match the office or group of offices
     const filteredEntries = this.officeStatus.find(entry => offices.includes(entry.department_name.toLowerCase()))!;
 
-    const date = filteredEntries.updated_at ? filteredEntries.updated_at : ''
+    const date = filteredEntries ? filteredEntries.updated_at : ''
 
     if (!date) return ''
 

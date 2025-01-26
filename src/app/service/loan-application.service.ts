@@ -60,20 +60,12 @@ export class LoanApplicationService {
 
   */
 
-  private _currentLoanStatus = new BehaviorSubject<CurrentLoanStatus>({
-    currentLoan: {
-      application_id: "",
-      application_date: "",
-      status: ""
-    },
-    currentHistory: {
-      application_history_id: "",
-      application_id: "",
-      remarks: "",
-      history_date: "",
-      initiator: ""
+  private _currentLoanStatus = new BehaviorSubject<CurrentLoanStatus>(
+    {
+      currentLoan: null,
+      currentHistory: null
     }
-  })
+  )
 
   currentLoanStatus$ = this._currentLoanStatus.asObservable()
 
@@ -91,7 +83,7 @@ export class LoanApplicationService {
   initLoanStatus() {
     this.requestService.get<LoanStatus>('loanApplicationStatus').subscribe({
       next: res => {
-        console.log('fetching status: ', res.message)
+        console.log('fetching status loan application: ', res.message)
         this.setLoanStatus(res.message)
         console.log(this._loanApplicationStatus.getValue())
       },
