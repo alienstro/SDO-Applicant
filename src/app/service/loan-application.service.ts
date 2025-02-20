@@ -34,7 +34,7 @@ export class LoanApplicationService {
   loanHistory$ = this._loanHistory.asObservable()
 
   currentLoanApplication$ = this._currentLoanApplication.asObservable()
-  
+
   officeStatus$ = this._officeStatus.asObservable()
 
   private _currentLoanStatus = new BehaviorSubject<CurrentLoanStatus>(
@@ -61,7 +61,7 @@ export class LoanApplicationService {
 
   initLoanStatus() {
     const applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken())
-    
+
     const url = `${API_URL}/loanApplication/loanApplicationStatus/${applicantId}`;
     return this.http.get<any>(url).subscribe({
       next: (res) => {
@@ -77,7 +77,11 @@ export class LoanApplicationService {
   }
 
   initCurrentLoanApplication() {
-    this.requestService.get<CurrentLoanApplication>('currentLoanApplication').subscribe({
+    const applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken())
+
+    const url = `${API_URL}/loanApplication/currentLoanApplication/${applicantId}`;
+
+    return this.http.get<any>(url).subscribe({
       next: res => {
         console.log('fetching current loan: ', res.message)
         this.setCurrentLoanApplication(res.message)
@@ -89,7 +93,11 @@ export class LoanApplicationService {
   }
 
   initLoanHistory() {
-    this.requestService.get<LoanHistory[]>('loanHistory').subscribe({
+    const applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken())
+
+    const url = `${API_URL}/loanApplication/loanHistory/${applicantId}`;
+
+    return this.http.get<any>(url).subscribe({
       next: res => {
         this.setLoanHistory(res.message)
       },
@@ -99,7 +107,11 @@ export class LoanApplicationService {
   }
 
   initOfficeStatus() {
-    this.requestService.get<OfficeStatus[]>('officeStatus').subscribe({
+    const applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken())
+
+    const url = `${API_URL}/loanApplication/officeStatus/${applicantId}`;
+
+    return this.http.get<any>(url).subscribe({
       next: res => {
         this._officeStatus.next(res.message)
       },
@@ -109,7 +121,11 @@ export class LoanApplicationService {
 
 
   initCurrentLoan() {
-    this.requestService.get<CurrentLoanStatus>('currentLoanApplication').subscribe({
+    const applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken())
+
+    const url = `${API_URL}/loanApplication/currentLoanApplication/${applicantId}`;
+
+    return this.http.get<any>(url).subscribe({
       next: res => {
         this._currentLoanStatus.next(res.message)
       },
