@@ -3,7 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RequestService } from '../../service/request.service';
-import { TokenService } from '../../service/auth/token.service';
+import { TokenService } from '../../service/token.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -60,7 +60,7 @@ export class LoginComponent {
 
     this.requestService.login(loginCred).subscribe({
       next: (res: LoginResponse) => {
-        this.tokenService.setTokenInCookie(res.token);
+        this.tokenService.setToken(res.token);
         this.router.navigate(['/application']);
       },
       error: err => {

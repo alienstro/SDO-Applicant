@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mainPort, API_URL } from '../env';
+import { API_URL } from '../env';
 import { Observable } from 'rxjs';
 import { Response } from '../interface';
 interface LoginResponse {
@@ -21,16 +21,16 @@ export class RequestService {
   constructor(private http: HttpClient) { }
 
   login(data: LoginRequest) {
-    return this.http.post<LoginResponse>(`${API_URL}`+'login', data);
+    return this.http.post<LoginResponse>(`${API_URL}/`+'applicantLogin', data);
   }
 
   addLoanApplication(data: any): Observable<any> {
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${API_URL}` + `addLoanData`, data);
+    return this.http.post(`${API_URL}/` + `addLoanData`, data);
   }
 
   get<T>(endpoint: string) {
-    return this.http.get<Response<T>>(`${API_URL}`+`${endpoint}`)
+    return this.http.get<Response<T>>(`${API_URL}/`+`${endpoint}`)
   }
 
 }

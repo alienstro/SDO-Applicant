@@ -31,7 +31,7 @@ export class UserService {
 
   initUserProfile() {
 
-    this.requestService.get<UserProfile>('user').subscribe({
+    this.requestService.get<UserProfile>('applicantUser').subscribe({
       next: res => {
         this.setUserProfile(res.message)
       },
