@@ -3,6 +3,9 @@ import { BehaviorSubject } from 'rxjs';
 import { RequestService } from './request.service';
 import { CurrentLoanApplication, CurrentLoan, LoanApplication, LoanHistory, LoanStatus, OfficeStatus, CurrentLoanStatus } from '../interface';
 import { SnackbarService } from './snackbar.service';
+import { TokenService } from './token.service';
+import { API_URL } from '../env';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -26,39 +29,13 @@ export class LoanApplicationService {
   })
 
   private _loanHistory = new BehaviorSubject<LoanHistory[]>([]);
+  private _officeStatus = new BehaviorSubject<OfficeStatus[]>([])
 
   loanHistory$ = this._loanHistory.asObservable()
 
   currentLoanApplication$ = this._currentLoanApplication.asObservable()
-
-  private _officeStatus = new BehaviorSubject<OfficeStatus[]>([])
-
+  
   officeStatus$ = this._officeStatus.asObservable()
-
-  /*
-  export interface CurrentLoan {
-    application_id: string,
-    application_date: string,
-    status: string
-  }
-
-
-  export interface CurrentHistory {
-    application_history_id: string;
-    application_id: string;
-    remarks: string;
-    history_date: string;
-    initiator: string;
-  }
-
-
-  export interface CurrentLoanStatus {
-    currentLoan: CurrentLoan
-    currentHistory: CurrentHistory
-  }
-
-
-  */
 
   private _currentLoanStatus = new BehaviorSubject<CurrentLoanStatus>(
     {
@@ -71,7 +48,9 @@ export class LoanApplicationService {
 
   constructor(
     private requestService: RequestService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private tokenService: TokenService,
+    private http: HttpClient
   ) {
     this.initLoanStatus()
     this.initCurrentLoanApplication()
@@ -81,15 +60,20 @@ export class LoanApplicationService {
   }
 
   initLoanStatus() {
-    this.requestService.get<LoanStatus>('loanApplicationStatus').subscribe({
-      next: res => {
-        console.log('fetching status loan application: ', res.message)
-        this.setLoanStatus(res.message)
-        console.log(this._loanApplicationStatus.getValue())
+    const applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken())
+    
+    const url = `${API_URL}/loanApplication/loanApplicationStatus/${applicantId}`;
+    return this.http.get<any>(url).subscribe({
+      next: (res) => {
+        console.log('Fetching status loan application:', res.message);
+        this.setLoanStatus(res.message);
+        console.log(this._loanApplicationStatus.getValue());
       },
-      error: error =>
-        this.snackbarService.showSnackbar('An error occured while fetching loan application status')
-    })
+      error: (error) => {
+        console.error('Error fetching loan application status:', error);
+        this.snackbarService.showSnackbar('An error occurred while fetching loan application status');
+      }
+    });
   }
 
   initCurrentLoanApplication() {
