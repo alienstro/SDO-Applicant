@@ -15,6 +15,7 @@ import { LoanApplicationService } from '../../service/loan-application.service';
 import { RequestService } from '../../service/request.service';
 import { SnackbarService } from '../../service/snackbar.service';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { TokenService } from '../../service/token.service';
 
 @Component({
   selector: 'app-application-form',
@@ -44,6 +45,7 @@ export class ApplicationFormComponent {
   fileFormData: FormData = new FormData()
   municipalities: { [id: string]: string[] }
   regions: { [id: string]: string[] }
+  applicantId: number = 0;
   // requiredDocuments = false
 
   private _requiredDocuments = new BehaviorSubject<{ [key: string]: boolean }>({
@@ -61,8 +63,10 @@ export class ApplicationFormComponent {
     private requestService: RequestService,
     private snackbarService: SnackbarService,
     private loanApplicationService: LoanApplicationService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private tokenService: TokenService
   ) {
+    this.applicantId = this.tokenService.userIDToken(this.tokenService.decodeToken());
     this.isCurrentLoanApplicationLoading = true
     this.loanApplicationService.currentLoanApplication$.subscribe(
       res => {
@@ -232,6 +236,7 @@ export class ApplicationFormComponent {
     applicantionFormdata.append('loanDetails', JSON.stringify(this.loanDetailsForm.getRawValue()))
     applicantionFormdata.append('borrowerInfo', JSON.stringify(this.borrowerInfoForm.getRawValue()))
     applicantionFormdata.append('comakerInfo', JSON.stringify(this.comakerInfoForm.getRawValue()))
+    applicantionFormdata.append('applicantId', JSON.stringify(this.applicantId));
 
     // const applicationForm: LoanApplication = {
     //   loanDetails: this.loanDetailsForm.getRawValue() as LoanDetails,
