@@ -58,6 +58,7 @@ export class LoginComponent {
       password: inputCred.password as string
     };
 
+    
     this.requestService.login(loginCred).subscribe({
       next: (res: LoginResponse) => {
         this.tokenService.setToken(res.token);

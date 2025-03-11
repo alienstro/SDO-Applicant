@@ -233,9 +233,9 @@ export class ApplicationFormComponent {
 
     const applicantionFormdata = new FormData()
 
-    applicantionFormdata.append('loanDetails', JSON.stringify(this.loanDetailsForm.getRawValue()))
-    applicantionFormdata.append('borrowerInfo', JSON.stringify(this.borrowerInfoForm.getRawValue()))
-    applicantionFormdata.append('comakerInfo', JSON.stringify(this.comakerInfoForm.getRawValue()))
+    applicantionFormdata.append('loanDetails', JSON.stringify(this.loanDetailsForm))
+    applicantionFormdata.append('borrowerInfo', JSON.stringify(this.borrowerInfoForm))
+    applicantionFormdata.append('comakerInfo', JSON.stringify(this.comakerInfoForm))
     applicantionFormdata.append('applicantId', JSON.stringify(this.applicantId));
 
     // const applicationForm: LoanApplication = {
@@ -337,12 +337,9 @@ export class ApplicationFormComponent {
   onSubmit() {
     const applicationForm = this.parseForm() as any;
 
-    // Append applicationForm data to fileFormData
-    for (const [key, value] of applicationForm.entries()) {
-      this.fileFormData.append(key, value);
-    }
-
     console.log(applicationForm.entries());
+
+    console.log(this.fileFormData);
 
     this.requestService.addLoanApplication(this.fileFormData).subscribe({
       next: (res) => {
