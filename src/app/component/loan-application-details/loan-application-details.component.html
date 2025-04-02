@@ -5,7 +5,7 @@
   <app-title-view [title]="'LOAN #'+currentLoanStatus.currentLoan.application_id"></app-title-view>
 
   <div class="progress_container">
-    <p id="latest_msg">{{currentLoanStatus.currentHistory.remarks}}</p>
+    <p id="latest_msg">{{currentLoanStatus.currentHistory.remarks}} ({{currentLoanStatus.currentHistory.initiator}})</p>
     <p>{{formatDate(currentLoanStatus.currentHistory.history_date)}}</p>
       <div class="stepper_container">
         <app-stepper [progressName]="'Loan Submitted'" [disable]="false" [date]="formatDate(currentLoanStatus.currentLoan.application_date)"></app-stepper>
