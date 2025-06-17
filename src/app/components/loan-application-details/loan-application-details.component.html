@@ -1,25 +1,62 @@
-@if(!currentLoanStatus.currentLoan || !currentLoanStatus.currentHistory) {
+@if(!currentLoanStatus.currentLoan) {
   <p class="status">No current Application</p>
 } @else {
-<div class="loan_details_container">
-  <app-title-view [title]="'LOAN #'+currentLoanStatus.currentLoan.application_id"></app-title-view>
+  <div class="loan_details_container">
+    <app-title-view
+      [title]="'LOAN #' + currentLoanStatus.currentLoan.application_id">
+    </app-title-view>
 
-  <div class="progress_container">
-    <p id="latest_msg">{{currentLoanStatus.currentHistory.remarks}} ({{currentLoanStatus.currentHistory.initiator}})</p>
-    <p>{{formatDate(currentLoanStatus.currentHistory.history_date)}}</p>
+    <div class="progress_container">
+      <!-- HEADER now driven by officeStatus, not history -->
+      <p id="latest_msg">{{ getCurrentPhaseRemark() }}</p>
+
       <div class="stepper_container">
-        <app-stepper [progressName]="'Loan Submitted'" [disable]="false" [date]="formatDate(currentLoanStatus.currentLoan.application_date)"></app-stepper>
-        <app-stepper [progressName]="'OSDS'" [disable]="!isOfficeDone('osds')" [date]="fetchUpdateDate(['osds'])"></app-stepper>
-        <app-stepper [progressName]="'Accounting'" [disable]="!isOfficeDone('accounting')" [date]="fetchUpdateDate(['accounting'])"></app-stepper>
-        <app-stepper [progressName]="'Assessment'" [disable]="!isOfficeDone('secretariat')" [date]="fetchUpdateDate(['secretariat'])"></app-stepper>
-        <app-stepper [progressName]="'Signature'" [disable]="!isOfficeDone(['HR', 'Admin', 'Legal'])" [date]="fetchUpdateDate(['hr', 'admin', 'legal'])"></app-stepper>
-        <app-stepper [progressName]="'Endorsement'" [disable]="!isOfficeDone(['SDS', 'ASDS'])" [date]="fetchUpdateDate(['sds', 'asds'])"></app-stepper>
-        <app-stepper-end [progressName]="'Payment'" [disable]="!isOfficeDone('payment')" [date]="fetchUpdateDate(['payment'])"></app-stepper-end>
+        <app-stepper
+          [progressName]="'Loan Submitted'"
+          [disable]="false"
+          [date]="formatDate(currentLoanStatus.currentLoan.application_date)">
+        </app-stepper>
+
+        <app-stepper
+          [progressName]="'OSDS'"
+          [disable]="!isOfficeDone('osds')"
+          [date]="fetchUpdateDate(['osds'])">
+        </app-stepper>
+
+        <app-stepper
+          [progressName]="'Accounting'"
+          [disable]="!isOfficeDone('accounting')"
+          [date]="fetchUpdateDate(['accounting'])">
+        </app-stepper>
+
+        <app-stepper
+          [progressName]="'Assessment'"
+          [disable]="!isOfficeDone('secretariat')"
+          [date]="fetchUpdateDate(['secretariat'])">
+        </app-stepper>
+
+        <app-stepper
+          [progressName]="'Signature'"
+          [disable]="!isOfficeDone(['hr','admin','legal'])"
+          [date]="fetchUpdateDate(['hr','admin','legal'])">
+        </app-stepper>
+
+        <app-stepper
+          [progressName]="'Endorsement'"
+          [disable]="!isOfficeDone(['sds','asds'])"
+          [date]="fetchUpdateDate(['sds','asds'])">
+        </app-stepper>
+
+        <app-stepper-end
+          [progressName]="'Payment'"
+          [disable]="!isOfficeDone('payment')"
+          [date]="fetchUpdateDate(['payment'])">
+        </app-stepper-end>
       </div>
     </div>
+
     <div class="remarks_container">
       <p>Remarks</p>
+    </div>
   </div>
-</div>
-
 }

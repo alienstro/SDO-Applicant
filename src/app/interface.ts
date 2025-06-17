@@ -1,38 +1,37 @@
 //  Lol for now
 export interface Information {
-  lastName: string | null
-  firstname: string | null
-  middleName: string | null
-  region: string | null
-  province: string | null
-  city: string | null
-  barangay: string | null
-  street: string | null
-  zipcode: string | null
-  employeeNo: string | null
-  employeeStatus: string | null
-  birth: Date | null
-  age: number | null
-  office: string | null
-  salary: number | null
-  officeTelNo: string | null
-  yearService: number | null
-  mobileNo: string | null
+  lastName: string | null;
+  firstname: string | null;
+  middleName: string | null;
+  region: string | null;
+  province: string | null;
+  city: string | null;
+  barangay: string | null;
+  street: string | null;
+  zipcode: string | null;
+  employeeNo: string | null;
+  employeeStatus: string | null;
+  birth: Date | null;
+  age: number | null;
+  office: string | null;
+  salary: number | null;
+  officeTelNo: string | null;
+  yearService: number | null;
+  mobileNo: string | null;
 }
 
 export interface LoanDetails {
-  loanAmount: number | null
-  loanNumber: string | null
-  purpose: string | null
-  term: number | null
-  loanType: string | null
+  loanAmount: number | null;
+  loanNumber: string | null;
+  purpose: string | null;
+  term: number | null;
+  loanType: string | null;
 }
 
-
 export interface LoanApplication {
-  loanDetails: LoanDetails
-  borrowerInfo: Information
-  comakerInfo: Information
+  loanDetails: LoanDetails;
+  borrowerInfo: Information;
+  comakerInfo: Information;
 }
 
 export interface LoanStatus {
@@ -44,37 +43,37 @@ export interface LoanStatus {
 }
 
 export interface Response<T> {
-  success: boolean,
-  message: T
+  success: boolean;
+  message: T;
 }
 
 export interface CurrentLoanApplication {
   isEditable: boolean;
   ongoingApplication: boolean;
-  applicationDetails: LoanApplication | {}
+  applicationDetails: LoanApplication | {};
 }
 
 export interface Files {
-  csc_path: string
-  emergency_path: string
-  idComaker_path: string
-  idApplicant_path: string
-  authorityToDeduct_path: string
-  payslipApplicant_path: string
-  payslipComaker_path: string
+  csc_path: string;
+  emergency_path: string;
+  idComaker_path: string;
+  idApplicant_path: string;
+  authorityToDeduct_path: string;
+  payslipApplicant_path: string;
+  payslipComaker_path: string;
 }
 
 export interface FileUpload {
-  idLabel: string
-  file: File
+  idLabel: string;
+  file: File;
 }
 
 export interface LoanHistory {
-  loan_application_number: number
+  loan_application_number: number;
   application_id: number;
   application_date: Date;
-  is_qualified: string,
-  amount: string
+  is_qualified: string;
+  amount: string;
 }
 
 export interface UserProfile {
@@ -88,20 +87,20 @@ export interface UserProfile {
 }
 
 export interface OfficeStatus {
-  application_id: string,
-  status: string,
-  updated_at: string | null,
-  department_name: string,
-  sequence_order: string
+  application_id: string;
+  status: string;
+  updated_at: string | null;
+  department_name: string;
+  sequence_order: string;
+  remarks: string;
+  initiator?: string;
 }
-
 
 export interface CurrentLoan {
-  application_id: string,
-  application_date: string,
-  status: string
+  application_id: string;
+  application_date: string;
+  status: string;
 }
-
 
 export interface CurrentHistory {
   application_history_id: string;
@@ -111,8 +110,7 @@ export interface CurrentHistory {
   initiator: string;
 }
 
-
 export interface CurrentLoanStatus {
-  currentLoan: CurrentLoan | null
-  currentHistory: CurrentHistory | null
+  currentLoan: CurrentLoan | null;
+  currentHistory: CurrentHistory | null;
 }
