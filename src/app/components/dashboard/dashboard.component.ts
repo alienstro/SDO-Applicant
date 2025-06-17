@@ -3,7 +3,7 @@ import { LoanApplicationService } from '../../service/loan-application.service';
 import { LoanApplication, LoanHistory, LoanStatus } from '../../interface';
 import { StepperComponent } from '../../common/stepper/stepper.component';
 import { StepperEndComponent } from '../../common/stepper-end/stepper-end.component';
-import { LoanApplicationDetailsComponent } from '../../component/loan-application-details/loan-application-details.component';
+import { LoanApplicationDetailsComponent } from '../loan-application-details/loan-application-details.component';
 
 @Component({
   selector: 'app-dashboard',
