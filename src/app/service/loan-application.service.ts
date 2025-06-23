@@ -57,13 +57,13 @@ export class LoanApplicationService {
     private tokenService: TokenService,
     private http: HttpClient
   ) {
-    this.initLoanStatus();
-    this.initCurrentLoanApplication();
-    this.initLoanHistory();
-    this.initOfficeStatus();
-    this.initCurrentLoan();
+    // this.initLoanStatus();
+    // this.initCurrentLoanApplication();
+    // this.initLoanHistory();
+    // this.initOfficeStatus();
+    // this.initCurrentLoan();
 
-    console.log('HAHAHAAHAHAAHA: ', this._officeStatus.getValue());
+    // console.log('HAHAHAAHAHAAHA: ', this._officeStatus.getValue());
   }
 
   initLoanStatus() {

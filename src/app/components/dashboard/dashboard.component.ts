@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoanApplicationService } from '../../service/loan-application.service';
-import { LoanApplication, LoanHistory, LoanStatus } from '../../interface';
-import { StepperComponent } from '../../common/stepper/stepper.component';
-import { StepperEndComponent } from '../../common/stepper-end/stepper-end.component';
+import {
+  LoanHistory,
+  LoanStatus,
+  CurrentLoanApplication,
+} from '../../interface';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 import { LoanApplicationDetailsComponent } from '../loan-application-details/loan-application-details.component';
 
 @Component({
@@ -10,41 +14,80 @@ import { LoanApplicationDetailsComponent } from '../loan-application-details/loa
   standalone: true,
   imports: [LoanApplicationDetailsComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
+  // Loan Status
+  isLoanStatusLoading = false;
+  currentLoanApplicationStatus: LoanStatus | null = null;
 
-  isLoanStatusLoading = false
-  currentLoanApplicationStatus!: LoanStatus
+  // Loan History
+  isLoanHistoryLoading = false;
+  loanHistory!: LoanHistory[];
 
-  isLoanHistoryLoading = false
-  loanHistory!: LoanHistory[]
+  // Current Loan Application
+  isCurrentLoanLoading = false;
+  currentLoanApplication: CurrentLoanApplication | null = null;
 
+  private routerSub!: Subscription;
+  private currentLoanSub!: Subscription;
 
-  constructor(private loanApplicationService: LoanApplicationService) {
-    this.isLoanStatusLoading = true
-    this.isLoanHistoryLoading = true
+  constructor(
+    private loanApplicationService: LoanApplicationService,
+    private router: Router
+  ) {}
 
-    this.loanApplicationService.loanApplicationStatus$.subscribe(res => {
-      this.currentLoanApplicationStatus = res
-      this.isLoanStatusLoading = false
-      console.log(this.currentLoanApplicationStatus)
-    })
+  ngOnInit(): void {
+    this.routerSub = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.fetchLoanApplicationStatus();
+        this.fetchLoanHistory();
+      });
 
-    this.loanApplicationService.loanHistory$.subscribe(res => {
+    this.fetchLoanApplicationStatus();
+    this.fetchLoanHistory();
+    this.loanApplicationService.initCurrentLoanApplication();
+    this.loanApplicationService.initOfficeStatus();
+    this.loanApplicationService.initCurrentLoan();
 
-      this.loanHistory = res
-      this.isLoanHistoryLoading = false
-    })
-
+    this.currentLoanSub =
+      this.loanApplicationService.currentLoanApplication$.subscribe((res) => {
+        this.currentLoanApplication = null;
+        this.currentLoanApplication = res;
+        console.log('Current Loan Application Updated:', res);
+      });
   }
 
+  ngOnDestroy(): void {
+    if (this.routerSub) this.routerSub.unsubscribe();
+    if (this.currentLoanSub) this.currentLoanSub.unsubscribe();
+  }
+
+  fetchLoanApplicationStatus() {
+    this.isLoanStatusLoading = true;
+    this.loanApplicationService.initLoanStatus();
+    this.loanApplicationService.loanApplicationStatus$.subscribe((res) => {
+      this.currentLoanApplicationStatus = null;
+      this.currentLoanApplicationStatus = res;
+      this.isLoanStatusLoading = false;
+    });
+  }
+
+  fetchLoanHistory() {
+    this.isLoanHistoryLoading = true;
+    this.loanApplicationService.initLoanHistory();
+    this.loanApplicationService.loanHistory$.subscribe((res) => {
+      this.loanHistory = [];
+      this.loanHistory = res;
+      this.isLoanHistoryLoading = false;
+    });
+  }
 
   formatPhp(amount: string) {
-
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'PHP' }).format(
-      parseFloat(amount),
-    )
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'PHP',
+    }).format(parseFloat(amount));
   }
-
 }

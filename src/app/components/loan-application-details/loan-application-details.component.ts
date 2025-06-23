@@ -57,18 +57,38 @@ export class LoanApplicationDetailsComponent {
   /**
    * Fetches the first updated_at for any of the given offices, formatted.
    */
+
   fetchUpdateDate(offices: string[]): string {
     if (!this.officeStatus || this.officeStatus.length === 0) return '';
+
+    console.log('Full officeStatus:', this.officeStatus);
+
     const names = offices.map((n) => n.toLowerCase());
-    const entry = this.officeStatus.find((e) =>
-      names.includes(e.department_name.toLowerCase())
+    const entries = this.officeStatus.filter(
+      (e) =>
+        e.department_name && names.includes(e.department_name.toLowerCase())
     );
-    return entry && entry.updated_at ? this.formatDate(entry.updated_at) : '';
+
+    console.log(`Filtered entries for ${offices}:`, entries);
+
+    if (entries.length === 0) return '';
+
+    const latest = entries.reduce((prev: OfficeStatus, curr: OfficeStatus) => {
+      const prevDate = prev.updated_at
+        ? new Date(prev.updated_at)
+        : new Date(0);
+      const currDate = curr.updated_at
+        ? new Date(curr.updated_at)
+        : new Date(0);
+      return prevDate > currDate ? prev : curr;
+    });
+
+    return latest.updated_at ? this.formatDate(latest.updated_at) : '';
   }
 
   public formatDate(dateString: string): string {
     const d = new Date(dateString);
-    const day = String(d.getDate()).padStart(2, '0');
+    const day = String(d.getUTCDate()).padStart(2, '0');
     const mon = [
       'Jan',
       'Feb',
@@ -82,8 +102,8 @@ export class LoanApplicationDetailsComponent {
       'Oct',
       'Nov',
       'Dec',
-    ][d.getMonth()];
-    return `${mon}/${day}/${d.getFullYear()}`;
+    ][d.getUTCMonth()];
+    return `${mon}/${day}/${d.getUTCFullYear()}`;
   }
 
   /**

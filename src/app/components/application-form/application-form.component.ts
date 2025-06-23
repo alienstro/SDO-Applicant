@@ -381,6 +381,8 @@ export class ApplicationFormComponent {
             'Loan application submitted successfully!'
           );
 
+          this.loanApplicationService.initCurrentLoanApplication();
+
           this.resetForm();
         } else {
           this.snackbarService.showSnackbar(
