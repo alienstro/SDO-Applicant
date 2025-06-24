@@ -91,7 +91,7 @@ export class LoanApplicationService {
     const applicantId = this.tokenService.userIDToken(
       this.tokenService.decodeToken()
     );
-    const url = `${API_URL}/loanApplication/currentLoanApplication/${applicantId}`;
+    const url = `${API_URL}/loanApplication/allPendingApplications/${applicantId}`;
 
     return this.http.get<any>(url).subscribe({
       next: (res) => {
@@ -144,7 +144,7 @@ export class LoanApplicationService {
     const applicantId = this.tokenService.userIDToken(
       this.tokenService.decodeToken()
     );
-    const url = `${API_URL}/loanApplication/currentLoanApplication/${applicantId}`;
+    const url = `${API_URL}/loanApplication/allPendingApplications/${applicantId}`;
 
     return this.http.get<any>(url).subscribe({
       next: (res) => {

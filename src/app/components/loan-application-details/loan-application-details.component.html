@@ -1,62 +1,75 @@
-@if(!currentLoanStatus.currentLoan) {
-  <p class="status">No current Application</p>
-} @else {
-  <div class="loan_details_container">
-    <app-title-view
-      [title]="'LOAN #' + currentLoanStatus.currentLoan.application_id">
-    </app-title-view>
+<div *ngIf="currentLoanStatusList.length === 0">
+  <p class="status">No current Applications</p>
+</div>
+
+<div
+  *ngFor="let loanStatus of currentLoanStatusList"
+  class="loan_details_container"
+>
+  <div *ngIf="loanStatus.currentLoan">
+    <app-title-view [title]="'LOAN #' + loanStatus.currentLoan.application_id"></app-title-view>
 
     <div class="progress_container">
-      <!-- HEADER now driven by officeStatus, not history -->
-      <p id="latest_msg">{{ getCurrentPhaseRemark() }}</p>
+      <p id="latest_msg">{{ getCurrentPhaseRemark(loanStatus.currentLoan.application_id) }}</p>
 
       <div class="stepper_container">
         <app-stepper
           [progressName]="'Loan Submitted'"
           [disable]="false"
-          [date]="formatDate(currentLoanStatus.currentLoan.application_date)">
+          [date]="formatDate(loanStatus.currentLoan.application_date)"
+        >
         </app-stepper>
 
         <app-stepper
           [progressName]="'OSDS'"
-          [disable]="!isOfficeDone('osds')"
-          [date]="fetchUpdateDate(['osds'])">
+          [disable]="!isOfficeDone('osds', loanStatus.currentLoan.application_id)"
+          [date]="fetchUpdateDate(['osds'], loanStatus.currentLoan.application_id)"
+        >
         </app-stepper>
 
         <app-stepper
           [progressName]="'Accounting'"
-          [disable]="!isOfficeDone('accounting')"
-          [date]="fetchUpdateDate(['accounting'])">
+          [disable]="!isOfficeDone('accounting', loanStatus.currentLoan.application_id)"
+          [date]="fetchUpdateDate(['accounting'], loanStatus.currentLoan.application_id)"
+        >
         </app-stepper>
 
         <app-stepper
           [progressName]="'Assessment'"
-          [disable]="!isOfficeDone('secretariat')"
-          [date]="fetchUpdateDate(['secretariat'])">
+          [disable]="!isOfficeDone('secretariat', loanStatus.currentLoan.application_id)"
+          [date]="fetchUpdateDate(['secretariat'], loanStatus.currentLoan.application_id)"
+        >
         </app-stepper>
 
         <app-stepper
           [progressName]="'Signature'"
-          [disable]="!isOfficeDone(['hr','admin','legal'])"
-          [date]="fetchUpdateDate(['hr','admin','legal'])">
+          [disable]="
+            !isOfficeDone(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+          "
+          [date]="
+            fetchUpdateDate(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+          "
+        >
         </app-stepper>
 
         <app-stepper
           [progressName]="'Endorsement'"
-          [disable]="!isOfficeDone(['sds','asds'])"
-          [date]="fetchUpdateDate(['sds','asds'])">
+          [disable]="!isOfficeDone(['sds', 'asds'], loanStatus.currentLoan.application_id)"
+          [date]="fetchUpdateDate(['sds', 'asds'], loanStatus.currentLoan.application_id)"
+        >
         </app-stepper>
 
         <app-stepper-end
           [progressName]="'Payment'"
-          [disable]="!isOfficeDone('payment')"
-          [date]="fetchUpdateDate(['payment'])">
+          [disable]="!isOfficeDone('payment', loanStatus.currentLoan.application_id)"
+          [date]="fetchUpdateDate(['payment'], loanStatus.currentLoan.application_id)"
+        >
         </app-stepper-end>
       </div>
     </div>
-
-    <div class="remarks_container">
-      <p>Remarks</p>
-    </div>
   </div>
-}
+
+  <div class="remarks_container">
+    <p>Remarks</p>
+  </div>
+</div>
