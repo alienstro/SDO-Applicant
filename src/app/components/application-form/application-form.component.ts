@@ -395,6 +395,7 @@ export class ApplicationFormComponent {
         this.snackbarService.showSnackbar(
           'An error occurred while submitting the application.'
         );
+        console.log("An error occurred while submitting the application.")
       },
     });
   }

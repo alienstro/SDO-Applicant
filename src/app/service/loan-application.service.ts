@@ -80,9 +80,10 @@ export class LoanApplicationService {
       },
       error: (error) => {
         console.error('Error fetching loan application status:', error);
-        this.snackbarService.showSnackbar(
-          'An error occurred while fetching loan application status'
-        );
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching loan application status'
+        // );
+        console.log("An error occurred while fetching loan application status")
       },
     });
   }
@@ -100,9 +101,10 @@ export class LoanApplicationService {
         console.log(this._currentLoanApplication.getValue());
       },
       error: (error) =>
-        this.snackbarService.showSnackbar(
-          'An error occurred while fetching current loan application status'
-        ),
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching current loan application status'
+        // ),
+        console.log("An error occurred while fetching current loan application status")
     });
   }
 
@@ -117,9 +119,10 @@ export class LoanApplicationService {
         this.setLoanHistory(res.message);
       },
       error: (error) =>
-        this.snackbarService.showSnackbar(
-          'An error occurred while fetching loan history'
-        ),
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching loan history'
+        // ),
+        console.log("An error occurred while fetching loan history")
     });
   }
 
@@ -134,9 +137,10 @@ export class LoanApplicationService {
         this._officeStatus.next(res || []);
       },
       error: (error) =>
-        this.snackbarService.showSnackbar(
-          'An error occurred while fetching office status'
-        ),
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching office status'
+        // ),
+        console.log("An error occurred while fetching office status")
     });
   }
 
@@ -151,9 +155,10 @@ export class LoanApplicationService {
         this._currentLoanStatus.next(res.message);
       },
       error: (error) =>
-        this.snackbarService.showSnackbar(
-          'An error occurred while fetching current loan status'
-        ),
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching current loan status'
+        // ),
+        console.log("An error occurred while fetching current loan status")
     });
   }
 
