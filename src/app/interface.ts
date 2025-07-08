@@ -9,6 +9,7 @@ export interface Information {
   barangay: string | null;
   street: string | null;
   zipcode: string | null;
+  position: string | null;
   employeeNo: string | null;
   employeeStatus: string | null;
   birth: Date | null;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -28,6 +28,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { TokenService } from '../../service/token.service';
 import { ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
+import SignaturePad from 'signature_pad';
 
 @Component({
   selector: 'app-application-form',
@@ -50,6 +51,9 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrl: './application-form.component.scss',
 })
 export class ApplicationFormComponent {
+  @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
+  signaturePad!: SignaturePad;
+
   @ViewChild('appStepper') stepper!: MatStepper;
 
   isCurrentLoanApplicationLoading = false;
@@ -100,6 +104,34 @@ export class ApplicationFormComponent {
     this.municipalities = addressService.municipalities;
   }
 
+  ngAfterViewInit() {
+    const canvas = this.canvasRef.nativeElement;
+    // size it however you like:
+    canvas.width = 500;
+    canvas.height = 200;
+
+    this.signaturePad = new SignaturePad(canvas, {
+      minWidth: 1,
+      backgroundColor: '#ffffff'
+    });
+    this.signaturePad.clear(); // make sure it’s blank
+  }
+
+  clearSignature() {
+    this.signaturePad.clear();
+  }
+
+  getSignatureDataURL(): string {
+    return this.signaturePad.toDataURL(); // PNG base64
+  }
+
+  onSubmits() {
+    const sigData = this.getSignatureDataURL();
+    // append to your FormData before sending:
+    this.fileFormData.append('signature', sigData);
+    // … then call your service …
+  }
+
   purposeArr = [
     'Hospitalization/Medical',
     'Long Medication/Rehabilitation',
@@ -130,6 +162,7 @@ export class ApplicationFormComponent {
     barangay: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
     zipcode: new FormControl('', [Validators.required]),
+    position: new FormControl('', [Validators.required]),
     employeeNo: new FormControl('', [Validators.required]),
     employeeStatus: new FormControl('', [Validators.required]),
     birth: new FormControl(new Date(), [Validators.required]),
@@ -151,6 +184,7 @@ export class ApplicationFormComponent {
     barangay: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
     zipcode: new FormControl('', [Validators.required]),
+    position: new FormControl('', [Validators.required]),
     employeeNo: new FormControl('', [Validators.required]),
     employeeStatus: new FormControl('', [Validators.required]),
     birth: new FormControl(new Date(), [Validators.required]),
@@ -199,6 +233,7 @@ export class ApplicationFormComponent {
       barangay: currentLoan.borrowerInfo.barangay,
       street: currentLoan.borrowerInfo.street,
       zipcode: currentLoan.borrowerInfo.zipcode,
+      position: currentLoan.borrowerInfo.position,
       employeeNo: currentLoan.borrowerInfo.employeeNo,
       employeeStatus: currentLoan.borrowerInfo.employeeStatus,
       birth: currentLoan.borrowerInfo.birth,
@@ -220,6 +255,7 @@ export class ApplicationFormComponent {
       barangay: currentLoan.borrowerInfo.barangay,
       street: currentLoan.borrowerInfo.street,
       zipcode: currentLoan.borrowerInfo.zipcode,
+      position: currentLoan.borrowerInfo.position,
       employeeNo: currentLoan.borrowerInfo.employeeNo,
       employeeStatus: currentLoan.borrowerInfo.employeeStatus,
       birth: currentLoan.borrowerInfo.birth,

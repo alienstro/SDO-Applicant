@@ -4,6 +4,27 @@
   <div class="stepper-container">
     <mat-stepper orientation="vertical" [linear]="isLinear" #appStepper>
       <!-- <mat-step [completed]="true"> -->
+      <mat-step [completed]="!signaturePad?.isEmpty()">
+        <ng-template matStepLabel>Signature</ng-template>
+
+        <div class="signature-container">
+          <canvas #canvas></canvas>
+        </div>
+
+        <div class="signature-actions">
+          <button mat-button (click)="clearSignature()">Clear</button>
+        </div>
+
+        <div class="next-button-container">
+          <button
+            mat-button
+            matStepperNext
+            [disabled]="!signaturePad || signaturePad.isEmpty()"
+          >
+            Next Step
+          </button>
+        </div>
+      </mat-step>
       <mat-step [completed]="loanDetailsForm.valid">
         <form [formGroup]="loanDetailsForm">
           <ng-template matStepLabel>Loan Details</ng-template>
@@ -219,6 +240,15 @@
 
             <div class="form-field">
               <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Position</mat-label>
+                <input
+                  matInput
+                  placeholder="Position"
+                  formControlName="position"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
                 <mat-label>Employee no.</mat-label>
                 <input
                   matInput
@@ -426,6 +456,15 @@
             </div>
 
             <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Position</mat-label>
+                <input
+                  matInput
+                  placeholder="Position"
+                  formControlName="position"
+                  required
+                />
+              </mat-form-field>
               <mat-form-field appearance="outline" class="form-split">
                 <mat-label>Employee no.</mat-label>
                 <input
@@ -637,6 +676,7 @@
           <button mat-button matStepperNext>Next Step</button>
         </div>
       </mat-step>
+
       <mat-step>
         <ng-template matStepLabel>Done!</ng-template>
         <p>Thank you for filling up the application form</p>

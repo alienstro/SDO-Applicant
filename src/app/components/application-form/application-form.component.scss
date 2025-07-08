@@ -48,3 +48,21 @@
     font-size: 2rem;
     font-weight: bold;
 }
+
+.signature-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5em;
+
+  canvas {
+    display: block;
+    touch-action: none; /* for mobile smoothness */
+  }
+}
+
+.signature-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
