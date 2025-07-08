@@ -108,6 +108,7 @@ export class ApplicationFormComponent {
     'House Repair - Minor',
     'Payment of Loans from Private Institution',
     'Calamity',
+    
   ];
 
   loanDetailsForm = new FormGroup({
@@ -241,7 +242,7 @@ export class ApplicationFormComponent {
       console.log('asdsd');
     } else if (type === 'other') {
       console.log('asdsd');
-      this.loanDetailsForm.get('purpose')?.setValue('NA');
+      this.loanDetailsForm.get('purpose')?.setValue('Others (specify)');
     }
   }
 
