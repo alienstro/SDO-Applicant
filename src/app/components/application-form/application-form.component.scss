@@ -50,10 +50,20 @@
 }
 
 .signature-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-container {
   border: 1px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 0.5em;
+  width: 800px;
+  height: 300px;
 
   canvas {
     display: block;
@@ -65,4 +75,9 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1em;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: flex-end;
 }

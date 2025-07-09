@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -52,9 +52,11 @@ import SignaturePad from 'signature_pad';
 })
 export class ApplicationFormComponent {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
-  signaturePad!: SignaturePad;
-
+  @ViewChild('fileInput', { static: false })
+  fileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('appStepper') stepper!: MatStepper;
+
+  signaturePad: SignaturePad | null = null;
 
   isCurrentLoanApplicationLoading = false;
   isloanPending = false;
@@ -81,7 +83,8 @@ export class ApplicationFormComponent {
     private snackbarService: SnackbarService,
     private loanApplicationService: LoanApplicationService,
     private addressService: AddressService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private cdr: ChangeDetectorRef
   ) {
     this.applicantId = this.tokenService.userIDToken(
       this.tokenService.decodeToken()
@@ -107,22 +110,63 @@ export class ApplicationFormComponent {
   ngAfterViewInit() {
     const canvas = this.canvasRef.nativeElement;
     // size it however you like:
-    canvas.width = 500;
-    canvas.height = 200;
+    canvas.width = 800;
+    canvas.height = 300;
 
     this.signaturePad = new SignaturePad(canvas, {
       minWidth: 1,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
     });
-    this.signaturePad.clear(); // make sure it’s blank
+    this.signaturePad.clear();
+
+    this.cdr.detectChanges();
+  }
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const imageDataUrl = e.target?.result as string;
+        this.loadImageToSignaturePad(imageDataUrl);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  loadImageToSignaturePad(imageDataUrl: string): void {
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+      const image = new Image();
+      image.onload = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        this.signaturePad?.fromDataURL(canvas.toDataURL());
+      };
+      image.src = imageDataUrl;
+    }
   }
 
   clearSignature() {
-    this.signaturePad.clear();
+    console.log(this.signaturePad?.toDataURL());
+
+    this.signaturePad?.clear();
   }
 
   getSignatureDataURL(): string {
-    return this.signaturePad.toDataURL(); // PNG base64
+    if (!this.signaturePad) {
+      return '';
+    }
+    return this.signaturePad.toDataURL();
   }
 
   onSubmits() {
@@ -140,7 +184,6 @@ export class ApplicationFormComponent {
     'House Repair - Minor',
     'Payment of Loans from Private Institution',
     'Calamity',
-    
   ];
 
   loanDetailsForm = new FormGroup({
@@ -301,6 +344,8 @@ export class ApplicationFormComponent {
       'applicantId',
       JSON.stringify(this.applicantId)
     );
+    const sigData = this.getSignatureDataURL();
+    applicantionFormdata.append('signature', sigData);
 
     // const applicationForm: LoanApplication = {
     //   loanDetails: this.loanDetailsForm.getRawValue() as LoanDetails,
@@ -432,7 +477,7 @@ export class ApplicationFormComponent {
         this.snackbarService.showSnackbar(
           'An error occurred while submitting the application.'
         );
-        console.log("An error occurred while submitting the application.")
+        console.log('An error occurred while submitting the application.');
       },
     });
   }

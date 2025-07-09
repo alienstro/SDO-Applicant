@@ -4,27 +4,7 @@
   <div class="stepper-container">
     <mat-stepper orientation="vertical" [linear]="isLinear" #appStepper>
       <!-- <mat-step [completed]="true"> -->
-      <mat-step [completed]="!signaturePad?.isEmpty()">
-        <ng-template matStepLabel>Signature</ng-template>
 
-        <div class="signature-container">
-          <canvas #canvas></canvas>
-        </div>
-
-        <div class="signature-actions">
-          <button mat-button (click)="clearSignature()">Clear</button>
-        </div>
-
-        <div class="next-button-container">
-          <button
-            mat-button
-            matStepperNext
-            [disabled]="!signaturePad || signaturePad.isEmpty()"
-          >
-            Next Step
-          </button>
-        </div>
-      </mat-step>
       <mat-step [completed]="loanDetailsForm.valid">
         <form [formGroup]="loanDetailsForm">
           <ng-template matStepLabel>Loan Details</ng-template>
@@ -674,6 +654,40 @@
         </p>
         <div class="next-button-container">
           <button mat-button matStepperNext>Next Step</button>
+        </div>
+      </mat-step>
+
+      <mat-step [completed]="signaturePad ? !signaturePad.isEmpty() : false">
+        <ng-template matStepLabel>Signature</ng-template>
+
+        <div class="header-buttons">
+          <div class="upload">
+            <button mat-button (click)="triggerFileInput()">Upload</button>
+            <input
+              type="file"
+              #fileInput
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              hidden
+            />
+          </div>
+        </div>
+
+        <div class="signature-container">
+          <div class="canvas-container">
+            <canvas #canvas></canvas>
+          </div>
+        </div>
+
+        <div class="next-button-container">
+          <button mat-button (click)="clearSignature()">Clear</button>
+          <button
+            mat-button
+            matStepperNext
+            [disabled]="!signaturePad || signaturePad.isEmpty()"
+          >
+            Next Step
+          </button>
         </div>
       </mat-step>
 
