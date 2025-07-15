@@ -1,6 +1,7 @@
 @if(isloanPending) { Current Loan is pending } @else {
 <div class="application-container">
   <h1 class="title">Provident Loan Application</h1>
+  <button (click)="populateFormWithSampleData()">Fill Details</button>
   <div class="stepper-container">
     <mat-stepper orientation="vertical" [linear]="isLinear" #appStepper>
       <!-- <mat-step [completed]="true"> -->
@@ -240,12 +241,10 @@
               </mat-form-field>
               <mat-form-field appearance="outline" class="form-split">
                 <mat-label>Employment Status</mat-label>
-                <input
-                  matInput
-                  placeholder="Php 1.00"
-                  formControlName="employeeStatus"
-                  required
-                />
+                <mat-select formControlName="employeeStatus" required>
+                  <mat-option value="Permanent">Permanent</mat-option>
+                  <mat-option value="Co-Terminus">Co-Terminus</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
 
@@ -457,12 +456,10 @@
               </mat-form-field>
               <mat-form-field appearance="outline" class="form-split">
                 <mat-label>Employment Status</mat-label>
-                <input
-                  matInput
-                  placeholder="Php 1.00"
-                  formControlName="employeeStatus"
-                  required
-                />
+                <mat-select formControlName="employeeStatus" required>
+                  <mat-option value="Permanent">Permanent</mat-option>
+                  <mat-option value="Co-Terminus">Co-Terminus</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
 

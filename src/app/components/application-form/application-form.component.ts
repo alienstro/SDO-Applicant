@@ -115,7 +115,7 @@ export class ApplicationFormComponent {
 
     this.signaturePad = new SignaturePad(canvas, {
       minWidth: 1,
-      backgroundColor: '#ffffff',
+      // backgroundColor: '#000000FF',
     });
     this.signaturePad.clear();
 
@@ -171,9 +171,67 @@ export class ApplicationFormComponent {
 
   onSubmits() {
     const sigData = this.getSignatureDataURL();
-    // append to your FormData before sending:
     this.fileFormData.append('signature', sigData);
-    // … then call your service …
+  }
+
+  populateFormWithSampleData() {
+    // Populate loan details
+    this.loanDetailsForm.patchValue({
+      loanAmount: 50000,
+      loanNumber: '202210599',
+      purpose: 'Hospitalization/Medical',
+      otherPurpose: '',
+      term: 12,
+      loanType: 'Multi-Purpose (renewal)',
+    });
+
+    // Populate borrower information
+    this.borrowerInfoForm.patchValue({
+      lastName: 'Dela Cruz',
+      firstname: 'Juan',
+      middleName: 'Santos',
+      region: 'REGION I (ILOCOS)',
+      province: 'ILOCOS NORTE',
+      city: 'BOTOLAN',
+      barangay: 'Bangan',
+      street: '123 Main Street',
+      zipcode: '4030',
+      position: 'Teacher I',
+      employeeNo: '1111',
+      employeeStatus: 'Permanent',
+      birth: new Date('1985-01-15'),
+      age: 40,
+      office: 'Los Baños Elementary School',
+      salary: 35000,
+      officeTelNo: '23423432',
+      yearService: 10,
+      mobileNo: '09171234567',
+    });
+
+    // Populate comaker information
+    this.comakerInfoForm.patchValue({
+      lastName: 'Garcia',
+      firstname: 'Maria',
+      middleName: 'Cruz',
+      region: 'REGION I (ILOCOS)',
+      province: 'ILOCOS NORTE',
+      city: 'BOTOLAN',
+      barangay: 'Bangan',
+      street: '456 Secondary Street',
+      zipcode: '4030',
+      position: 'Teacher II',
+      employeeNo: '11111',
+      employeeStatus: 'Co-Terminus',
+      birth: new Date('1980-05-20'),
+      age: 45,
+      office: 'Los Baños High School',
+      salary: 40000,
+      officeTelNo: '234234324',
+      yearService: 15,
+      mobileNo: '09181234567',
+    });
+
+    console.log('Forms populated with sample data');
   }
 
   purposeArr = [
