@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './service/guards/auth.guard';
 import { AppComponent } from './app.component';
 import { LayoutComponent } from './layout/layout.component';
+import { PendingApplicationComponent } from './components/pending-application/pending-application.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
         { path: '', redirectTo: '/login', pathMatch: 'full' },
         { path: 'dashboard', component: DashboardComponent},
         { path: 'application', component: ApplicationFormComponent},
+        { path: 'pending', component: PendingApplicationComponent},
         { path: '**', redirectTo: '/login' },
     ], canActivate: [AuthGuard]}
 ];

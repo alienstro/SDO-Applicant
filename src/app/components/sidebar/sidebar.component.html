@@ -135,19 +135,27 @@
       </div>
 
       <div class="routes">
-        <button>
+        <button [routerLink]="['/dashboard']">
           <img src="../../../assets/panel.svg" alt="dashboard img">
 
-          <div class="button-title" [routerLink]="['/dashboard']">
+          <div class="button-title">
             <span>Dashboard</span>
           </div>
         </button>
 
-        <button>
+        <button [routerLink]="['/application']">
           <img src="../../../assets/forms.svg" alt="applicant forms img">
 
-          <div class="button-title" [routerLink]="['/application']">
+          <div class="button-title">
             <span>Loan Application</span>
+          </div>
+        </button>
+
+        <button [routerLink]="['/pending']">
+          <img src="../../../assets/forms.svg" alt="pending img">
+
+          <div class="button-title">
+            <span>Pending</span>
           </div>
         </button>
       </div>
