@@ -210,25 +210,26 @@ export class ApplicationFormComponent {
 
     // Populate comaker information
     this.comakerInfoForm.patchValue({
-      lastName: 'Garcia',
-      firstname: 'Maria',
-      middleName: 'Cruz',
-      region: 'REGION I (ILOCOS)',
-      province: 'ILOCOS NORTE',
-      city: 'BOTOLAN',
-      barangay: 'Bangan',
-      street: '456 Secondary Street',
-      zipcode: '4030',
-      position: 'Teacher II',
-      employeeNo: '11111',
-      employeeStatus: 'Co-Terminus',
-      birth: new Date('1980-05-20'),
-      age: 45,
-      office: 'Los Baños High School',
-      salary: 40000,
-      officeTelNo: '234234324',
-      yearService: 15,
-      mobileNo: '09181234567',
+      email: 'robinaquino2@gmail.com'
+      // lastName: 'Garcia',
+      // firstname: 'Maria',
+      // middleName: 'Cruz',
+      // region: 'REGION I (ILOCOS)',
+      // province: 'ILOCOS NORTE',
+      // city: 'BOTOLAN',
+      // barangay: 'Bangan',
+      // street: '456 Secondary Street',
+      // zipcode: '4030',
+      // position: 'Teacher II',
+      // employeeNo: '11111',
+      // employeeStatus: 'Co-Terminus',
+      // birth: new Date('1980-05-20'),
+      // age: 45,
+      // office: 'Los Baños High School',
+      // salary: 40000,
+      // officeTelNo: '234234324',
+      // yearService: 15,
+      // mobileNo: '09181234567',
     });
 
     console.log('Forms populated with sample data');
@@ -276,25 +277,26 @@ export class ApplicationFormComponent {
   });
 
   comakerInfoForm = new FormGroup({
-    lastName: new FormControl('', [Validators.required]),
-    firstname: new FormControl('', [Validators.required]),
-    middleName: new FormControl(''),
-    region: new FormControl('', [Validators.required]),
-    province: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    barangay: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    zipcode: new FormControl('', [Validators.required]),
-    position: new FormControl('', [Validators.required]),
-    employeeNo: new FormControl('', [Validators.required]),
-    employeeStatus: new FormControl('', [Validators.required]),
-    birth: new FormControl(new Date(), [Validators.required]),
-    age: new FormControl(0),
-    office: new FormControl('', [Validators.required]),
-    salary: new FormControl(0, [Validators.required]),
-    officeTelNo: new FormControl('', [Validators.required]),
-    yearService: new FormControl(0, [Validators.required]),
-    mobileNo: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    // lastName: new FormControl('', [Validators.required]),
+    // firstname: new FormControl('', [Validators.required]),
+    // middleName: new FormControl(''),
+    // region: new FormControl('', [Validators.required]),
+    // province: new FormControl('', [Validators.required]),
+    // city: new FormControl('', [Validators.required]),
+    // barangay: new FormControl('', [Validators.required]),
+    // street: new FormControl('', [Validators.required]),
+    // zipcode: new FormControl('', [Validators.required]),
+    // position: new FormControl('', [Validators.required]),
+    // employeeNo: new FormControl('', [Validators.required]),
+    // employeeStatus: new FormControl('', [Validators.required]),
+    // birth: new FormControl(new Date(), [Validators.required]),
+    // age: new FormControl(0),
+    // office: new FormControl('', [Validators.required]),
+    // salary: new FormControl(0, [Validators.required]),
+    // officeTelNo: new FormControl('', [Validators.required]),
+    // yearService: new FormControl(0, [Validators.required]),
+    // mobileNo: new FormControl('', [Validators.required]),
   });
 
   isLinear = true;
@@ -347,25 +349,26 @@ export class ApplicationFormComponent {
     });
 
     this.comakerInfoForm.patchValue({
-      lastName: currentLoan.borrowerInfo.lastName,
-      firstname: currentLoan.borrowerInfo.firstname,
-      middleName: currentLoan.borrowerInfo.middleName,
-      region: currentLoan.borrowerInfo.region,
-      province: currentLoan.borrowerInfo.province,
-      city: currentLoan.borrowerInfo.city,
-      barangay: currentLoan.borrowerInfo.barangay,
-      street: currentLoan.borrowerInfo.street,
-      zipcode: currentLoan.borrowerInfo.zipcode,
-      position: currentLoan.borrowerInfo.position,
-      employeeNo: currentLoan.borrowerInfo.employeeNo,
-      employeeStatus: currentLoan.borrowerInfo.employeeStatus,
-      birth: currentLoan.borrowerInfo.birth,
-      age: currentLoan.borrowerInfo.age,
-      office: currentLoan.borrowerInfo.office,
-      salary: currentLoan.borrowerInfo.salary,
-      officeTelNo: currentLoan.borrowerInfo.officeTelNo,
-      yearService: currentLoan.borrowerInfo.yearService,
-      mobileNo: currentLoan.borrowerInfo.mobileNo,
+      email: currentLoan.comakerInfo.email
+      // lastName: currentLoan.borrowerInfo.lastName,
+      // firstname: currentLoan.borrowerInfo.firstname,
+      // middleName: currentLoan.borrowerInfo.middleName,
+      // region: currentLoan.borrowerInfo.region,
+      // province: currentLoan.borrowerInfo.province,
+      // city: currentLoan.borrowerInfo.city,
+      // barangay: currentLoan.borrowerInfo.barangay,
+      // street: currentLoan.borrowerInfo.street,
+      // zipcode: currentLoan.borrowerInfo.zipcode,
+      // position: currentLoan.borrowerInfo.position,
+      // employeeNo: currentLoan.borrowerInfo.employeeNo,
+      // employeeStatus: currentLoan.borrowerInfo.employeeStatus,
+      // birth: currentLoan.borrowerInfo.birth,
+      // age: currentLoan.borrowerInfo.age,
+      // office: currentLoan.borrowerInfo.office,
+      // salary: currentLoan.borrowerInfo.salary,
+      // officeTelNo: currentLoan.borrowerInfo.officeTelNo,
+      // yearService: currentLoan.borrowerInfo.yearService,
+      // mobileNo: currentLoan.borrowerInfo.mobileNo,
     });
 
     this.isEditing = true;
@@ -521,7 +524,7 @@ export class ApplicationFormComponent {
             'Loan application submitted successfully!'
           );
 
-          this.loanApplicationService.initCurrentLoanApplication();
+          this.loanApplicationService.initCurrentLoan();
 
           this.resetForm();
         } else {
@@ -548,7 +551,8 @@ export class ApplicationFormComponent {
     // Reset form defaults
     this.loanDetailsForm.patchValue({ loanAmount: 0, term: 0 });
     this.borrowerInfoForm.patchValue({ birth: new Date(), age: 0 });
-    this.comakerInfoForm.patchValue({ birth: new Date(), age: 0 });
+    // this.comakerInfoForm.patchValue({ birth: new Date(), age: 0 });
+     this.comakerInfoForm.patchValue({ email: '' });
 
     // Reset stepper to first step
     if (this.stepper) {

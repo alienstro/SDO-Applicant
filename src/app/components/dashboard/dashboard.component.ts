@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.fetchLoanApplicationStatus();
     this.fetchLoanHistory();
-    this.loanApplicationService.initCurrentLoanApplication();
+    // this.loanApplicationService.initCurrentLoanApplication();
     this.loanApplicationService.initOfficeStatus();
     this.loanApplicationService.initCurrentLoan();
 

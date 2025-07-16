@@ -19,6 +19,7 @@ export interface Information {
   officeTelNo: string | null;
   yearService: number | null;
   mobileNo: string | null;
+  email: string | null;
 }
 
 export interface LoanDetails {
