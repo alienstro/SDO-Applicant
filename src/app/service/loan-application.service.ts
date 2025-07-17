@@ -87,6 +87,29 @@ export class LoanApplicationService {
     });
   }
 
+   initLoanStatusCoMaker() {
+    const email = this.tokenService.userEmailToken(
+      this.tokenService.decodeToken()
+    );
+    const url = `${API_URL}/loanApplication/loanApplicationStatusCoMaker/${email}`;
+
+    return this.http.get<any>(url).subscribe({
+      next: (res) => {
+        console.log('Fetching status loan application:', res.message);
+        this.setLoanStatus(res.message);
+        console.log(this._loanApplicationStatus.getValue());
+      },
+      error: (error) => {
+        console.error('Error fetching loan application status:', error);
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching loan application status'
+        // );
+        console.log('An error occurred while fetching loan application status');
+      },
+    });
+  }
+
+
    initCoMakerLoanStatus(application_id: number) {
     const url = `${API_URL}/loanApplication/CoMakerLoanApplicationStatus/${application_id}`;
 
@@ -149,11 +172,47 @@ export class LoanApplicationService {
     });
   }
 
+   initLoanHistoryCoMaker() {
+    const email = this.tokenService.userEmailToken(
+      this.tokenService.decodeToken()
+    );
+    const url = `${API_URL}/loanApplication/loanHistoryCoMaker/${email}`;
+
+    return this.http.get<any>(url).subscribe({
+      next: (res) => {
+        this.setLoanHistory(res.message);
+      },
+      error: (error) =>
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching loan history'
+        // ),
+        console.log('An error occurred while fetching loan history'),
+    });
+  }
+
   initOfficeStatus() {
     const applicantId = this.tokenService.userIDToken(
       this.tokenService.decodeToken()
     );
     const url = `${API_URL}/loanApplication/officeStatus/${applicantId}`;
+
+    return this.http.get<any>(url).subscribe({
+      next: (res) => {
+        this._officeStatus.next(res || []);
+      },
+      error: (error) =>
+        // this.snackbarService.showSnackbar(
+        //   'An error occurred while fetching office status'
+        // ),
+        console.log('An error occurred while fetching office status'),
+    });
+  }
+
+  initOfficeStatusCoMaker() {
+    const email = this.tokenService.userEmailToken(
+      this.tokenService.decodeToken()
+    );
+    const url = `${API_URL}/loanApplication/officeStatusCoMaker/${email}`;
 
     return this.http.get<any>(url).subscribe({
       next: (res) => {

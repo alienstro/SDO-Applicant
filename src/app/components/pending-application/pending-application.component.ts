@@ -83,7 +83,7 @@ export class PendingApplicationComponent implements OnInit {
 
     this.fetchLoanApplicationStatus();
     this.fetchLoanHistory();
-    this.loanApplicationService.initOfficeStatus();
+    this.loanApplicationService.initOfficeStatusCoMaker();
     this.loanApplicationService.initCoMakersCurrentLoan();
 
     this.currentLoanSub =
@@ -200,7 +200,7 @@ export class PendingApplicationComponent implements OnInit {
   // FETCHING LOAN APPLICATION STATUS IN BACKEND
   fetchLoanApplicationStatus() {
     this.isLoanStatusLoading = true;
-    this.loanApplicationService.initLoanStatus();
+    this.loanApplicationService.initLoanStatusCoMaker();
     this.loanApplicationService.loanApplicationStatus$.subscribe((res) => {
       this.currentLoanApplicationStatus = null;
       this.currentLoanApplicationStatus = res;
@@ -211,7 +211,7 @@ export class PendingApplicationComponent implements OnInit {
   // FETCHING LOAN HISTORY IN BACKEND
   fetchLoanHistory() {
     this.isLoanHistoryLoading = true;
-    this.loanApplicationService.initLoanHistory();
+    this.loanApplicationService.initLoanHistoryCoMaker();
     this.loanApplicationService.loanHistory$.subscribe((res) => {
       this.loanHistory = [];
       this.loanHistory = res;
