@@ -87,7 +87,7 @@ export class LoanApplicationService {
     });
   }
 
-   initLoanStatusCoMaker() {
+  initLoanStatusCoMaker() {
     const email = this.tokenService.userEmailToken(
       this.tokenService.decodeToken()
     );
@@ -109,8 +109,7 @@ export class LoanApplicationService {
     });
   }
 
-
-   initCoMakerLoanStatus(application_id: number) {
+  initCoMakerLoanStatus(application_id: number) {
     const url = `${API_URL}/loanApplication/CoMakerLoanApplicationStatus/${application_id}`;
 
     return this.http.get<any>(url).subscribe({
@@ -120,15 +119,19 @@ export class LoanApplicationService {
         console.log(this._loanApplicationStatus.getValue());
       },
       error: (error) => {
-        console.error('Error fetching co-maker loan application status:', error);
+        console.error(
+          'Error fetching co-maker loan application status:',
+          error
+        );
         // this.snackbarService.showSnackbar(
         //   'An error occurred while fetching loan application status'
         // );
-        console.log('An error occurred while fetching co-maker loan application status');
+        console.log(
+          'An error occurred while fetching co-maker loan application status'
+        );
       },
     });
   }
-  
 
   // FETCHING ALL APPLICATIONS
   // initCurrentLoanApplication() {
@@ -172,7 +175,7 @@ export class LoanApplicationService {
     });
   }
 
-   initLoanHistoryCoMaker() {
+  initLoanHistoryCoMaker() {
     const email = this.tokenService.userEmailToken(
       this.tokenService.decodeToken()
     );
@@ -263,6 +266,23 @@ export class LoanApplicationService {
     });
   }
 
+  initBorrowersInformation(application_id: number) {
+    const url = `${API_URL}/loanApplication/getBorrowersInformation/${application_id}`;
+
+    return this.http.get<any>(url);
+  }
+
+  initCoMakersInformation(application_id: number) {
+    const url = `${API_URL}/loanApplication/getCoMakersInformation/${application_id}`;
+
+    return this.http.get<any>(url);
+  }
+
+  initLoanDetailsInformation(application_id: number) {
+    const url = `${API_URL}/loanApplication/getLoanDetailsById/${application_id}`;
+
+    return this.http.get<any>(url);
+  }
 
   setLoanStatus(data: LoanStatus) {
     this._loanApplicationStatus.next(data);

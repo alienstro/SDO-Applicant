@@ -8,10 +8,11 @@
     class="loan_details_container"
   >
     <div *ngIf="loanStatus.currentLoan">
-      <app-title-view
-        [title]="'LOAN #' + loanStatus.currentLoan.application_id"
-      ></app-title-view>
-
+      <div class="title">
+        <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
+        <button mat-raised-button color="primary" (click)="openCoMakerDialog(loanStatus.currentLoan.application_id)">{{ loanStatus.currentLoan.is_filled_out === 'Yes' ? 'Edit Co-Maker Information' : 'Fill Out Co-Maker Information'}}</button>
+      </div>
+      <hr />
       <div class="progress_container">
         <p id="latest_msg">
           {{ getCurrentPhaseRemark(loanStatus.currentLoan.application_id) }}

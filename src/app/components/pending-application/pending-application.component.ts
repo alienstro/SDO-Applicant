@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StepperComponent } from '../../common/stepper/stepper.component';
 import { StepperEndComponent } from '../../common/stepper-end/stepper-end.component';
-import { TitleViewComponent } from '../../common/titleview/titleview.component';
 import { CommonModule } from '@angular/common';
 import {
   CurrentLoanApplication,
@@ -14,6 +13,9 @@ import { LoanApplicationService } from '../../service/loan-application.service';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { TokenService } from '../../service/token.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ComakerDialogComponent } from '../comaker-dialog/comaker-dialog.component';
 
 @Component({
   selector: 'app-pending-application',
@@ -21,8 +23,8 @@ import { TokenService } from '../../service/token.service';
   imports: [
     StepperComponent,
     StepperEndComponent,
-    TitleViewComponent,
     CommonModule,
+    MatButtonModule,
   ],
   templateUrl: './pending-application.component.html',
   styleUrl: './pending-application.component.scss',
@@ -51,7 +53,8 @@ export class PendingApplicationComponent implements OnInit {
   constructor(
     private loanApplicationDetails: LoanApplicationService,
     private loanApplicationService: LoanApplicationService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.loanApplicationDetails.officeStatus$.subscribe((res) => {
       this.officeStatus = res;
@@ -68,6 +71,8 @@ export class PendingApplicationComponent implements OnInit {
       } else {
         this.currentLoanStatusList = res.currentLoan ? [res] : [];
       }
+
+      console.log(this.currentLoanStatusList);
     });
   }
 
@@ -90,10 +95,26 @@ export class PendingApplicationComponent implements OnInit {
       this.loanApplicationService.currentLoanApplication$.subscribe((res) => {
         this.currentLoanApplication = null;
         this.currentLoanApplication = res;
-        console.log('Current Loan Application Updated:', res);
       });
 
     throw new Error('Method not implemented.');
+  }
+
+  openCoMakerDialog(application_id: string) {
+    const dialogRef = this.dialog.open(ComakerDialogComponent, {
+      height: '50rem',
+      width: '900rem',
+      data: { application_id: application_id },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'refresh') {
+        this.fetchLoanApplicationStatus();
+        this.fetchLoanHistory();
+        this.loanApplicationService.initOfficeStatusCoMaker();
+        this.loanApplicationService.initCoMakersCurrentLoan();
+      }
+    });
   }
 
   // PROGRESS OF THE LOAN APPLICATION
@@ -205,6 +226,7 @@ export class PendingApplicationComponent implements OnInit {
       this.currentLoanApplicationStatus = null;
       this.currentLoanApplicationStatus = res;
       this.isLoanStatusLoading = false;
+      // console.log(this.currentLoanApplicationStatus);
     });
   }
 

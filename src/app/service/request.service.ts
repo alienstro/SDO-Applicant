@@ -29,6 +29,12 @@ export class RequestService {
     return this.http.post(`${API_URL}/` + `addLoanData`, data);
   }
 
+  addLoanApplicationCoMaker(data: any): Observable<any> {
+    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    console.log(data);
+    return this.http.patch(`${API_URL}/` + `addLoanDataCoMaker`, data);
+  }
+
   get<T>(endpoint: string) {
     return this.http.get<Response<T>>(`${API_URL}/`+`${endpoint}`)
   }

@@ -28,6 +28,7 @@ export interface LoanDetails {
   purpose: string | null;
   term: number | null;
   loanType: string | null;
+  application_id: string;
 }
 
 export interface LoanApplication {
@@ -102,6 +103,7 @@ export interface CurrentLoan {
   application_id: string;
   application_date: string;
   status: string;
+  is_filled_out: string;
 }
 
 export interface CurrentHistory {

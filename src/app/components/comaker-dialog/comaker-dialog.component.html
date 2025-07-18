@@ -1,0 +1,568 @@
+@if(isloanPending) { Current Loan is pending } @else {
+<div class="application-container">
+  <h1 class="title">Provident Loan Application</h1>
+  <button (click)="populateFormWithSampleData()">Fill Details</button>
+  <div class="stepper-container">
+    <mat-stepper orientation="vertical" [linear]="isLinear" #appStepper>
+      <!-- <mat-step [completed]="true"> -->
+
+      <mat-step [completed]="loanDetailsForm.valid">
+        <form [formGroup]="loanDetailsForm">
+          <ng-template matStepLabel>Loan Details</ng-template>
+          <div class="form-field-container">
+            <div class="form-field">
+              <div class="form-split">
+                <mat-form-field appearance="outline">
+                  <mat-label>Loan Amount</mat-label>
+                  <input
+                    required=""
+                    matInput
+                    placeholder="Php 1.00"
+                    formControlName="loanAmount"
+                    required
+                    type="number"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="form-split">
+                <mat-form-field appearance="outline">
+                  <mat-label>Loan Application Number</mat-label>
+                  <input
+                    matInput
+                    required=""
+                    placeholder="123456"
+                    formControlName="loanNumber"
+                    required
+                    type="number"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <div class="form-field form-split">
+                <div class="form-split">
+                  <p>Type of Loan:</p>
+                  <div class="purpose">
+                    <p>Multi-Purpose</p>
+                    <!-- <mat-checkbox class="example-margin"
+                      >Multi-Purpose</mat-checkbox
+                    > -->
+                    <mat-radio-group
+                      required=""
+                      aria-label="Select an option"
+                      class="purpose"
+                      formControlName="loanType"
+                    >
+                      <div class="type-loan purpose">
+                        <mat-radio-button
+                          value="Multi-Purpose (new)"
+                          class="example-margin"
+                          >New</mat-radio-button
+                        >
+                        <mat-radio-button
+                          value="Multi-Purpose (renewal)"
+                          class="example-margin"
+                          >Renewal</mat-radio-button
+                        >
+                      </div>
+                      <mat-radio-button
+                        value="additional"
+                        class="example-margin"
+                        >Additional</mat-radio-button
+                      >
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <div class="form-split">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Term</mat-label>
+                    <input
+                      matInput
+                      placeholder="Php 1.00"
+                      formControlName="term"
+                      required
+                      type="number"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-split purpose">
+                <p>Purpose:</p>
+                <mat-radio-group
+                  required
+                  aria-label="Select an option"
+                  class="purpose"
+                  formControlName="purpose"
+                  (change)="purposeChange('main')"
+                >
+                  @for (item of purposeArr; track $index) {
+                  <mat-radio-button [value]="item">
+                    {{ item }}
+                  </mat-radio-button>
+                  }
+                </mat-radio-group>
+                <mat-form-field appearance="outline">
+                  <mat-label>Other (Specify)</mat-label>
+                  <input
+                    (keydown)="purposeChange('other')"
+                    matInput
+                    placeholder="Other (Specify)"
+                    formControlName="otherPurpose"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="next-button-container">
+            <button
+              mat-button
+              matStepperNext
+              (click)="findInvalidControls(loanDetailsForm)"
+            >
+              Next Step
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [completed]="borrowerInfoForm.valid">
+        <form [formGroup]="borrowerInfoForm">
+          <ng-template matStepLabel>Borrower's Information</ng-template>
+          <div class="form-field-container">
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Lastname</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="lastName"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Firstname</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="firstname"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Middle Initial</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="middleName"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="region">
+                  <mat-option>Region</mat-option>
+                  @for (region of fetchRegions(); track $index) {
+                  <mat-option [value]="region">{{ region }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Province</mat-label>
+                <mat-select formControlName="province">
+                  <mat-option>Province</mat-option>
+                  @if(borrowerInfoForm.get('region')?.value) { @for (province of
+                  fetchProvince(borrowerInfoForm.get('region')!.value!); track
+                  $index) {
+                  <mat-option [value]="province">{{ province }}</mat-option>
+                  } }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>City</mat-label>
+                <mat-select formControlName="city">
+                  <mat-option>City</mat-option>
+                  @for (city of fetchCity(); track $index) {
+                  <mat-option [value]="city">{{ city }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Barangay</mat-label>
+                <mat-select formControlName="barangay">
+                  <mat-option>Barangay</mat-option>
+                  @if(borrowerInfoForm.get('city')?.value) { @for (barangay of
+                  fetchBarangay(borrowerInfoForm.get('city')?.value!); track
+                  $index) {
+                  <mat-option [value]="barangay">{{ barangay }}</mat-option>
+                  } }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Street</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="street"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Zip Code</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="zipcode"
+                  required
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Position</mat-label>
+                <input
+                  matInput
+                  placeholder="Position"
+                  formControlName="position"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Employee no.</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="employeeNo"
+                  required
+                  type="number"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Employment Status</mat-label>
+                <mat-select formControlName="employeeStatus" required>
+                  <mat-option value="Permanent">Permanent</mat-option>
+                  <mat-option value="Co-Terminus">Co-Terminus</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Date of Birth</mat-label>
+                <input
+                  matInput
+                  placeholder="YYYY-MM-DD"
+                  formControlName="birth"
+                  required
+                  type="date"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Age</mat-label>
+                <input
+                  matInput
+                  placeholder="Age"
+                  formControlName="age"
+                  required
+                  type="number"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Office</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="office"
+                  required
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Monthly Salary (PHP)</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="salary"
+                  required
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Office tel no.</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="officeTelNo"
+                  required
+                  type="number"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Years in service</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="yearService"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Mobile no.</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="mobileNo"
+                  required
+                  type="number"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="next-button-container">
+            <button
+              mat-button
+              matStepperNext
+              (click)="findInvalidControls(borrowerInfoForm)"
+            >
+              Next Step
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [completed]="comakerInfoForm.valid">
+        <form [formGroup]="comakerInfoForm">
+          <ng-template matStepLabel>Co-Maker's Information</ng-template>
+          <div class="form-field-container">
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Lastname</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="lastName"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Firstname</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="firstname"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Middle Initial</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="middleName"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="region">
+                  <mat-option>Region</mat-option>
+                  @for (region of fetchRegions(); track $index) {
+                  <mat-option [value]="region">{{ region }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Province</mat-label>
+                <mat-select formControlName="province">
+                  <mat-option>Province</mat-option>
+                  @if(borrowerInfoForm.get('region')?.value) { @for (province of
+                  fetchProvince(borrowerInfoForm.get('region')!.value!); track
+                  $index) {
+                  <mat-option [value]="province">{{ province }}</mat-option>
+                  } }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>City</mat-label>
+                <mat-select formControlName="city">
+                  <mat-option>City</mat-option>
+                  @for (city of fetchCity(); track $index) {
+                  <mat-option [value]="city">{{ city }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Barangay</mat-label>
+                <mat-select formControlName="barangay">
+                  <mat-option>Barangay</mat-option>
+                  @if(borrowerInfoForm.get('city')?.value) { @for (barangay of
+                  fetchBarangay(borrowerInfoForm.get('city')?.value!); track
+                  $index) {
+                  <mat-option [value]="barangay">{{ barangay }}</mat-option>
+                  } }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Street</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="street"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Zip Code</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="zipcode"
+                  required
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Position</mat-label>
+                <input
+                  matInput
+                  placeholder="Position"
+                  formControlName="position"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Employee no.</mat-label>
+                <input
+                  matInput
+                  placeholder="Php 1.00"
+                  formControlName="employeeNo"
+                  required
+                  type="number"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Employment Status</mat-label>
+                <mat-select formControlName="employeeStatus" required>
+                  <mat-option value="Permanent">Permanent</mat-option>
+                  <mat-option value="Co-Terminus">Co-Terminus</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="form-field">
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Date of Birth</mat-label>
+                <input
+                  matInput
+                  placeholder="YYYY-MM-DD"
+                  formControlName="birth"
+                  required
+                  type="date"
+                />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="form-split">
+                <mat-label>Age</mat-label>
+                <input
+                  matInput
+                  placeholder="Age"
+                  formControlName="age"
+                  required
+                  type="number"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="next-button-container">
+            <button
+              mat-button
+              matStepperNext
+              (click)="findInvalidControls(comakerInfoForm)"
+            >
+              Next Step
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Co maker's Agreement</ng-template>
+        <p>
+          I hereby agree to assume all the outstanding obligations for the grant
+          of this loan should the principal borrower be separated from the
+          service, and either retirement or separation benefits due to him/her
+          is not received or is insufficient to settle the borrower's
+          outstanding loan, and upon proper notification by the Provident Fund
+          Secretariat.
+        </p>
+
+        <p>
+          Accordingly, I hereby authorize the monthly deduction from my salary
+          of the amortizations for the outstanding obligation of the principal
+          borrower until his/her loan is fully paid.
+        </p>
+        <div class="next-button-container">
+          <button mat-button matStepperNext>Next Step</button>
+        </div>
+      </mat-step>
+
+      <mat-step [completed]="signaturePad ? !signaturePad.isEmpty() : false">
+        <ng-template matStepLabel>Signature</ng-template>
+
+        <div class="header-buttons">
+          <div class="upload">
+            <button mat-button (click)="triggerFileInput()">Upload</button>
+            <input
+              type="file"
+              #fileInput
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              hidden
+            />
+          </div>
+        </div>
+
+        <div class="signature-container">
+          <div class="canvas-container">
+            <canvas #canvas></canvas>
+          </div>
+        </div>
+
+        <div class="next-button-container">
+          <button mat-button (click)="clearSignature()">Clear</button>
+          <button
+            mat-button
+            matStepperNext
+            [disabled]="!signaturePad || signaturePad.isEmpty()"
+          >
+            Next Step
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done!</ng-template>
+        <p>Thank you for filling up the application form</p>
+        <div class="next-button-container">
+          <button mat-button (click)="onSubmit()">
+            {{ isEditing ? "Edit Application" : "Submit Application" }}
+          </button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+</div>
+}
