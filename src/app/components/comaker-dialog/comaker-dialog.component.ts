@@ -38,6 +38,7 @@ import { ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import SignaturePad from 'signature_pad';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-comaker-dialog',
@@ -52,9 +53,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     MatCheckboxModule,
     MatRadioModule,
     CommonModule,
-    FileUploadComponent,
     MatFormFieldModule,
     MatSelectModule,
+    MatIconModule
   ],
   templateUrl: './comaker-dialog.component.html',
   styleUrl: './comaker-dialog.component.scss',

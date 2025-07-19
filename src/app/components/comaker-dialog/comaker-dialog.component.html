@@ -1,5 +1,13 @@
 @if(isloanPending) { Current Loan is pending } @else {
 <div class="application-container">
+  <button
+    mat-icon-button
+    class="close-dialog-btn"
+    (click)="dialogRef.close()"
+    aria-label="Close"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
   <h1 class="title">Provident Loan Application</h1>
   <button (click)="populateFormWithSampleData()">Fill Details</button>
   <div class="stepper-container">
