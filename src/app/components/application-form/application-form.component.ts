@@ -1,11 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -50,7 +57,7 @@ import SignaturePad from 'signature_pad';
   templateUrl: './application-form.component.html',
   styleUrl: './application-form.component.scss',
 })
-export class ApplicationFormComponent {
+export class ApplicationFormComponent implements OnInit {
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('fileInput', { static: false })
   fileInput!: ElementRef<HTMLInputElement>;
@@ -65,6 +72,7 @@ export class ApplicationFormComponent {
   municipalities: { [id: string]: string[] };
   regions: { [id: string]: string[] };
   applicantId: number = 0;
+  email: string = '';
   // requiredDocuments = false
 
   private _requiredDocuments = new BehaviorSubject<{ [key: string]: boolean }>({
@@ -89,6 +97,11 @@ export class ApplicationFormComponent {
     this.applicantId = this.tokenService.userIDToken(
       this.tokenService.decodeToken()
     );
+
+    this.email = this.tokenService.userEmailToken(
+      this.tokenService.decodeToken()
+    );
+
     this.isCurrentLoanApplicationLoading = true;
     this.loanApplicationService.currentLoanApplication$.subscribe((res) => {
       this.CurrentLoanApplication = res;
@@ -210,7 +223,7 @@ export class ApplicationFormComponent {
 
     // Populate comaker information
     this.comakerInfoForm.patchValue({
-      email: 'robinaquino2@gmail.com'
+      email: 'robinaquino2@gmail.com',
       // lastName: 'Garcia',
       // firstname: 'Maria',
       // middleName: 'Cruz',
@@ -349,26 +362,7 @@ export class ApplicationFormComponent {
     });
 
     this.comakerInfoForm.patchValue({
-      email: currentLoan.comakerInfo.email
-      // lastName: currentLoan.borrowerInfo.lastName,
-      // firstname: currentLoan.borrowerInfo.firstname,
-      // middleName: currentLoan.borrowerInfo.middleName,
-      // region: currentLoan.borrowerInfo.region,
-      // province: currentLoan.borrowerInfo.province,
-      // city: currentLoan.borrowerInfo.city,
-      // barangay: currentLoan.borrowerInfo.barangay,
-      // street: currentLoan.borrowerInfo.street,
-      // zipcode: currentLoan.borrowerInfo.zipcode,
-      // position: currentLoan.borrowerInfo.position,
-      // employeeNo: currentLoan.borrowerInfo.employeeNo,
-      // employeeStatus: currentLoan.borrowerInfo.employeeStatus,
-      // birth: currentLoan.borrowerInfo.birth,
-      // age: currentLoan.borrowerInfo.age,
-      // office: currentLoan.borrowerInfo.office,
-      // salary: currentLoan.borrowerInfo.salary,
-      // officeTelNo: currentLoan.borrowerInfo.officeTelNo,
-      // yearService: currentLoan.borrowerInfo.yearService,
-      // mobileNo: currentLoan.borrowerInfo.mobileNo,
+      email: currentLoan.comakerInfo.email,
     });
 
     this.isEditing = true;
@@ -552,7 +546,7 @@ export class ApplicationFormComponent {
     this.loanDetailsForm.patchValue({ loanAmount: 0, term: 0 });
     this.borrowerInfoForm.patchValue({ birth: new Date(), age: 0 });
     // this.comakerInfoForm.patchValue({ birth: new Date(), age: 0 });
-     this.comakerInfoForm.patchValue({ email: '' });
+    this.comakerInfoForm.patchValue({ email: '' });
 
     // Reset stepper to first step
     if (this.stepper) {
@@ -573,5 +567,20 @@ export class ApplicationFormComponent {
 
     this.isDocumentValid = false;
     this.isEditing = false;
+  }
+
+  coMakerEmailValidator(applicantEmail: string) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value && control.value === applicantEmail) {
+        return { sameAsApplicant: true };
+      }
+      return null;
+    };
+  }
+
+  ngOnInit() {
+    this.comakerInfoForm
+      .get('email')
+      ?.addValidators(this.coMakerEmailValidator(this.email));
   }
 }

@@ -81,3 +81,12 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.email-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.error-message {
+    color: red;
+}

@@ -345,16 +345,26 @@
           <ng-template matStepLabel>Co-Maker's Information</ng-template>
           <div class="form-field-container">
             <div class="form-field">
-              <mat-form-field appearance="outline" class="form-split">
-                <mat-label>Email</mat-label>
-                <input
-                  matInput
-                  placeholder="Email"
-                  formControlName="email"
-                  required
-                  type="email"
-                />
-              </mat-form-field>
+              <div class="email-field">
+                <mat-form-field appearance="outline" class="form-split">
+                  <mat-label>Email</mat-label>
+                  <input
+                    matInput
+                    placeholder="Email"
+                    formControlName="email"
+                    required
+                    type="email"
+                  />
+                </mat-form-field>
+                <div
+                  class="error-message"
+                  *ngIf="
+                    comakerInfoForm.get('email')?.hasError('sameAsApplicant')
+                  "
+                >
+                  Comaker email cannot be the same as applicant email.
+                </div>
+              </div>
             </div>
           </div>
           <div class="next-button-container">
