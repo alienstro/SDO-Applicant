@@ -16,6 +16,7 @@ import { TokenService } from '../../service/token.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ComakerDialogComponent } from '../comaker-dialog/comaker-dialog.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-pending-application',
@@ -25,6 +26,7 @@ import { ComakerDialogComponent } from '../comaker-dialog/comaker-dialog.compone
     StepperEndComponent,
     CommonModule,
     MatButtonModule,
+    MatTabsModule,
   ],
   templateUrl: './pending-application.component.html',
   styleUrl: './pending-application.component.scss',
@@ -97,7 +99,22 @@ export class PendingApplicationComponent implements OnInit {
         this.currentLoanApplication = res;
       });
 
-    throw new Error('Method not implemented.');
+  }
+
+  getCurrentApplicationNotFilledOut(): boolean {
+    return (
+      this.currentLoanStatusList.filter(
+        (ls) => ls.currentLoan && ls.currentLoan.is_filled_out === null
+      ).length === 0
+    );
+  }
+
+  getCurrentApplicationFilledOut(): boolean {
+    return (
+      this.currentLoanStatusList.filter(
+        (ls) => ls.currentLoan?.is_filled_out === 'Yes'
+      ).length === 0
+    );
   }
 
   openCoMakerDialog(application_id: string) {

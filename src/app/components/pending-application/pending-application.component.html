@@ -1,126 +1,308 @@
 <div class="dashboard-container">
-  <div *ngIf="currentLoanStatusList.length === 0">
-    <p class="status">No current Applications</p>
-  </div>
+  <mat-tab-group>
 
-  <div
-    *ngFor="let loanStatus of currentLoanStatusList"
-    class="loan_details_container"
-  >
-    <div *ngIf="loanStatus.currentLoan">
-      <div class="title">
-        <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
-        <button mat-raised-button color="primary" (click)="openCoMakerDialog(loanStatus.currentLoan.application_id)">{{ loanStatus.currentLoan.is_filled_out === 'Yes' ? 'Edit Co-Maker Information' : 'Fill Out Co-Maker Information'}}</button>
+    <!-- PENDING APPLICATION -->
+    <mat-tab label="Pending Application">
+      <div *ngIf="getCurrentApplicationNotFilledOut()">
+        <p class="status">No current Applications</p>
       </div>
-      <hr />
-      <div class="progress_container">
-        <p id="latest_msg">
-          {{ getCurrentPhaseRemark(loanStatus.currentLoan.application_id) }}
-        </p>
 
-        <div class="stepper_container">
-          <app-stepper
-            [progressName]="'Loan Submitted'"
-            [disable]="false"
-            [date]="formatDate(loanStatus.currentLoan.application_date)"
-          >
-          </app-stepper>
+      <div
+        *ngFor="let loanStatus of currentLoanStatusList"
+        class="loan_details_container"
+      >
+        <div *ngIf="loanStatus.currentLoan as currentLoan">
+          <div *ngIf="currentLoan.is_filled_out === null">
+            <div class="title">
+              <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="
+                  openCoMakerDialog(loanStatus.currentLoan.application_id)
+                "
+              >
+                {{
+                  loanStatus.currentLoan.is_filled_out === "Yes"
+                    ? "Edit Co-Maker Information"
+                    : "Fill Out Co-Maker Information"
+                }}
+              </button>
+            </div>
+            <hr />
+            <div class="progress_container">
+              <p id="latest_msg">
+                {{
+                  getCurrentPhaseRemark(loanStatus.currentLoan.application_id)
+                }}
+              </p>
 
-          <app-stepper
-            [progressName]="'OSDS'"
-            [disable]="
-              !isOfficeDone('osds', loanStatus.currentLoan.application_id)
-            "
-            [date]="
-              fetchUpdateDate(['osds'], loanStatus.currentLoan.application_id)
-            "
-          >
-          </app-stepper>
+              <div class="stepper_container">
+                <app-stepper
+                  [progressName]="'Loan Submitted'"
+                  [disable]="false"
+                  [date]="formatDate(loanStatus.currentLoan.application_date)"
+                >
+                </app-stepper>
 
-          <app-stepper
-            [progressName]="'Accounting'"
-            [disable]="
-              !isOfficeDone('accounting', loanStatus.currentLoan.application_id)
-            "
-            [date]="
-              fetchUpdateDate(
-                ['accounting'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-          >
-          </app-stepper>
+                <app-stepper
+                  [progressName]="'OSDS'"
+                  [disable]="
+                    !isOfficeDone('osds', loanStatus.currentLoan.application_id)
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['osds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
 
-          <app-stepper
-            [progressName]="'Assessment'"
-            [disable]="
-              !isOfficeDone(
-                'secretariat',
-                loanStatus.currentLoan.application_id
-              )
-            "
-            [date]="
-              fetchUpdateDate(
-                ['secretariat'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-          >
-          </app-stepper>
+                <app-stepper
+                  [progressName]="'Accounting'"
+                  [disable]="
+                    !isOfficeDone(
+                      'accounting',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['accounting'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
 
-          <app-stepper
-            [progressName]="'Signature'"
-            [disable]="
-              !isOfficeDone(
-                ['hr', 'admin', 'legal'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-            [date]="
-              fetchUpdateDate(
-                ['hr', 'admin', 'legal'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-          >
-          </app-stepper>
+                <app-stepper
+                  [progressName]="'Assessment'"
+                  [disable]="
+                    !isOfficeDone(
+                      'secretariat',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['secretariat'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
 
-          <app-stepper
-            [progressName]="'Endorsement'"
-            [disable]="
-              !isOfficeDone(
-                ['sds', 'asds'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-            [date]="
-              fetchUpdateDate(
-                ['sds', 'asds'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-          >
-          </app-stepper>
+                <app-stepper
+                  [progressName]="'Signature'"
+                  [disable]="
+                    !isOfficeDone(
+                      ['hr', 'admin', 'legal'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['hr', 'admin', 'legal'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
 
-          <app-stepper-end
-            [progressName]="'Payment'"
-            [disable]="
-              !isOfficeDone('payment', loanStatus.currentLoan.application_id)
-            "
-            [date]="
-              fetchUpdateDate(
-                ['payment'],
-                loanStatus.currentLoan.application_id
-              )
-            "
-          >
-          </app-stepper-end>
+                <app-stepper
+                  [progressName]="'Endorsement'"
+                  [disable]="
+                    !isOfficeDone(
+                      ['sds', 'asds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['sds', 'asds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
+
+                <app-stepper-end
+                  [progressName]="'Payment'"
+                  [disable]="
+                    !isOfficeDone(
+                      'payment',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['payment'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper-end>
+              </div>
+            </div>
+            <div class="remarks_container">
+              <p>Remarks</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </mat-tab>
 
-    <div class="remarks_container">
-      <p>Remarks</p>
-    </div>
-  </div>
+    <!-- FINISHED APPLICATION -->
+    <mat-tab label="Finished Application">
+      <div *ngIf="getCurrentApplicationFilledOut()">
+        <p class="status">No current Applications</p>
+      </div>
+
+      <div
+        *ngFor="let loanStatus of currentLoanStatusList"
+        class="loan_details_container"
+      >
+        <div *ngIf="loanStatus.currentLoan as currentLoan">
+          <div *ngIf="currentLoan.is_filled_out === 'Yes'">
+            <div class="title">
+              <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="
+                  openCoMakerDialog(loanStatus.currentLoan.application_id)
+                "
+              >
+                {{
+                  loanStatus.currentLoan.is_filled_out === "Yes"
+                    ? "Edit Co-Maker Information"
+                    : "Fill Out Co-Maker Information"
+                }}
+              </button>
+            </div>
+            <hr />
+            <div class="progress_container">
+              <p id="latest_msg">
+                {{
+                  getCurrentPhaseRemark(loanStatus.currentLoan.application_id)
+                }}
+              </p>
+
+              <div class="stepper_container">
+                <app-stepper
+                  [progressName]="'Loan Submitted'"
+                  [disable]="false"
+                  [date]="formatDate(loanStatus.currentLoan.application_date)"
+                >
+                </app-stepper>
+
+                <app-stepper
+                  [progressName]="'OSDS'"
+                  [disable]="
+                    !isOfficeDone('osds', loanStatus.currentLoan.application_id)
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['osds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
+
+                <app-stepper
+                  [progressName]="'Accounting'"
+                  [disable]="
+                    !isOfficeDone(
+                      'accounting',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['accounting'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
+
+                <app-stepper
+                  [progressName]="'Assessment'"
+                  [disable]="
+                    !isOfficeDone(
+                      'secretariat',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['secretariat'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
+
+                <app-stepper
+                  [progressName]="'Signature'"
+                  [disable]="
+                    !isOfficeDone(
+                      ['hr', 'admin', 'legal'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['hr', 'admin', 'legal'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
+
+                <app-stepper
+                  [progressName]="'Endorsement'"
+                  [disable]="
+                    !isOfficeDone(
+                      ['sds', 'asds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['sds', 'asds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper>
+
+                <app-stepper-end
+                  [progressName]="'Payment'"
+                  [disable]="
+                    !isOfficeDone(
+                      'payment',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['payment'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                >
+                </app-stepper-end>
+              </div>
+            </div>
+            <div class="remarks_container">
+              <p>Remarks</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
