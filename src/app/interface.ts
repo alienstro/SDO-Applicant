@@ -104,6 +104,7 @@ export interface CurrentLoan {
   application_date: string;
   status: string;
   is_filled_out: string;
+  remarks_message: string;
 }
 
 export interface CurrentHistory {

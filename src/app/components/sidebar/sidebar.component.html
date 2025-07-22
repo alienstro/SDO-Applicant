@@ -117,45 +117,40 @@
 
 <div class="sidebar">
   <div class="main-content">
-
-
     <div class="top">
       <div class="profile">
         <div class="img-contianer">
-          <img src="../../../assets/profile.svg" alt="user pfp">
+          <img src="../../../assets/profile.svg" alt="user pfp" />
         </div>
 
         <div class="info-container">
           <p class="profile-name">{{ parseFullName }}</p>
-          <p class="profile-department"> {{ designation }}</p>
-
-
+          <p class="profile-department">{{ designation }}</p>
         </div>
-
       </div>
 
       <div class="routes">
         <button [routerLink]="['/dashboard']">
-          <img src="../../../assets/panel.svg" alt="dashboard img">
+          <img src="../../../assets/panel.svg" alt="dashboard img" />
 
           <div class="button-title">
-            <span>Dashboard</span>
-          </div>
-        </button>
-
-        <button [routerLink]="['/application']">
-          <img src="../../../assets/forms.svg" alt="applicant forms img">
-
-          <div class="button-title">
-            <span>Loan Application</span>
+            <span>Applications</span>
           </div>
         </button>
 
         <button [routerLink]="['/pending']">
-          <img src="../../../assets/pending.svg" alt="pending img">
+          <img src="../../../assets/pending.svg" alt="pending img" />
 
           <div class="button-title">
-            <span>Pending</span>
+            <span>Pending (Co)</span>
+          </div>
+        </button>
+
+        <button [routerLink]="['/application']">
+          <img src="../../../assets/forms.svg" alt="applicant forms img" />
+
+          <div class="button-title">
+            <span>Loan Form</span>
           </div>
         </button>
       </div>
@@ -163,11 +158,8 @@
 
     <div class="bottom">
       <div class="logout">
-        <button (click)="logout()" class="button-action">
-          Logout
-        </button>
+        <button (click)="logout()" class="button-action">Logout</button>
       </div>
     </div>
   </div>
-
 </div>

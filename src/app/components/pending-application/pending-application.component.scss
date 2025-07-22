@@ -88,7 +88,7 @@ th {
   box-shadow: 4px 6px 6px -3px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 4px 6px 6px -3px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 4px 6px 6px -3px rgba(0, 0, 0, 0.75);
-  padding: 1.5rem 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
@@ -97,10 +97,14 @@ th {
   margin: 1rem 0 3rem 0;
 }
 
+.remarks_container p, .remarks_container h2 {
+  margin: 0;
+}
+
 .loan_details_container {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 #latest_msg {

@@ -3,18 +3,13 @@ import { StepperEndComponent } from '../../common/stepper-end/stepper-end.compon
 import { StepperComponent } from '../../common/stepper/stepper.component';
 import { LoanApplicationService } from '../../service/loan-application.service';
 import { CurrentLoanStatus, OfficeStatus } from '../../interface';
-import { TitleViewComponent } from '../../common/titleview/titleview.component';
 import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-loan-application-details',
   standalone: true,
-  imports: [
-    StepperComponent,
-    StepperEndComponent,
-    TitleViewComponent,
-    CommonModule,
-  ],
+  imports: [StepperComponent, StepperEndComponent, CommonModule, MatTabsModule],
   templateUrl: './loan-application-details.component.html',
   styleUrls: ['./loan-application-details.component.scss'],
 })
@@ -131,5 +126,28 @@ export class LoanApplicationDetailsComponent {
       'Dec',
     ][d.getUTCMonth()];
     return `${mon}/${day}/${d.getUTCFullYear()}`;
+  }
+
+  getCurrentApplicationPending(): boolean {
+    return (
+      this.currentLoanStatusList.filter(
+        (ls) => ls.currentLoan && ls.currentLoan.status === 'Pending'
+      ).length === 0
+    );
+  }
+
+  getCurrentApplicationRejected(): boolean {
+    return (
+      this.currentLoanStatusList.filter(
+        (ls) => ls.currentLoan && ls.currentLoan.status === 'Rejected'
+      ).length === 0
+    );
+  }
+  getCurrentApplicationApproved(): boolean {
+    return (
+      this.currentLoanStatusList.filter(
+        (ls) => ls.currentLoan && ls.currentLoan.status === 'Approved'
+      ).length === 0
+    );
   }
 }

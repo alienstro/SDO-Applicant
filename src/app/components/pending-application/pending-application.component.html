@@ -1,6 +1,5 @@
 <div class="dashboard-container">
   <mat-tab-group>
-
     <!-- PENDING APPLICATION -->
     <mat-tab label="Pending Application">
       <div *ngIf="getCurrentApplicationNotFilledOut()">
@@ -146,7 +145,14 @@
               </div>
             </div>
             <div class="remarks_container">
-              <p>Remarks</p>
+              <h2>Remarks</h2>
+              <p>
+                {{
+                  loanStatus.currentLoan.remarks_message
+                    ? loanStatus.currentLoan.remarks_message
+                    : "No Remarks Yet"
+                }}
+              </p>
             </div>
           </div>
         </div>
@@ -298,7 +304,14 @@
               </div>
             </div>
             <div class="remarks_container">
-              <p>Remarks</p>
+              <h2>Remarks</h2>
+              <p>
+                {{
+                  loanStatus.currentLoan.remarks_message
+                    ? loanStatus.currentLoan.remarks_message
+                    : "No Remarks Yet"
+                }}
+              </p>
             </div>
           </div>
         </div>
