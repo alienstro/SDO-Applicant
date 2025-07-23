@@ -415,9 +415,9 @@ export class ApplicationFormComponent implements OnInit {
     let message = '';
 
     if (words.length < 2) {
-      message = `Recheck ${words} input`;
+      message = `Recheck ${words} Input`;
     } else if (words.length < 4) {
-      message = `Recheck  ${words} inputs`;
+      message = `Recheck  ${words} Inputs`;
     } else {
       message = `Some inputs are invalid`;
     }
@@ -515,8 +515,9 @@ export class ApplicationFormComponent implements OnInit {
 
         if (res.success) {
           this.snackbarService.showSnackbar(
-            'Loan application submitted successfully!'
+            'Loan application submitted successfully! Sent to Co-Maker!'
           );
+
 
           this.loanApplicationService.initCurrentLoan();
 

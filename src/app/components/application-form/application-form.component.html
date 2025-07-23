@@ -343,6 +343,9 @@
       <mat-step [completed]="comakerInfoForm.valid">
         <form [formGroup]="comakerInfoForm">
           <ng-template matStepLabel>Co-Maker's Information</ng-template>
+          <p class="comaker-warning">
+            Make sure to let the Co-Maker insert his/her information!
+          </p>
           <div class="form-field-container">
             <div class="form-field">
               <div class="email-field">
