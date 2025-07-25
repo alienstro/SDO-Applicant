@@ -50,6 +50,11 @@ export class LoanApplicationDetailsComponent {
       const entries = filteredStatus.filter((e) =>
         names.includes(e.department_name.toLowerCase())
       );
+      // console.log(
+      //   '1',
+      //   entries.every((e) => e.status.toLowerCase() !== 'pending')
+      // );
+
       return (
         entries.length > 0 &&
         entries.every((e) => e.status.toLowerCase() !== 'pending')
@@ -58,6 +63,8 @@ export class LoanApplicationDetailsComponent {
       const entry = filteredStatus.find(
         (e) => e.department_name.toLowerCase() === officeName.toLowerCase()
       );
+      // console.log(entry ? entry.status.toLowerCase() !== 'pending' : false);
+
       return entry ? entry.status.toLowerCase() !== 'pending' : false;
     }
   }
@@ -92,16 +99,17 @@ export class LoanApplicationDetailsComponent {
 
   getCurrentPhaseRemark(applicationId: any): string {
     const phases = [
-      { key: 'osds', label: 'For OSDS' },
-      { key: 'accounting', label: 'For Accounting' },
-      { key: 'secretariat', label: 'For Assessment' },
-      { key: ['hr', 'admin', 'legal'], label: 'For Signature' },
-      { key: ['sds', 'asds'], label: 'For Endorsement' },
-      { key: 'payment', label: 'For Payment' },
+      { key: 'Secretariat', label: 'For Assessment' }, // 1
+      { key: ['HR', 'Admin', 'Legal'], label: 'For Signature' }, // 2,3,4
+      { key: 'Accounting', label: 'For Accounting' }, // 5
+      { key: ['ASDS', 'SDS'], label: 'For Endorsement' }, // 6,7
+      { key: 'OSDS', label: 'For OSDS' }, // 8
+      { key: 'Payment', label: 'For Payment' }, // 9
     ];
 
     for (const phase of phases) {
       if (!this.isOfficeDone(phase.key, applicationId)) {
+        console.log('appliactionId: ', applicationId + phase.label);
         return phase.label;
       }
     }
