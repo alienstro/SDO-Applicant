@@ -505,6 +505,12 @@ export class ApplicationFormComponent implements OnInit {
     return this.municipalities[city];
   }
 
+  isAgeEligible(): boolean {
+    const age = this.borrowerInfoForm.get('age')?.value || 0;
+    const term = this.loanDetailsForm.get('term')?.value || 0;
+    return age + term <= 65;
+  }
+
   onSubmit() {
     const pendingCount = Array.isArray(this.currentLoanApplicationStatus)
       ? this.currentLoanApplicationStatus.filter(

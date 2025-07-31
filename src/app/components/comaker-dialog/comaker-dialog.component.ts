@@ -125,6 +125,12 @@ export class ComakerDialogComponent implements OnInit {
     console.log('Dialog data:', this.data.application_id);
   }
 
+  isAgeEligible(): boolean {
+    const age = this.comakerInfoForm.get('age')?.value || 0;
+    const term = this.loanDetailsForm.get('term')?.value || 0;
+    return age + term <= 65;
+  }
+
   ngAfterViewInit() {
     const canvas = this.canvasRef.nativeElement;
     // size it however you like:

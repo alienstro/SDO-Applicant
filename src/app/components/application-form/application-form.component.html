@@ -334,9 +334,13 @@
               mat-button
               matStepperNext
               (click)="findInvalidControls(borrowerInfoForm)"
+              [disabled]="!isAgeEligible()"
             >
               Next Step
             </button>
+          </div>
+          <div *ngIf="!isAgeEligible()" class="error-message">
+            Borrower's age plus loan term must not exceed 65.
           </div>
         </form>
       </mat-step>
