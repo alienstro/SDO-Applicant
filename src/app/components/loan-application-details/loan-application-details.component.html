@@ -102,7 +102,7 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Approved Application">
+  <mat-tab label="Finished Application">
     <div *ngIf="getCurrentApplicationApproved()">
       <p class="status">No current Applications</p>
     </div>
@@ -112,7 +112,7 @@
       class="loan_details_container"
     >
       <div *ngIf="loanStatus.currentLoan as currentLoan">
-        <div *ngIf="currentLoan.status === 'Approved'">
+        <div *ngIf="currentLoan.status === 'Paid'">
           <div class="title">
             <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
           </div>

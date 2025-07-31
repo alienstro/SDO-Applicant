@@ -30,7 +30,7 @@
                   <input
                     matInput
                     required=""
-                    placeholder="123456"
+                    placeholder="Loan Application Number..."
                     formControlName="loanNumber"
                     required
                     type="number"
@@ -460,7 +460,7 @@
           <button mat-button matStepperNext>Next Step</button>
         </div>
       </mat-step>
-      <mat-step>
+      <!-- <mat-step>
         <ng-template matStepLabel>Co maker's Agreement</ng-template>
         <p>
           I hereby agree to assume all the outstanding obligations for the grant
@@ -479,7 +479,7 @@
         <div class="next-button-container">
           <button mat-button matStepperNext>Next Step</button>
         </div>
-      </mat-step>
+      </mat-step> -->
 
       <mat-step [completed]="signaturePad ? !signaturePad.isEmpty() : false">
         <ng-template matStepLabel>Signature</ng-template>

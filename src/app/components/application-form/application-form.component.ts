@@ -23,9 +23,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BehaviorSubject } from 'rxjs';
 import {
+  CurrentLoan,
   CurrentLoanApplication,
+  CurrentLoanStatus,
   FileUpload,
   LoanApplication,
+  LoanStatus,
 } from '../../interface';
 import { AddressService } from '../../service/address.service';
 import { LoanApplicationService } from '../../service/loan-application.service';
@@ -73,6 +76,7 @@ export class ApplicationFormComponent implements OnInit {
   regions: { [id: string]: string[] };
   applicantId: number = 0;
   email: string = '';
+  currentLoanApplicationStatus: CurrentLoanStatus | null = null;
   // requiredDocuments = false
 
   private _requiredDocuments = new BehaviorSubject<{ [key: string]: boolean }>({
@@ -502,6 +506,19 @@ export class ApplicationFormComponent implements OnInit {
   }
 
   onSubmit() {
+    const pendingCount = Array.isArray(this.currentLoanApplicationStatus)
+      ? this.currentLoanApplicationStatus.filter(
+          (item: any) => item.currentLoan?.status === 'Pending'
+        ).length
+      : 0;
+
+    if (pendingCount >= 3) {
+      this.snackbarService.showSnackbar(
+        'You cannot submit another application while you have 3 pending applications.'
+      );
+      return;
+    }
+
     const applicationForm = this.parseForm() as any;
 
     // Append JSON fields to FormData
@@ -517,7 +534,6 @@ export class ApplicationFormComponent implements OnInit {
           this.snackbarService.showSnackbar(
             'Loan application submitted successfully! Sent to Co-Maker!'
           );
-
 
           this.loanApplicationService.initCurrentLoan();
 
@@ -583,5 +599,13 @@ export class ApplicationFormComponent implements OnInit {
     this.comakerInfoForm
       .get('email')
       ?.addValidators(this.coMakerEmailValidator(this.email));
+
+    this.loanApplicationService.initCurrentLoan();
+
+    this.loanApplicationService.currentLoanStatus$.subscribe((res) => {
+      this.currentLoanApplicationStatus = null;
+      this.currentLoanApplicationStatus = res;
+      console.log('CurrentLoanApplication:', this.currentLoanApplicationStatus);
+    });
   }
 }
