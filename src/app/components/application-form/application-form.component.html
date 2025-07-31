@@ -79,7 +79,7 @@
                     <mat-label>Term</mat-label>
                     <input
                       matInput
-                      placeholder="Php 1.00"
+                      placeholder="Year/s"
                       formControlName="term"
                       required
                       type="number"
@@ -118,7 +118,7 @@
             <button
               mat-button
               matStepperNext
-              (click)="findInvalidControls(loanDetailsForm)"
+              (click)="checkTermValid() && findInvalidControls(loanDetailsForm)"
             >
               Next Step
             </button>

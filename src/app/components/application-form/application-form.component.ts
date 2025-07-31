@@ -191,6 +191,15 @@ export class ApplicationFormComponent implements OnInit {
     this.fileFormData.append('signature', sigData);
   }
 
+  checkTermValid(): boolean {
+    const term = this.loanDetailsForm.get('term')?.value || 0;
+    if (term > 5) {
+      this.snackbarService.showSnackbar('Term cannot exceed 5 years.');
+      return false;
+    }
+    return true;
+  }
+
   populateFormWithSampleData() {
     // Populate loan details
     this.loanDetailsForm.patchValue({
@@ -267,7 +276,7 @@ export class ApplicationFormComponent implements OnInit {
     loanNumber: new FormControl('', [Validators.required]),
     purpose: new FormControl('', [Validators.required]),
     otherPurpose: new FormControl(''),
-    term: new FormControl(0, [Validators.required]),
+    term: new FormControl(0, [Validators.required, Validators.max(5)]),
     loanType: new FormControl('', [Validators.required]),
   });
 
@@ -419,11 +428,11 @@ export class ApplicationFormComponent implements OnInit {
     let message = '';
 
     if (words.length < 2) {
-      message = `Recheck ${words} Input`;
+      message = `Recheck ${words} Field`;
     } else if (words.length < 4) {
-      message = `Recheck  ${words} Inputs`;
+      message = `Recheck  ${words} Fields`;
     } else {
-      message = `Some inputs are invalid`;
+      message = `Some fields are invalid`;
     }
 
     this.snackbarService.showSnackbar(message);
