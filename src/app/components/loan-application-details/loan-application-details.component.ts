@@ -99,12 +99,11 @@ export class LoanApplicationDetailsComponent {
 
   getCurrentPhaseRemark(applicationId: any): string {
     const phases = [
-      { key: 'Secretariat', label: 'For Assessment' }, // 1
-      { key: ['HR', 'Admin', 'Legal'], label: 'For Signature' }, // 2,3,4
-      { key: 'Accounting', label: 'For Accounting' }, // 5
-      { key: ['ASDS', 'SDS'], label: 'For Endorsement' }, // 6,7
-      { key: 'OSDS', label: 'For OSDS' }, // 8
-      { key: 'Payment', label: 'For Payment' }, // 9
+      { key: ['HR', 'Legal', 'Admin'], label: 'For Signature' }, // 1,2,3
+      { key: 'Accounting', label: 'For Accounting' }, // 4
+      { key: ['ASDS', 'SDS'], label: 'For Endorsement' }, // 5,6
+      { key: 'OSDS', label: 'For OSDS' }, // 7
+      { key: 'Payment', label: 'For Payment' }, // 8
     ];
 
     for (const phase of phases) {

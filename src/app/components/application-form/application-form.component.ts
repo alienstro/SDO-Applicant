@@ -207,7 +207,7 @@ export class ApplicationFormComponent implements OnInit {
       loanNumber: '202210599',
       purpose: 'Hospitalization/Medical',
       otherPurpose: '',
-      term: 12,
+      term: 5,
       loanType: 'Multi-Purpose (renewal)',
     });
 

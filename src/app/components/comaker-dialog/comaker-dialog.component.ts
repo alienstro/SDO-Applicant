@@ -126,8 +126,10 @@ export class ComakerDialogComponent implements OnInit {
   }
 
   isAgeEligible(): boolean {
-    const age = this.comakerInfoForm.get('age')?.value || 0;
-    const term = this.loanDetailsForm.get('term')?.value || 0;
+    const age = Number(this.comakerInfoForm.get('age')?.value) || 0;
+    const term = Number(this.loanDetailsForm.get('term')?.value) || 0;
+    console.log(age, term)
+
     return age + term <= 65;
   }
 

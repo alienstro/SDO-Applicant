@@ -44,16 +44,6 @@
                 ></app-stepper>
 
                 <app-stepper
-                  [progressName]="'Assessment'"
-                  [disable]="
-                    !isOfficeDone('secretariat', loanStatus.currentLoan.application_id)
-                  "
-                  [date]="
-                    fetchUpdateDate(['secretariat'], loanStatus.currentLoan.application_id)
-                  "
-                ></app-stepper>
-
-                <app-stepper
                   [progressName]="'Signature'"
                   [disable]="
                     !isOfficeDone(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
@@ -160,16 +150,6 @@
                   [progressName]="'Loan Submitted'"
                   [disable]="false"
                   [date]="formatDate(loanStatus.currentLoan.application_date)"
-                ></app-stepper>
-
-                <app-stepper
-                  [progressName]="'Assessment'"
-                  [disable]="
-                    !isOfficeDone('secretariat', loanStatus.currentLoan.application_id)
-                  "
-                  [date]="
-                    fetchUpdateDate(['secretariat'], loanStatus.currentLoan.application_id)
-                  "
                 ></app-stepper>
 
                 <app-stepper

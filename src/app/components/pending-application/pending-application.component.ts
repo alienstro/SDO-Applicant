@@ -195,7 +195,6 @@ export class PendingApplicationComponent implements OnInit {
     const phases = [
       { key: 'osds', label: 'For OSDS' },
       { key: 'accounting', label: 'For Accounting' },
-      { key: 'secretariat', label: 'For Assessment' },
       { key: ['hr', 'admin', 'legal'], label: 'For Signature' },
       { key: ['sds', 'asds'], label: 'For Endorsement' },
       { key: 'payment', label: 'For Payment' },
