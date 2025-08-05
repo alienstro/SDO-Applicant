@@ -130,7 +130,7 @@ export class ComakerDialogComponent implements OnInit {
     const term = Number(this.loanDetailsForm.get('term')?.value) || 0;
     console.log(age, term)
 
-    return age + term <= 65;
+    return age + term < 65;
   }
 
   ngAfterViewInit() {

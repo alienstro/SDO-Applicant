@@ -517,7 +517,7 @@ export class ApplicationFormComponent implements OnInit {
   isAgeEligible(): boolean {
     const age = this.borrowerInfoForm.get('age')?.value || 0;
     const term = this.loanDetailsForm.get('term')?.value || 0;
-    return age + term <= 65;
+    return age + term < 65;
   }
 
   onSubmit() {
