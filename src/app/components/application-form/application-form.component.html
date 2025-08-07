@@ -17,7 +17,7 @@
                   <input
                     required=""
                     matInput
-                    placeholder="Php 1.00"
+                    placeholder="Loan Amount"
                     formControlName="loanAmount"
                     required
                     type="number"
@@ -134,7 +134,7 @@
                 <mat-label>Lastname</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter last name"
                   formControlName="lastName"
                   required
                 />
@@ -143,7 +143,7 @@
                 <mat-label>Firstname</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter first name"
                   formControlName="firstname"
                   required
                 />
@@ -152,7 +152,7 @@
                 <mat-label>Middle Initial</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter middle initial"
                   formControlName="middleName"
                 />
               </mat-form-field>
@@ -203,7 +203,7 @@
                 <mat-label>Street</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter street"
                   formControlName="street"
                   required
                 />
@@ -212,7 +212,7 @@
                 <mat-label>Zip Code</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter zip code"
                   formControlName="zipcode"
                   required
                 />
@@ -224,7 +224,7 @@
                 <mat-label>Position</mat-label>
                 <input
                   matInput
-                  placeholder="Position"
+                  placeholder="Enter position"
                   formControlName="position"
                   required
                 />
@@ -233,7 +233,7 @@
                 <mat-label>Employee no.</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter employee number"
                   formControlName="employeeNo"
                   required
                   type="number"
@@ -289,7 +289,7 @@
                 <mat-label>Monthly Salary (PHP)</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter monthly salary"
                   formControlName="salary"
                   required
                 />
@@ -299,7 +299,7 @@
                 <mat-label>Office tel no.</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter office telephone number"
                   formControlName="officeTelNo"
                   required
                   type="number"
@@ -312,7 +312,7 @@
                 <mat-label>Years in service</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter years in service"
                   formControlName="yearService"
                   required
                 />
@@ -321,7 +321,7 @@
                 <mat-label>Mobile no.</mat-label>
                 <input
                   matInput
-                  placeholder="Php 1.00"
+                  placeholder="Enter mobile number"
                   formControlName="mobileNo"
                   required
                   type="number"
@@ -408,31 +408,31 @@
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="idComaker"
-          title="Photocopy ID of Co-maker"
+          title="Photocopy ID of Co-maker (Required)"
         ></app-file-upload>
         <app-file-upload
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="idApplicant"
-          title="Photocopy ID of applicant"
+          title="Photocopy ID of applicant (Required)"
         ></app-file-upload>
-        <app-file-upload
+        <!-- <app-file-upload
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="authorityToDeduct"
           title="Authority to Deduct"
-        ></app-file-upload>
+        ></app-file-upload> -->
         <app-file-upload
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="payslipApplicant"
-          title="Payslip of applicant"
+          title="Payslip of applicant (Required)"
         ></app-file-upload>
         <app-file-upload
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="payslipComaker"
-          title="Payslip of comaker"
+          title="Payslip of comaker (Required)"
         ></app-file-upload>
         <div class="next-button-container">
           <button mat-button matStepperNext (click)="checkValidDocuments()">

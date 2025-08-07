@@ -82,7 +82,6 @@ export class ApplicationFormComponent implements OnInit {
   private _requiredDocuments = new BehaviorSubject<{ [key: string]: boolean }>({
     idComaker: false,
     idApplicant: false,
-    authorityToDeduct: false,
     payslipApplicant: false,
     payslipComaker: false,
   });
@@ -216,9 +215,9 @@ export class ApplicationFormComponent implements OnInit {
       lastName: 'Dela Cruz',
       firstname: 'Juan',
       middleName: 'Santos',
-      region: 'REGION I (ILOCOS)',
-      province: 'ILOCOS NORTE',
-      city: 'BOTOLAN',
+      region: 'Region I (Ilocos)',
+      province: 'Ilocos Norte',
+      city: 'Botolan',
       barangay: 'Bangan',
       street: '123 Main Street',
       zipcode: '4030',
@@ -592,7 +591,6 @@ export class ApplicationFormComponent implements OnInit {
     this._requiredDocuments.next({
       idComaker: false,
       idApplicant: false,
-      authorityToDeduct: false,
       payslipApplicant: false,
       payslipComaker: false,
     });
