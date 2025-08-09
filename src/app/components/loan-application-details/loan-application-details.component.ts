@@ -101,9 +101,8 @@ export class LoanApplicationDetailsComponent {
     const phases = [
       { key: ['HR', 'Legal', 'Admin'], label: 'For Signature' }, // 1,2,3
       { key: 'Accounting', label: 'For Accounting' }, // 4
-      { key: ['ASDS'], label: 'For Endorsement' }, // 5,6
-      { key: 'OSDS', label: 'For OSDS' }, // 7
-      { key: 'Payment', label: 'For Payment' }, // 8
+      { key: ['ASDS'], label: 'For Endorsement' }, // 5
+      { key: 'OSDS', label: 'For OSDS' }, // 6
     ];
 
     for (const phase of phases) {

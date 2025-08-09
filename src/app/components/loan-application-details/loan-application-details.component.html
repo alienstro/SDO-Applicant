@@ -30,30 +30,48 @@
               <app-stepper
                 [progressName]="'Signature'"
                 [disable]="
-                  !isOfficeDone(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    ['hr', 'admin', 'legal'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['hr', 'admin', 'legal'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
               <app-stepper
                 [progressName]="'Accounting'"
                 [disable]="
-                  !isOfficeDone('accounting', loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    'accounting',
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['accounting'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['accounting'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
               <app-stepper
                 [progressName]="'Endorsement'"
                 [disable]="
-                  !isOfficeDone(['sds', 'asds'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    ['sds', 'asds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['sds', 'asds'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['sds', 'asds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
@@ -63,17 +81,16 @@
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
                 [date]="
-                  fetchUpdateDate(['osds'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['osds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
-
               <app-stepper-end
-                [progressName]="'Payment'"
+                [progressName]="'Finished'"
                 [disable]="
-                  !isOfficeDone('payment', loanStatus.currentLoan.application_id)
-                "
-                [date]="
-                  fetchUpdateDate(['payment'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
               ></app-stepper-end>
             </div>
@@ -122,30 +139,48 @@
               <app-stepper
                 [progressName]="'Signature'"
                 [disable]="
-                  !isOfficeDone(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    ['hr', 'admin', 'legal'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['hr', 'admin', 'legal'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
               <app-stepper
                 [progressName]="'Accounting'"
                 [disable]="
-                  !isOfficeDone('accounting', loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    'accounting',
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['accounting'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['accounting'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
               <app-stepper
                 [progressName]="'Endorsement'"
                 [disable]="
-                  !isOfficeDone(['sds', 'asds'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    ['sds', 'asds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['sds', 'asds'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['sds', 'asds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
@@ -155,17 +190,16 @@
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
                 [date]="
-                  fetchUpdateDate(['osds'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['osds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
-
               <app-stepper-end
-                [progressName]="'Payment'"
+                [progressName]="'Finished'"
                 [disable]="
-                  !isOfficeDone('payment', loanStatus.currentLoan.application_id)
-                "
-                [date]="
-                  fetchUpdateDate(['payment'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
               ></app-stepper-end>
             </div>
@@ -215,30 +249,48 @@
               <app-stepper
                 [progressName]="'Signature'"
                 [disable]="
-                  !isOfficeDone(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    ['hr', 'admin', 'legal'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['hr', 'admin', 'legal'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['hr', 'admin', 'legal'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
               <app-stepper
                 [progressName]="'Accounting'"
                 [disable]="
-                  !isOfficeDone('accounting', loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    'accounting',
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['accounting'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['accounting'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
               <app-stepper
                 [progressName]="'Endorsement'"
                 [disable]="
-                  !isOfficeDone(['sds', 'asds'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone(
+                    ['sds', 'asds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
                 [date]="
-                  fetchUpdateDate(['sds', 'asds'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['sds', 'asds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
 
@@ -248,17 +300,16 @@
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
                 [date]="
-                  fetchUpdateDate(['osds'], loanStatus.currentLoan.application_id)
+                  fetchUpdateDate(
+                    ['osds'],
+                    loanStatus.currentLoan.application_id
+                  )
                 "
               ></app-stepper>
-
               <app-stepper-end
-                [progressName]="'Payment'"
+                [progressName]="'Finished'"
                 [disable]="
-                  !isOfficeDone('payment', loanStatus.currentLoan.application_id)
-                "
-                [date]="
-                  fetchUpdateDate(['payment'], loanStatus.currentLoan.application_id)
+                  !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
               ></app-stepper-end>
             </div>

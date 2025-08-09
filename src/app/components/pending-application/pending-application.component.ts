@@ -98,7 +98,6 @@ export class PendingApplicationComponent implements OnInit {
         this.currentLoanApplication = null;
         this.currentLoanApplication = res;
       });
-
   }
 
   getCurrentApplicationNotFilledOut(): boolean {
@@ -193,11 +192,10 @@ export class PendingApplicationComponent implements OnInit {
   // GETTING THE LABEL FOR EACH OFFICE FOR PROGRESS
   getCurrentPhaseRemark(applicationId: any): string {
     const phases = [
-      { key: 'osds', label: 'For OSDS' },
-      { key: 'accounting', label: 'For Accounting' },
-      { key: ['hr', 'admin', 'legal'], label: 'For Signature' },
-      { key: ['sds', 'asds'], label: 'For Endorsement' },
-      { key: 'payment', label: 'For Payment' },
+      { key: ['HR', 'Legal', 'Admin'], label: 'For Signature' }, // 1,2,3
+      { key: 'Accounting', label: 'For Accounting' }, // 4
+      { key: ['ASDS'], label: 'For Endorsement' }, // 5
+      { key: 'OSDS', label: 'For OSDS' }, // 6
     ];
 
     for (const phase of phases) {
