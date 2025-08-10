@@ -141,6 +141,7 @@
             <div class="title">
               <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
               <button
+                *ngIf="loanStatus.currentHistory?.initiator === 'Applicant'"
                 mat-raised-button
                 color="primary"
                 (click)="
@@ -152,6 +153,14 @@
                     ? "Edit Co-Maker Information"
                     : "Fill Out Co-Maker Information"
                 }}
+              </button>
+
+              <button
+                *ngIf="loanStatus.currentHistory?.initiator !== 'Applicant'"
+                mat-raised-button
+                color="primary"
+              >
+                Cannot Edit Anymore
               </button>
             </div>
             <hr />

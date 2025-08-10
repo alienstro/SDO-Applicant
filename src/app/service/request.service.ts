@@ -4,7 +4,7 @@ import { API_URL } from '../env';
 import { Observable } from 'rxjs';
 import { Response } from '../interface';
 interface LoginResponse {
-  token: string
+  token: string;
 }
 
 interface LoginRequest {
@@ -13,15 +13,24 @@ interface LoginRequest {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class RequestService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(data: LoginRequest) {
-    return this.http.post<LoginResponse>(`${API_URL}/`+'applicantLogin', data);
+    return this.http.post<LoginResponse>(
+      `${API_URL}/` + 'applicantLogin',
+      data
+    );
+  }
+
+  editPasswordApplicant(data: any): Observable<any> {
+    console.log('request service applicant: ', data);
+    return this.http.put(
+      `${API_URL}` + `/applicantUser/change-password/${data.applicant_id}`,
+      data
+    );
   }
 
   addLoanApplication(data: any): Observable<any> {
@@ -36,7 +45,6 @@ export class RequestService {
   }
 
   get<T>(endpoint: string) {
-    return this.http.get<Response<T>>(`${API_URL}/`+`${endpoint}`)
+    return this.http.get<Response<T>>(`${API_URL}/` + `${endpoint}`);
   }
-
 }
