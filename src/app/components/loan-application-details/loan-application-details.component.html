@@ -119,7 +119,7 @@
       class="loan_details_container"
     >
       <div *ngIf="loanStatus.currentLoan as currentLoan">
-        <div *ngIf="currentLoan.status === 'Paid'">
+        <div *ngIf="currentLoan.status === 'Approved'">
           <div class="title">
             <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
           </div>

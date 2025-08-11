@@ -369,7 +369,7 @@
                     comakerInfoForm.get('email')?.hasError('sameAsApplicant')
                   "
                 >
-                  Comaker email cannot be the same as applicant email.
+                  Comaker email cannot be the same as borrower's email.
                 </div>
               </div>
             </div>
@@ -391,8 +391,8 @@
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="csc"
-          title="CSC"
-          note="For first time applicant"
+          title="Approved CSC Appointment"
+          note="For first time borrower"
           [required]="false"
         >
         </app-file-upload>
@@ -414,7 +414,7 @@
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="idApplicant"
-          title="Photocopy ID of applicant (Required)"
+          title="Photocopy ID of borrower (Required)"
         ></app-file-upload>
         <!-- <app-file-upload
           (fileSelected)="handleFileUpload($event)"
@@ -426,7 +426,7 @@
           (fileSelected)="handleFileUpload($event)"
           (cancelFile)="handleFileCancel($event)"
           idLabel="payslipApplicant"
-          title="Payslip of applicant (Required)"
+          title="Payslip of borrower (Required)"
         ></app-file-upload>
         <app-file-upload
           (fileSelected)="handleFileUpload($event)"

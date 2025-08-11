@@ -152,7 +152,7 @@ export class LoanApplicationDetailsComponent {
   getCurrentApplicationApproved(): boolean {
     return (
       this.currentLoanStatusList.filter(
-        (ls) => ls.currentLoan && ls.currentLoan.status === 'Paid'
+        (ls) => ls.currentLoan && ls.currentLoan.status === 'Approved'
       ).length === 0
     );
   }
