@@ -69,6 +69,14 @@ export class LoanApplicationDetailsComponent {
     }
   }
 
+  isApplicationDone(status: string): boolean {
+    if(status === "Approved") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   fetchUpdateDate(offices: string[], applicationId: any): string {
     const filteredStatus = this.officeStatus.filter(
       (e) => e.application_id.toString() === applicationId.toString()
