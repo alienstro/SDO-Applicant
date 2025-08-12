@@ -11,6 +11,7 @@ import { Component, Input } from '@angular/core';
 export class StepperEndComponent {
 
   @Input() progressName: string = ''
+   @Input() note: string = ''
   @Input() disable: boolean = false
   @Input() date: string | null = ''
 

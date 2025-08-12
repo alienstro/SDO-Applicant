@@ -89,6 +89,7 @@
               ></app-stepper>
               <app-stepper-end
                 [progressName]="'Finished'"
+                [note]="'(For Voucher Processing)'"
                 [disable]="
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
                 "
