@@ -44,6 +44,14 @@ export class RequestService {
     return this.http.patch(`${API_URL}/` + `addLoanDataCoMaker`, data);
   }
 
+  rejectApprovalApplication(data: any): Observable<any> {
+    console.log(data);
+    return this.http.post(
+      `${API_URL}` + `/loanApplication/rejectApplicationCoMaker`,
+      data
+    );
+  }
+
   get<T>(endpoint: string) {
     return this.http.get<Response<T>>(`${API_URL}/` + `${endpoint}`);
   }

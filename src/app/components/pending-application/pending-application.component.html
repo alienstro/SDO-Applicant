@@ -11,7 +11,7 @@
         class="loan_details_container"
       >
         <div *ngIf="loanStatus.currentLoan as currentLoan">
-          <div *ngIf="currentLoan.is_filled_out === null">
+          <div *ngIf="currentLoan.is_filled_out === null && currentLoan.status !== 'Rejected'">
             <div class="title">
               <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
               <button
@@ -27,12 +27,25 @@
                     : "Fill Out Co-Maker Information"
                 }}
               </button>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="
+                  rejectApplicationDialog(loanStatus.currentLoan.application_id)
+                "
+              >
+                Reject this application
+              </button>
             </div>
             <hr />
             <div class="progress_container">
               <p id="latest_msg">
                 {{
-                  getCurrentPhaseRemark(loanStatus.currentLoan.application_id)
+                  loanStatus.currentLoan.status === "Rejected"
+                    ? "Rejected"
+                    : getCurrentPhaseRemark(
+                        loanStatus.currentLoan.application_id
+                      )
                 }}
               </p>
 
@@ -167,7 +180,150 @@
             <div class="progress_container">
               <p id="latest_msg">
                 {{
-                  getCurrentPhaseRemark(loanStatus.currentLoan.application_id)
+                  loanStatus.currentLoan.status === "Rejected"
+                    ? "Rejected"
+                    : getCurrentPhaseRemark(
+                        loanStatus.currentLoan.application_id
+                      )
+                }}
+              </p>
+
+              <div class="stepper_container">
+                <app-stepper
+                  [progressName]="'Loan Submitted'"
+                  [disable]="false"
+                  [date]="formatDate(loanStatus.currentLoan.application_date)"
+                ></app-stepper>
+
+                <app-stepper
+                  [progressName]="'Signature'"
+                  [disable]="
+                    !isOfficeDone(
+                      ['hr', 'admin', 'legal'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['hr', 'admin', 'legal'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                ></app-stepper>
+
+                <app-stepper
+                  [progressName]="'Accounting'"
+                  [disable]="
+                    !isOfficeDone(
+                      'accounting',
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['accounting'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                ></app-stepper>
+
+                <app-stepper
+                  [progressName]="'Endorsement'"
+                  [disable]="
+                    !isOfficeDone(
+                      ['sds', 'asds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['sds', 'asds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                ></app-stepper>
+
+                <app-stepper
+                  [progressName]="'OSDS'"
+                  [disable]="
+                    !isOfficeDone('osds', loanStatus.currentLoan.application_id)
+                  "
+                  [date]="
+                    fetchUpdateDate(
+                      ['osds'],
+                      loanStatus.currentLoan.application_id
+                    )
+                  "
+                ></app-stepper>
+                <app-stepper-end
+                  [progressName]="'Finished'"
+                  [disable]="
+                    !isOfficeDone('osds', loanStatus.currentLoan.application_id)
+                  "
+                ></app-stepper-end>
+              </div>
+            </div>
+            <div class="remarks_container">
+              <h2>Remarks</h2>
+              <p>
+                {{
+                  loanStatus.currentLoan.remarks_message
+                    ? loanStatus.currentLoan.remarks_message
+                    : "No Remarks Yet"
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- REJECTED APPLICATION -->
+    <mat-tab label="Rejected Application">
+      <div *ngIf="getCurrentApplicationRejected()">
+        <p class="status">No current Applications</p>
+      </div>
+
+      <div
+        *ngFor="let loanStatus of currentLoanStatusList"
+        class="loan_details_container"
+      >
+        <div *ngIf="loanStatus.currentLoan as currentLoan">
+          <div *ngIf="currentLoan.status === 'Rejected'">
+            <div class="title">
+              <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
+              <button
+                *ngIf="loanStatus.currentHistory?.initiator === 'Applicant'"
+                mat-raised-button
+                color="primary"
+                (click)="
+                  openCoMakerDialog(loanStatus.currentLoan.application_id)
+                "
+              >
+                {{
+                  loanStatus.currentLoan.is_filled_out === "Yes"
+                    ? "Edit Co-Maker Information"
+                    : "Fill Out Co-Maker Information"
+                }}
+              </button>
+
+              <button
+                *ngIf="loanStatus.currentHistory?.initiator !== 'Applicant'"
+                mat-raised-button
+                color="primary"
+              >
+                Cannot Edit Anymore
+              </button>
+            </div>
+            <hr />
+            <div class="progress_container">
+              <p id="latest_msg">
+                {{
+                  loanStatus.currentLoan.status === "Rejected"
+                    ? "Rejected"
+                    : getCurrentPhaseRemark(
+                        loanStatus.currentLoan.application_id
+                      )
                 }}
               </p>
 

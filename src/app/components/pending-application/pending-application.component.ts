@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ComakerDialogComponent } from '../comaker-dialog/comaker-dialog.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { RejectApplicationComponent } from '../reject-application/reject-application.component';
 
 @Component({
   selector: 'app-pending-application',
@@ -103,7 +104,7 @@ export class PendingApplicationComponent implements OnInit {
   getCurrentApplicationNotFilledOut(): boolean {
     return (
       this.currentLoanStatusList.filter(
-        (ls) => ls.currentLoan && ls.currentLoan.is_filled_out === null
+        (ls) => ls.currentLoan && ls.currentLoan.is_filled_out === null && ls.currentLoan.status !== 'Rejected'
       ).length === 0
     );
   }
@@ -116,10 +117,36 @@ export class PendingApplicationComponent implements OnInit {
     );
   }
 
+  getCurrentApplicationRejected(): boolean {
+    return (
+      this.currentLoanStatusList.filter(
+        (ls) => ls.currentLoan?.status === 'Rejected'
+      ).length === 0
+    );
+  }
+
   openCoMakerDialog(application_id: string) {
     const dialogRef = this.dialog.open(ComakerDialogComponent, {
       height: '50rem',
       width: '900rem',
+      data: { application_id: application_id },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'refresh') {
+        this.fetchLoanApplicationStatus();
+        this.fetchLoanHistory();
+        this.loanApplicationService.initOfficeStatusCoMaker();
+        this.loanApplicationService.initCoMakersCurrentLoan();
+      }
+    });
+  }
+
+  rejectApplicationDialog(application_id: string) {
+    const dialogRef = this.dialog.open(RejectApplicationComponent, {
+      width: '50rem',
+      maxWidth: '50rem',
+      height: '16rem',
       data: { application_id: application_id },
     });
 
