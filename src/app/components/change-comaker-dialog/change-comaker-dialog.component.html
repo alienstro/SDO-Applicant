@@ -1,0 +1,49 @@
+<div class="endorse">
+  <div class="main">
+    <div class="header">
+      <h1>Change Co-Maker</h1>
+    </div>
+
+    <div class="input-container">
+      <label for="comaker-email">Co-Maker Email</label>
+
+      <input
+        id="comaker-email"
+        name="comakerEmail"
+        type="email"
+        [(ngModel)]="email"
+        #comaker="ngModel"
+        placeholder="Enter co-maker's email address..."
+        autocomplete="email"
+        required
+        aria-required="true"
+        email
+        [class.invalid]="(comaker.invalid && (comaker.touched || comaker.dirty)) || isSameAsApplicant()"
+      />
+
+      <div class="error-message" *ngIf="comaker.invalid && (comaker.touched || comaker.dirty)">
+        <div *ngIf="comaker.errors?.['required']">Co‑maker email is required.</div>
+        <div *ngIf="comaker.errors?.['email']">Please enter a valid email address.</div>
+      </div>
+
+      <div class="error-message" *ngIf="isSameAsApplicant() && (comaker.touched || comaker.dirty)">
+        Co‑maker email cannot be the same as borrower's email.
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cancel">
+        <button class="button-1" (click)="cancel()">Cancel</button>
+      </div>
+      <div class="confirm">
+        <button
+          class="button-1"
+          (click)="changeCoMaker()"
+          [disabled]="!email || comaker.invalid || isSameAsApplicant()"
+        >
+          Change
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

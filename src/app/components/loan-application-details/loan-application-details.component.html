@@ -4,11 +4,30 @@
       <p class="status">No current Applications</p>
     </div>
 
-    <div *ngFor="let loanStatus of currentLoanStatusList" class="loan_details_container">
+    <div
+      *ngFor="let loanStatus of currentLoanStatusList"
+      class="loan_details_container"
+    >
       <div *ngIf="loanStatus.currentLoan as currentLoan">
         <div *ngIf="currentLoan.status === 'Pending'">
           <div class="title">
             <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
+            <button
+              *ngIf="loanStatus.currentLoan.is_filled_out !== 'Yes'"
+              mat-raised-button
+              color="primary"
+              (click)="openChangeCoMakerDialog(loanStatus.currentLoan.application_id)"
+            >
+              Replace Co-Maker
+            </button>
+
+            <button
+              *ngIf="loanStatus.currentLoan.is_filled_out === 'Yes'"
+              mat-raised-button
+              color="primary"
+            >
+              Co-Maker Information Submitted - Editing Disabled
+            </button>
           </div>
           <hr />
 
@@ -18,65 +37,88 @@
             </p>
 
             <div class="stepper_container">
-              <app-stepper [progressName]="'Loan Submitted'" [disable]="false"
-                [date]="formatDate(loanStatus.currentLoan.application_date)"></app-stepper>
+              <app-stepper
+                [progressName]="'Loan Submitted'"
+                [disable]="false"
+                [date]="formatDate(loanStatus.currentLoan.application_date)"
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Signature'" [disable]="
+              <app-stepper
+                [progressName]="'Signature'"
+                [disable]="
                   !isOfficeDone(
                     ['hr', 'admin', 'legal'],
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['hr', 'admin', 'legal'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Accounting'" [disable]="
+              <app-stepper
+                [progressName]="'Accounting'"
+                [disable]="
                   !isOfficeDone(
                     'accounting',
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['accounting'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Endorsement'" [disable]="
+              <app-stepper
+                [progressName]="'Endorsement'"
+                [disable]="
                   !isOfficeDone(
                     ['sds', 'asds'],
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['sds', 'asds'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'OSDS'" [disable]="
+              <app-stepper
+                [progressName]="'OSDS'"
+                [disable]="
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['osds'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
-              <app-stepper-end [progressName]="'Finished'" [note]="'(For Voucher Processing)'" [disable]="
+                "
+              ></app-stepper>
+              <app-stepper-end
+                [progressName]="'Finished'"
+                [note]="'(For Voucher Processing)'"
+                [disable]="
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
-                "></app-stepper-end>
+                "
+              ></app-stepper-end>
             </div>
           </div>
           <div class="remarks_container">
             <h2>Remarks</h2>
             <p>
               {{
-              loanStatus.currentLoan.remarks_message
-              ? loanStatus.currentLoan.remarks_message
-              : "No Remarks Yet"
+                loanStatus.currentLoan.remarks_message
+                  ? loanStatus.currentLoan.remarks_message
+                  : "No Remarks Yet"
               }}
             </p>
           </div>
@@ -89,7 +131,10 @@
       <p class="status">No current Applications</p>
     </div>
 
-    <div *ngFor="let loanStatus of currentLoanStatusList" class="loan_details_container">
+    <div
+      *ngFor="let loanStatus of currentLoanStatusList"
+      class="loan_details_container"
+    >
       <div *ngIf="loanStatus.currentLoan as currentLoan">
         <div *ngIf="currentLoan.status === 'Approved'">
           <div class="title">
@@ -103,64 +148,87 @@
             </p>
 
             <div class="stepper_container">
-              <app-stepper [progressName]="'Loan Submitted'" [disable]="false"
-                [date]="formatDate(loanStatus.currentLoan.application_date)"></app-stepper>
-              <app-stepper [progressName]="'Signature'" [disable]="
+              <app-stepper
+                [progressName]="'Loan Submitted'"
+                [disable]="false"
+                [date]="formatDate(loanStatus.currentLoan.application_date)"
+              ></app-stepper>
+              <app-stepper
+                [progressName]="'Signature'"
+                [disable]="
                   !isOfficeDone(
                     ['hr', 'admin', 'legal'],
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['hr', 'admin', 'legal'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Accounting'" [disable]="
+              <app-stepper
+                [progressName]="'Accounting'"
+                [disable]="
                   !isOfficeDone(
                     'accounting',
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['accounting'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Endorsement'" [disable]="
+              <app-stepper
+                [progressName]="'Endorsement'"
+                [disable]="
                   !isOfficeDone(
                     ['sds', 'asds'],
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['sds', 'asds'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'OSDS'" [disable]="
+              <app-stepper
+                [progressName]="'OSDS'"
+                [disable]="
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['osds'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
-              <app-stepper-end [progressName]="'Finished'" [note]="'(For Voucher Processing)'" [disable]="
+                "
+              ></app-stepper>
+              <app-stepper-end
+                [progressName]="'Finished'"
+                [note]="'(For Voucher Processing)'"
+                [disable]="
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
-                "></app-stepper-end>
+                "
+              ></app-stepper-end>
             </div>
           </div>
           <div class="remarks_container">
             <h2>Remarks</h2>
             <p>
               {{
-              loanStatus.currentLoan.remarks_message
-              ? loanStatus.currentLoan.remarks_message
-              : "No Remarks Yet"
+                loanStatus.currentLoan.remarks_message
+                  ? loanStatus.currentLoan.remarks_message
+                  : "No Remarks Yet"
               }}
             </p>
           </div>
@@ -173,7 +241,10 @@
       <p class="status">No current Applications</p>
     </div>
 
-    <div *ngFor="let loanStatus of currentLoanStatusList" class="loan_details_container">
+    <div
+      *ngFor="let loanStatus of currentLoanStatusList"
+      class="loan_details_container"
+    >
       <div *ngIf="loanStatus.currentLoan as currentLoan">
         <div *ngIf="currentLoan.status === 'Rejected'">
           <div class="title">
@@ -184,72 +255,92 @@
           <div class="progress_container">
             <p id="latest_msg">
               {{
-              loanStatus.currentLoan.status === 'Rejected'
-              ? 'Rejected'
-              : getCurrentPhaseRemark(loanStatus.currentLoan.application_id)
+                loanStatus.currentLoan.status === "Rejected"
+                  ? "Rejected"
+                  : getCurrentPhaseRemark(loanStatus.currentLoan.application_id)
               }}
             </p>
 
             <div class="stepper_container">
-              <app-stepper [progressName]="'Loan Submitted'" [disable]="false"
-                [date]="formatDate(loanStatus.currentLoan.application_date)"></app-stepper>
+              <app-stepper
+                [progressName]="'Loan Submitted'"
+                [disable]="false"
+                [date]="formatDate(loanStatus.currentLoan.application_date)"
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Signature'" [disable]="
+              <app-stepper
+                [progressName]="'Signature'"
+                [disable]="
                   !isOfficeDone(
                     ['hr', 'admin', 'legal'],
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['hr', 'admin', 'legal'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Accounting'" [disable]="
+              <app-stepper
+                [progressName]="'Accounting'"
+                [disable]="
                   !isOfficeDone(
                     'accounting',
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['accounting'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'Endorsement'" [disable]="
+              <app-stepper
+                [progressName]="'Endorsement'"
+                [disable]="
                   !isOfficeDone(
                     ['sds', 'asds'],
                     loanStatus.currentLoan.application_id
                   )
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['sds', 'asds'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
+                "
+              ></app-stepper>
 
-              <app-stepper [progressName]="'OSDS'" [disable]="
+              <app-stepper
+                [progressName]="'OSDS'"
+                [disable]="
                   !isOfficeDone('osds', loanStatus.currentLoan.application_id)
-                " [date]="
+                "
+                [date]="
                   fetchUpdateDate(
                     ['osds'],
                     loanStatus.currentLoan.application_id
                   )
-                "></app-stepper>
-              <app-stepper-end [progressName]="'Finished'" [disable]="
-                  isApplicationDone(loanStatus.currentLoan.status)
-                "></app-stepper-end>
+                "
+              ></app-stepper>
+              <app-stepper-end
+                [progressName]="'Finished'"
+                [disable]="isApplicationDone(loanStatus.currentLoan.status)"
+              ></app-stepper-end>
             </div>
           </div>
           <div class="remarks_container">
             <h2>Remarks</h2>
             <p>
               {{
-              loanStatus.currentLoan.remarks_message
-              ? loanStatus.currentLoan.remarks_message
-              : "No Remarks Yet"
+                loanStatus.currentLoan.remarks_message
+                  ? loanStatus.currentLoan.remarks_message
+                  : "No Remarks Yet"
               }}
             </p>
           </div>

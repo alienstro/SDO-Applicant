@@ -11,7 +11,12 @@
         class="loan_details_container"
       >
         <div *ngIf="loanStatus.currentLoan as currentLoan">
-          <div *ngIf="currentLoan.is_filled_out === null && currentLoan.status !== 'Rejected'">
+          <div
+            *ngIf="
+              currentLoan.is_filled_out === null &&
+              currentLoan.status !== 'Rejected'
+            "
+          >
             <div class="title">
               <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
               <button
@@ -172,8 +177,9 @@
                 *ngIf="loanStatus.currentHistory?.initiator !== 'Applicant'"
                 mat-raised-button
                 color="primary"
+              
               >
-                Cannot Edit Anymore
+                Staff Update In Progress — Editing Disabled
               </button>
             </div>
             <hr />
@@ -292,28 +298,6 @@
           <div *ngIf="currentLoan.status === 'Rejected'">
             <div class="title">
               <p>LOAN # {{ loanStatus.currentLoan.application_id }}</p>
-              <button
-                *ngIf="loanStatus.currentHistory?.initiator === 'Applicant'"
-                mat-raised-button
-                color="primary"
-                (click)="
-                  openCoMakerDialog(loanStatus.currentLoan.application_id)
-                "
-              >
-                {{
-                  loanStatus.currentLoan.is_filled_out === "Yes"
-                    ? "Edit Co-Maker Information"
-                    : "Fill Out Co-Maker Information"
-                }}
-              </button>
-
-              <button
-                *ngIf="loanStatus.currentHistory?.initiator !== 'Applicant'"
-                mat-raised-button
-                color="primary"
-              >
-                Cannot Edit Anymore
-              </button>
             </div>
             <hr />
             <div class="progress_container">

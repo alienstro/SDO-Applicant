@@ -5,11 +5,20 @@ import { LoanApplicationService } from '../../service/loan-application.service';
 import { CurrentLoanStatus, OfficeStatus } from '../../interface';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ChangeComakerDialogComponent } from '../change-comaker-dialog/change-comaker-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-loan-application-details',
   standalone: true,
-  imports: [StepperComponent, StepperEndComponent, CommonModule, MatTabsModule],
+  imports: [
+    StepperComponent,
+    StepperEndComponent,
+    CommonModule,
+    MatTabsModule,
+    MatButtonModule,
+  ],
   templateUrl: './loan-application-details.component.html',
   styleUrls: ['./loan-application-details.component.scss'],
 })
@@ -17,7 +26,10 @@ export class LoanApplicationDetailsComponent {
   officeStatus: OfficeStatus[] = [];
   currentLoanStatusList: CurrentLoanStatus[] = [];
 
-  constructor(private loanApplicationDetails: LoanApplicationService) {
+  constructor(
+    private loanApplicationDetails: LoanApplicationService,
+    private dialog: MatDialog
+  ) {
     this.loanApplicationDetails.officeStatus$.subscribe((res) => {
       this.officeStatus = res;
     });
@@ -70,7 +82,7 @@ export class LoanApplicationDetailsComponent {
   }
 
   isApplicationDone(status: string): boolean {
-    if(status === "Approved") {
+    if (status === 'Approved') {
       return false;
     } else {
       return true;
@@ -115,7 +127,7 @@ export class LoanApplicationDetailsComponent {
 
     for (const phase of phases) {
       if (!this.isOfficeDone(phase.key, applicationId)) {
-        console.log('appliactionId: ', applicationId + phase.label);
+        // console.log('appliactionId: ', applicationId + phase.label);
         return phase.label;
       }
     }
@@ -163,5 +175,13 @@ export class LoanApplicationDetailsComponent {
         (ls) => ls.currentLoan && ls.currentLoan.status === 'Approved'
       ).length === 0
     );
+  }
+
+  openChangeCoMakerDialog(application_id: string) {
+    const dialogRef = this.dialog.open(ChangeComakerDialogComponent, {
+      width: '20rem',
+      maxWidth: '20rem',
+      data: { application_id: application_id },
+    });
   }
 }

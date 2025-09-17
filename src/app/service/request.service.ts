@@ -52,6 +52,14 @@ export class RequestService {
     );
   }
 
+   changeCoMakerEmail(data: any): Observable<any> {
+    console.log(data);
+    return this.http.patch(
+      `${API_URL}` + `/loanApplication/changeCoMakerEmail/${data.application_id}`,
+      data
+    );
+  }
+
   get<T>(endpoint: string) {
     return this.http.get<Response<T>>(`${API_URL}/` + `${endpoint}`);
   }
