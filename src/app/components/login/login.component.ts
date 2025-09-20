@@ -7,6 +7,7 @@ import { TokenService } from '../../service/token.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface LoginResponse {
   token: string
@@ -39,7 +40,8 @@ export class LoginComponent {
   constructor(
     private requestService: RequestService,
     private tokenService: TokenService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   userLogin = new FormGroup({
@@ -63,6 +65,7 @@ export class LoginComponent {
       next: (res: LoginResponse) => {
         this.tokenService.setToken(res.token);
         this.router.navigate(['/application']);
+        this.snackBar.open("Successfully Logged In", 'Close', { duration: 3000 });
       },
       error: err => {
         if (err.status === 401) {
