@@ -61,32 +61,32 @@ h1 {
   display: inline-block;
 }
 
-/* Input styling */
+
 .input-container input {
   width: 96%;
   padding: 10px 12px;
   font-size: 14px;
   border-radius: 8px;
-  border: 1.5px solid #d1d5db; /* gray-300 */
+  border: 1.5px solid #d1d5db; 
   background: #ffffff;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
   outline: none;
-  color: #111827; /* neutral-900 */
+  color: #111827;
 }
 
-/* Placeholder color */
+
 .input-container input::placeholder {
-  color: #9ca3af; /* gray-400 */
+  color: #9ca3af; 
 }
 
-/* Focus state */
+
 .input-container input:focus {
   border-color: #0165b2;
   box-shadow: 0 6px 18px rgba(1, 101, 178, 0.08);
 }
 
-/* Keep textarea styles but unify look */
+
 .input-container textarea {
   width: 96%;
   height: 100%;
@@ -152,14 +152,14 @@ canvas {
   height: 9rem;
 }
 
-/* error message styling (match application-form style) */
+
 .error-message {
-  color: #dc2626; /* red-600 */
+  color: #dc2626;
   font-size: 13px;
   margin-top: 6px;
 }
 
-/* invalid input visual */
+
 .input-container input.invalid {
   border-color: #dc2626;
   box-shadow: 0 6px 18px rgba(220, 38, 38, 0.06);

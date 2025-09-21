@@ -5,12 +5,17 @@ import { MatInputModule } from '@angular/material/input';
 import { RequestService } from '../../service/request.service';
 import { TokenService } from '../../service/token.service';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface LoginResponse {
-  token: string
+  token: string;
 }
 
 interface LoginRequest {
@@ -27,53 +32,53 @@ interface LoginRequest {
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
-
 export class LoginComponent {
-
-  errMessage = ''
+  errMessage = '';
 
   constructor(
     private requestService: RequestService,
     private tokenService: TokenService,
     private router: Router,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   userLogin = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
-  })
+  });
 
   onLogin() {
-    this.errMessage = ''
+    this.errMessage = '';
     const inputCred = this.userLogin.getRawValue();
 
     if (!inputCred.email || !inputCred.password) return;
 
     const loginCred: LoginRequest = {
       email: inputCred.email as string,
-      password: inputCred.password as string
+      password: inputCred.password as string,
     };
 
-    
     this.requestService.login(loginCred).subscribe({
       next: (res: LoginResponse) => {
         this.tokenService.setToken(res.token);
         this.router.navigate(['/application']);
-        this.snackBar.open("Successfully Logged In", 'Close', { duration: 3000 });
+        this.snackBar.open('Successfully Logged In', 'Close', {
+          duration: 3000,
+        });
       },
-      error: err => {
-        if (err.status === 401) {
-          this.errMessage = 'Invalid Credentials'
-        } else {
-          this.errMessage = 'Error Logging in'
-        }
-      }
+      error: (error) => {
+        this.snackBar.open(
+          'Email or password is incorrect. Please try again.',
+          'Close',
+          { duration: 3000 }
+        );
+        console.error('Error creating user: ', error);
+      },
     });
   }
 }
