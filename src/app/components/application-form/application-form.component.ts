@@ -546,7 +546,7 @@ export class ApplicationFormComponent implements OnInit {
 
         if (res.success) {
           this.snackbarService.showSnackbar(
-            'Loan application submitted successfully! Sent to Co-Maker!'
+            'Loan application successfully sent to your Co-Maker!'
           );
 
           this.loanApplicationService.initCurrentLoan();
